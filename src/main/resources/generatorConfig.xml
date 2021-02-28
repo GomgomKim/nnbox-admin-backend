@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+  <context id="solution" targetRuntime="MyBatis3">
+
+  <commentGenerator>
+    <property name="suppressAllComments" value="true"></property>
+    <property name="suppressDate" value="true"></property>
+  </commentGenerator>
+  
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+    connectionURL="jdbc:mysql://121.78.187.111:3306/nnbox?serverTimezone=UTC"
+    userId="admin" password="zhstjxm!2" />
+
+    <javaModelGenerator targetPackage="com.nnbox.admin.data.model" targetProject="nnbox-admin-backend" />
+    <sqlMapGenerator targetPackage="com.nnbox.admin.data.xml" targetProject="nnbox-admin-backend" />
+    <javaClientGenerator targetPackage="com.nnbox.admin.data.mapper" targetProject="nnbox-admin-backend" type="XMLMAPPER" />
+	
+	<table schema="nnbox" tableName="inquiry" domainObjectName="Inquiry" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>
+	
+	
+	</context>
+</generatorConfiguration>

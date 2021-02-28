@@ -1,0 +1,116 @@
+#dev
+---
+spring:
+  profiles: dev
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      jdbcUrl: "jdbc:mysql://121.78.187.111:3306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC&allowMultiQueries=true"
+      username: admin
+      password: zhstjxm!2
+      driverClassName: com.mysql.cj.jdbc.Driver
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true
+      useLocalSessionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+      elideSetAutoCommits: true
+      maintainTimeStats: false
+  messages:
+    basename: messages/messages
+server:
+  port: 30002
+  servlet:
+    contextPath: /
+    session:
+      timeout: 600m
+cors:
+  allowOrigin: http://172.30.1.123:3000
+mybatis:
+  mapper-locations: mapper/**/*.xml
+mail:
+  host: smtp.naver.com
+  senderemail: blict@naver.com
+  auth:
+    user: blict
+    password: qmfflrxm
+push:
+  url: https://fcm.googleapis.com/fcm/send
+  apikey: 
+sms:
+  vendor: 
+  key: 
+  secret: 
+  sender: ''
+logging:
+  level:
+    com: 
+      nnbox: DEBUG
+  responseLength: 1000
+applicationName: nyamnyambox
+testmode: true
+
+#prod
+---
+spring:
+  profiles: prod
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      jdbcUrl: "jdbc:mysql://121.78.187.111:3306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC&allowMultiQueries=true"
+      username: admin
+      password: zhstjxm!2
+      driverClassName: com.mysql.cj.jdbc.Driver
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      useServerPrepStmts: true
+      useLocalSessionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+      elideSetAutoCommits: true
+      maintainTimeStats: false
+  messages:
+    basename: messages/messages
+server:
+  port: 30002
+  servlet:
+    contextPath: /
+    session:
+      timeout: 600m
+  ssl:
+    key-store: /home/ubuntu/server/cert/keyStore.jks
+    key-store-password: 1111
+    key-password: 1111
+cors:
+  allowOrigin: https://www.aaa.net
+mybatis:
+  mapper-locations: mapper/**/*.xml
+mail:
+  host: smtp.naver.com
+  senderemail: blict@naver.com
+  auth:
+    user: blict
+    password: qmfflrxm
+push:
+  url: https://fcm.googleapis.com/fcm/send
+  apikey: 
+sms:
+  vendor: 
+  key: 
+  secret: 
+  sender: ''
+logging:
+  level:
+    com: 
+      nnbox: DEBUG
+  file:
+    path: /home/ubuntu/server/nnbox/logs
+  maxHistory: 10
+  responseLength: 1000
+applicationName: nyamnyambox
+testmode: false

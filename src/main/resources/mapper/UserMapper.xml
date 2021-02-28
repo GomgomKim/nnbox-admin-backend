@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.User">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="LAST_NAME" jdbcType="VARCHAR" property="lastName" />
+    <result column="FIRST_NAME" jdbcType="VARCHAR" property="firstName" />
+    <result column="NATIONALITY" jdbcType="CHAR" property="nationality" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="SECURITY_PASSWORD" jdbcType="VARCHAR" property="securityPassword" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="EMAIL_VERIFIED" jdbcType="TINYINT" property="emailVerified" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="PHONE_VERIFIED" jdbcType="TINYINT" property="phoneVerified" />
+    <result column="COIN" jdbcType="INTEGER" property="coin" />
+    <result column="POINT" jdbcType="INTEGER" property="point" />
+    <result column="OTP_KEY" jdbcType="VARCHAR" property="otpKey" />
+    <result column="OTP_URL" jdbcType="VARCHAR" property="otpUrl" />
+    <result column="OTP_VERIFIED" jdbcType="TINYINT" property="otpVerified" />
+    <result column="CODE" jdbcType="VARCHAR" property="code" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="RECOMMENDER" jdbcType="VARCHAR" property="recommender" />
+    <result column="TOKEN" jdbcType="VARCHAR" property="token" />
+    <result column="TOKEN_DATE" jdbcType="TIMESTAMP" property="tokenDate" />
+    <result column="PUSH_TOKEN" jdbcType="VARCHAR" property="pushToken" />
+    <result column="PUSH_FLAG" jdbcType="TINYINT" property="pushFlag" />
+    <result column="SIGNUP_DEVICE_ID" jdbcType="VARCHAR" property="signupDeviceId" />
+    <result column="LOGIN_TYPE" jdbcType="VARCHAR" property="loginType" />
+    <result column="LOGIN_LANGUAGE" jdbcType="VARCHAR" property="loginLanguage" />
+    <result column="LOGIN_DATE" jdbcType="TIMESTAMP" property="loginDate" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="DELETED" jdbcType="TINYINT" property="deleted" />
+    <result column="DELETE_DATE" jdbcType="TIMESTAMP" property="deleteDate" />
+    <result column="EVENT_AGREE" jdbcType="TINYINT" property="eventAgree" />
+    <result column="NICKNAME" jdbcType="VARCHAR" property="nickname" />
+    <result column="PROFILE_IMAGE" jdbcType="VARCHAR" property="profileImage" />
+    <result column="APP_LANGUAGE" jdbcType="VARCHAR" property="appLanguage" />
+    <result column="TRANSLATE_LANGUAGE" jdbcType="VARCHAR" property="translateLanguage" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    IDX, ID, LAST_NAME, FIRST_NAME, NATIONALITY, PASSWORD, SECURITY_PASSWORD, EMAIL, 
+    EMAIL_VERIFIED, PHONE, PHONE_VERIFIED, COIN, POINT, OTP_KEY, OTP_URL, OTP_VERIFIED, 
+    CODE, MEMO, RECOMMENDER, TOKEN, TOKEN_DATE, PUSH_TOKEN, PUSH_FLAG, SIGNUP_DEVICE_ID, 
+    LOGIN_TYPE, LOGIN_LANGUAGE, LOGIN_DATE, CREATE_DATE, DELETED, DELETE_DATE, EVENT_AGREE, 
+    NICKNAME, PROFILE_IMAGE, APP_LANGUAGE, TRANSLATE_LANGUAGE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where IDX = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where IDX = #{idx,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nnbox.admin.data.model.User">
+    insert into user (IDX, ID, LAST_NAME, 
+      FIRST_NAME, NATIONALITY, PASSWORD, 
+      SECURITY_PASSWORD, EMAIL, EMAIL_VERIFIED, 
+      PHONE, PHONE_VERIFIED, COIN, 
+      POINT, OTP_KEY, OTP_URL, 
+      OTP_VERIFIED, CODE, MEMO, 
+      RECOMMENDER, TOKEN, TOKEN_DATE, 
+      PUSH_TOKEN, PUSH_FLAG, SIGNUP_DEVICE_ID, 
+      LOGIN_TYPE, LOGIN_LANGUAGE, LOGIN_DATE, 
+      CREATE_DATE, DELETED, DELETE_DATE, 
+      EVENT_AGREE, NICKNAME, PROFILE_IMAGE, 
+      APP_LANGUAGE, TRANSLATE_LANGUAGE)
+    values (#{idx,jdbcType=INTEGER}, #{id,jdbcType=VARCHAR}, #{lastName,jdbcType=VARCHAR}, 
+      #{firstName,jdbcType=VARCHAR}, #{nationality,jdbcType=CHAR}, #{password,jdbcType=VARCHAR}, 
+      #{securityPassword,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{emailVerified,jdbcType=TINYINT}, 
+      #{phone,jdbcType=VARCHAR}, #{phoneVerified,jdbcType=TINYINT}, #{coin,jdbcType=INTEGER}, 
+      #{point,jdbcType=INTEGER}, #{otpKey,jdbcType=VARCHAR}, #{otpUrl,jdbcType=VARCHAR}, 
+      #{otpVerified,jdbcType=TINYINT}, #{code,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{recommender,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, #{tokenDate,jdbcType=TIMESTAMP}, 
+      #{pushToken,jdbcType=VARCHAR}, #{pushFlag,jdbcType=TINYINT}, #{signupDeviceId,jdbcType=VARCHAR}, 
+      #{loginType,jdbcType=VARCHAR}, #{loginLanguage,jdbcType=VARCHAR}, #{loginDate,jdbcType=TIMESTAMP}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT}, #{deleteDate,jdbcType=TIMESTAMP}, 
+      #{eventAgree,jdbcType=TINYINT}, #{nickname,jdbcType=VARCHAR}, #{profileImage,jdbcType=VARCHAR}, 
+      #{appLanguage,jdbcType=VARCHAR}, #{translateLanguage,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="idx" parameterType="com.nnbox.admin.data.model.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        IDX,
+      </if>
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="lastName != null">
+        LAST_NAME,
+      </if>
+      <if test="firstName != null">
+        FIRST_NAME,
+      </if>
+      <if test="nationality != null">
+        NATIONALITY,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="securityPassword != null">
+        SECURITY_PASSWORD,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="emailVerified != null">
+        EMAIL_VERIFIED,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="phoneVerified != null">
+        PHONE_VERIFIED,
+      </if>
+      <if test="coin != null">
+        COIN,
+      </if>
+      <if test="point != null">
+        POINT,
+      </if>
+      <if test="otpKey != null">
+        OTP_KEY,
+      </if>
+      <if test="otpUrl != null">
+        OTP_URL,
+      </if>
+      <if test="otpVerified != null">
+        OTP_VERIFIED,
+      </if>
+      <if test="code != null">
+        CODE,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="recommender != null">
+        RECOMMENDER,
+      </if>
+      <if test="token != null">
+        TOKEN,
+      </if>
+      <if test="tokenDate != null">
+        TOKEN_DATE,
+      </if>
+      <if test="pushToken != null">
+        PUSH_TOKEN,
+      </if>
+      <if test="pushFlag != null">
+        PUSH_FLAG,
+      </if>
+      <if test="signupDeviceId != null">
+        SIGNUP_DEVICE_ID,
+      </if>
+      <if test="loginType != null">
+        LOGIN_TYPE,
+      </if>
+      <if test="loginLanguage != null">
+        LOGIN_LANGUAGE,
+      </if>
+      <if test="loginDate != null">
+        LOGIN_DATE,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="deleted != null">
+        DELETED,
+      </if>
+      <if test="deleteDate != null">
+        DELETE_DATE,
+      </if>
+      <if test="eventAgree != null">
+        EVENT_AGREE,
+      </if>
+      <if test="nickname != null">
+        NICKNAME,
+      </if>
+      <if test="profileImage != null">
+        PROFILE_IMAGE,
+      </if>
+      <if test="appLanguage != null">
+        APP_LANGUAGE,
+      </if>
+      <if test="translateLanguage != null">
+        TRANSLATE_LANGUAGE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null">
+        #{nationality,jdbcType=CHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="securityPassword != null">
+        #{securityPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="emailVerified != null">
+        #{emailVerified,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneVerified != null">
+        #{phoneVerified,jdbcType=TINYINT},
+      </if>
+      <if test="coin != null">
+        #{coin,jdbcType=INTEGER},
+      </if>
+      <if test="point != null">
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="otpKey != null">
+        #{otpKey,jdbcType=VARCHAR},
+      </if>
+      <if test="otpUrl != null">
+        #{otpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="otpVerified != null">
+        #{otpVerified,jdbcType=TINYINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="recommender != null">
+        #{recommender,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenDate != null">
+        #{tokenDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushToken != null">
+        #{pushToken,jdbcType=VARCHAR},
+      </if>
+      <if test="pushFlag != null">
+        #{pushFlag,jdbcType=TINYINT},
+      </if>
+      <if test="signupDeviceId != null">
+        #{signupDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginType != null">
+        #{loginType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginLanguage != null">
+        #{loginLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="loginDate != null">
+        #{loginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="deleteDate != null">
+        #{deleteDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventAgree != null">
+        #{eventAgree,jdbcType=TINYINT},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="profileImage != null">
+        #{profileImage,jdbcType=VARCHAR},
+      </if>
+      <if test="appLanguage != null">
+        #{appLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="translateLanguage != null">
+        #{translateLanguage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.User">
+    update user
+    <set>
+      <if test="id != null">
+        ID = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="lastName != null">
+        LAST_NAME = #{lastName,jdbcType=VARCHAR},
+      </if>
+      <if test="firstName != null">
+        FIRST_NAME = #{firstName,jdbcType=VARCHAR},
+      </if>
+      <if test="nationality != null">
+        NATIONALITY = #{nationality,jdbcType=CHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="securityPassword != null">
+        SECURITY_PASSWORD = #{securityPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="emailVerified != null">
+        EMAIL_VERIFIED = #{emailVerified,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneVerified != null">
+        PHONE_VERIFIED = #{phoneVerified,jdbcType=TINYINT},
+      </if>
+      <if test="coin != null">
+        COIN = #{coin,jdbcType=INTEGER},
+      </if>
+      <if test="point != null">
+        POINT = #{point,jdbcType=INTEGER},
+      </if>
+      <if test="otpKey != null">
+        OTP_KEY = #{otpKey,jdbcType=VARCHAR},
+      </if>
+      <if test="otpUrl != null">
+        OTP_URL = #{otpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="otpVerified != null">
+        OTP_VERIFIED = #{otpVerified,jdbcType=TINYINT},
+      </if>
+      <if test="code != null">
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="recommender != null">
+        RECOMMENDER = #{recommender,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null">
+        TOKEN = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="tokenDate != null">
+        TOKEN_DATE = #{tokenDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushToken != null">
+        PUSH_TOKEN = #{pushToken,jdbcType=VARCHAR},
+      </if>
+      <if test="pushFlag != null">
+        PUSH_FLAG = #{pushFlag,jdbcType=TINYINT},
+      </if>
+      <if test="signupDeviceId != null">
+        SIGNUP_DEVICE_ID = #{signupDeviceId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginType != null">
+        LOGIN_TYPE = #{loginType,jdbcType=VARCHAR},
+      </if>
+      <if test="loginLanguage != null">
+        LOGIN_LANGUAGE = #{loginLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="loginDate != null">
+        LOGIN_DATE = #{loginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        DELETED = #{deleted,jdbcType=TINYINT},
+      </if>
+      <if test="deleteDate != null">
+        DELETE_DATE = #{deleteDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="eventAgree != null">
+        EVENT_AGREE = #{eventAgree,jdbcType=TINYINT},
+      </if>
+      <if test="nickname != null">
+        NICKNAME = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="profileImage != null">
+        PROFILE_IMAGE = #{profileImage,jdbcType=VARCHAR},
+      </if>
+      <if test="appLanguage != null">
+        APP_LANGUAGE = #{appLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="translateLanguage != null">
+        TRANSLATE_LANGUAGE = #{translateLanguage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnbox.admin.data.model.User">
+    update user
+    set ID = #{id,jdbcType=VARCHAR},
+      LAST_NAME = #{lastName,jdbcType=VARCHAR},
+      FIRST_NAME = #{firstName,jdbcType=VARCHAR},
+      NATIONALITY = #{nationality,jdbcType=CHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      SECURITY_PASSWORD = #{securityPassword,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      EMAIL_VERIFIED = #{emailVerified,jdbcType=TINYINT},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      PHONE_VERIFIED = #{phoneVerified,jdbcType=TINYINT},
+      COIN = #{coin,jdbcType=INTEGER},
+      POINT = #{point,jdbcType=INTEGER},
+      OTP_KEY = #{otpKey,jdbcType=VARCHAR},
+      OTP_URL = #{otpUrl,jdbcType=VARCHAR},
+      OTP_VERIFIED = #{otpVerified,jdbcType=TINYINT},
+      CODE = #{code,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      RECOMMENDER = #{recommender,jdbcType=VARCHAR},
+      TOKEN = #{token,jdbcType=VARCHAR},
+      TOKEN_DATE = #{tokenDate,jdbcType=TIMESTAMP},
+      PUSH_TOKEN = #{pushToken,jdbcType=VARCHAR},
+      PUSH_FLAG = #{pushFlag,jdbcType=TINYINT},
+      SIGNUP_DEVICE_ID = #{signupDeviceId,jdbcType=VARCHAR},
+      LOGIN_TYPE = #{loginType,jdbcType=VARCHAR},
+      LOGIN_LANGUAGE = #{loginLanguage,jdbcType=VARCHAR},
+      LOGIN_DATE = #{loginDate,jdbcType=TIMESTAMP},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      DELETED = #{deleted,jdbcType=TINYINT},
+      DELETE_DATE = #{deleteDate,jdbcType=TIMESTAMP},
+      EVENT_AGREE = #{eventAgree,jdbcType=TINYINT},
+      NICKNAME = #{nickname,jdbcType=VARCHAR},
+      PROFILE_IMAGE = #{profileImage,jdbcType=VARCHAR},
+      APP_LANGUAGE = #{appLanguage,jdbcType=VARCHAR},
+      TRANSLATE_LANGUAGE = #{translateLanguage,jdbcType=VARCHAR}
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectList" parameterType="com.nnbox.admin.api.sample.model.UserListRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+	<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<if test="searchId != null">AND id LIKE CONCAT(#{searchId}, '%')</if>
+	</trim>
+    order by idx desc
+    limit #{pageSize,jdbcType=INTEGER}
+	offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+</mapper>
