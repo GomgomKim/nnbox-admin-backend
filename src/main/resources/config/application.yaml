@@ -28,7 +28,7 @@ server:
     session:
       timeout: 600m
 cors:
-  allowOrigin: https://www.nyamnyambox.com:8000
+  allowOrigin: http://localhost:3000
 mybatis:
   mapper-locations: mapper/**/*.xml
 mail:
@@ -83,9 +83,9 @@ server:
     session:
       timeout: 600m
   ssl:
-    key-store: /home/ubuntu/server/cert/keyStore.jks
-    key-store-password: 1111
-    key-password: 1111
+    key-store: /usr/local/server/cert/keyStore.jks
+    key-store-password: siasiaqkrtm1!
+    key-password: siasiaqkrtm1!
 cors:
   allowOrigin: https://www.nyamnyambox.com:8000
 mybatis:
