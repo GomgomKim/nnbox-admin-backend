@@ -109,7 +109,7 @@ logging:
     com: 
       nnbox: DEBUG
   file:
-    path: /home/ubuntu/server/nnbox/logs
+    path: /home/heewook/java/adminlogs
   maxHistory: 10
   responseLength: 1000
 applicationName: nyamnyambox
