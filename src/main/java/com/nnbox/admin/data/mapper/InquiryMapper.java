@@ -3,6 +3,7 @@ package com.nnbox.admin.data.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.nnbox.admin.api.inquiry.model.InquiryListRequest;
 import com.nnbox.admin.data.model.Inquiry;
@@ -21,7 +22,7 @@ public interface InquiryMapper {
 
     int updateByPrimaryKey(Inquiry record);
 
-	List<Inquiry> selectList(InquiryListRequest listRequest);
+	List<Inquiry> selectList(@Param("listRequest") InquiryListRequest listRequest, @Param("categories") List<String> categories);
 
-	int selectListCount(InquiryListRequest listRequest);
+	int selectListCount(@Param("listRequest") InquiryListRequest listRequest, @Param("categories") List<String> categories);
 }

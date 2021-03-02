@@ -189,13 +189,23 @@
     select 
     <include refid="Base_Column_List" />
     from inquiry
+    where category in (
+    	<foreach collection="categories" item="item" separator=",">
+            #{item}
+        </foreach>
+    )
     order by idx desc
-    limit #{pageSize,jdbcType=INTEGER}
-	offset #{limitStart,jdbcType=INTEGER}
+    limit #{listRequest.pageSize,jdbcType=INTEGER}
+	offset #{listRequest.limitStart,jdbcType=INTEGER}
   </select>
   <select id="selectListCount" parameterType="com.nnbox.admin.api.inquiry.model.InquiryListRequest" resultType="java.lang.Integer">
     select 
     	count(*)
     from inquiry
+    where category in (
+    	<foreach collection="categories" item="item" separator=",">
+            #{item}
+        </foreach>
+    )
   </select>
 </mapper>

@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import com.nnbox.admin.common.security.token.UserAuthenticationToken;
 import com.nnbox.admin.common.utils.SessionUtil;
@@ -37,7 +36,26 @@ public class AuthService {
 		if (authenticationToken.isAuthenticated()) {
 			return authenticationToken;
 		}
-		if (!"admin".equals(authenticationToken.getId()) || !"nnbox1!".equals(authenticationToken.getPassword())) {
+		boolean isValid = false;
+		User user = new User();
+		authenticationToken.setUser(user);
+		if ("admin".equals(authenticationToken.getId()) && "nnbox1!".equals(authenticationToken.getPassword())) {
+			user.setId("admin");
+			isValid = true;
+		}
+		if ("kimpo".equals(authenticationToken.getId()) && "kimpo1!".equals(authenticationToken.getPassword())) {
+			user.setId("kimpo");
+			isValid = true;
+		}
+		if ("tax".equals(authenticationToken.getId()) && "tax1!".equals(authenticationToken.getPassword())) {
+			user.setId("tax");
+			isValid = true;
+		}
+		if ("law".equals(authenticationToken.getId()) && "law1!".equals(authenticationToken.getPassword())) {
+			user.setId("law");
+			isValid = true;
+		}
+		if (!isValid) {
 			authenticationToken.setDetails(AuthenticationCode.INVALID_LOGIN_ID);
 			return authenticationToken;
 		}
