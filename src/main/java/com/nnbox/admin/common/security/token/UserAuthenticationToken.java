@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
+import com.nnbox.admin.data.model.AdminUser;
 import com.nnbox.admin.data.model.User;
 
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class UserAuthenticationToken extends AbstractAuthenticationToken {
 
 	String id;
 	String password;
-	User user;
+	AdminUser adminUser;
 
 	public UserAuthenticationToken(String id, String password, Collection<? extends GrantedAuthority> authorities, boolean authenticated) {
 		super(authorities);

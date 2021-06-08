@@ -47,12 +47,8 @@ public class DeliveryService {
 	    if (token == null) {
 	      throw new BasicException(ErrorCode.COMMON_UNAUTHORIZED);
 	    } else {
-	      Integer userIdx = token.getUser().getIdx();
-	      listRequest.setUserIdx(userIdx);
-	
 	      StaffDeliveryListResponse response = new StaffDeliveryListResponse();
 	
-	      if (token.getUser().getUserType() == 2) {
 	        response.setCurrentPage(listRequest.getPageNum());
 	        List<Order> orders = orderMapper.selectOrderCompleteListByFrIdx(listRequest);
 	        response.setOrders(orders);
@@ -61,7 +57,6 @@ public class DeliveryService {
 	        Integer totalCount = orderMapper.selectOrderCompleteListByFrIdxCnt(listRequest);
 	        response.setTotalCount(totalCount);
 	        response.setTotalPage(totalCount, currentCount);
-	      }
 	
 	      return response;
 	    }

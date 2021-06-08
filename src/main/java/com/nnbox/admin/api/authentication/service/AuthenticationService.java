@@ -28,28 +28,24 @@ public class AuthenticationService {
 
 		UserLoginLog userLoginLog = new UserLoginLog();
 		log.debug("token: {}", token);
-		log.debug("token: {}", token.getUser());
-//		log.debug("token: {}", token.getUser().getIdx());
-//		userLoginLog.setUserIdx(token.getUser() == null ? 0 : token.getUser().getIdx());
+		log.debug("token: {}", token.getAdminUser());
+//		log.debug("token: {}", token.getAdminUser().getIdx());
+//		userLoginLog.setUserIdx(token.getAdminUser() == null ? 0 : token.getAdminUser().getIdx());
 		
 		if (!token.isAuthenticated()) {
 			response.setReason((AuthenticationCode)token.getDetails());
 //			userLoginLog.setResult(((AuthenticationCode)token.getDetails()).name());	
 		}
 		else {
-			token.getUser().setPassword(null);
-			token.getUser().setSecurityPassword(null);
-			token.getUser().setToken(null);
-			token.getUser().setOtpKey(null);
-			token.getUser().setOtpUrl(null);
-			response.setUser(token.getUser());
+			token.getAdminUser().setPassword(null);
+			response.setAdminUser(token.getAdminUser());
 			
-//			if(loginRequest.getPushToken() != null && !loginRequest.getPushToken().equals(token.getUser().getPushToken())) {
+//			if(loginRequest.getPushToken() != null && !loginRequest.getPushToken().equals(token.getAdminUser().getPushToken())) {
 //				User user = new User();
-//				user.setIdx(token.getUser().getIdx());
+//				user.setIdx(token.getAdminUser().getIdx());
 //				user.setPushToken(loginRequest.getPushToken());
 //				userMapper.updateByPrimaryKeySelective(user);
-//				token.getUser().setPushToken(loginRequest.getPushToken());
+//				token.getAdminUser().setPushToken(loginRequest.getPushToken());
 //			}
 
 			userLoginLog.setResult("SUCCESS");	

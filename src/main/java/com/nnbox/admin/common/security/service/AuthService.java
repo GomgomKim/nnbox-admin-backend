@@ -8,11 +8,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import com.nnbox.admin.common.security.token.UserAuthenticationToken;
 import com.nnbox.admin.common.utils.SessionUtil;
-import com.nnbox.admin.data.mapper.UserMapper;
-import com.nnbox.admin.data.model.User;
+import com.nnbox.admin.data.mapper.AdminUserMapper;
+import com.nnbox.admin.data.model.AdminUser;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,7 @@ public class AuthService {
 	private boolean testMode;
 
 	@Autowired
-	UserMapper userMapper;
+	AdminUserMapper adminUserMapper;
 
 	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -37,41 +38,41 @@ public class AuthService {
 			return authenticationToken;
 		}
 		boolean isValid = false;
-		User user = new User();
-		authenticationToken.setUser(user);
-		if ("admin".equals(authenticationToken.getId()) && "nnbox1!".equals(authenticationToken.getPassword())) {
-			user.setId("admin");
-			isValid = true;
-		}
-		if ("kimpo".equals(authenticationToken.getId()) && "kimpo1!".equals(authenticationToken.getPassword())) {
-			user.setId("kimpo");
-			isValid = true;
-		}
-		if ("tax".equals(authenticationToken.getId()) && "tax1!".equals(authenticationToken.getPassword())) {
-			user.setId("tax");
-			isValid = true;
-		}
-		if ("law".equals(authenticationToken.getId()) && "law1!".equals(authenticationToken.getPassword())) {
-			user.setId("law");
-			isValid = true;
-		}
-		if (!isValid) {
-			authenticationToken.setDetails(AuthenticationCode.INVALID_LOGIN_ID);
-			return authenticationToken;
-		}
-//		User user = userMapper.selectById(authenticationToken.getId());
+//		User user = new User();
 //		authenticationToken.setUser(user);
-//		if (ObjectUtils.isEmpty(user)) {
+//		if ("admin".equals(authenticationToken.getId()) && "nnbox1!".equals(authenticationToken.getPassword())) {
+//			user.setId("admin");
+//			isValid = true;
+//		}
+//		if ("kimpo".equals(authenticationToken.getId()) && "kimpo1!".equals(authenticationToken.getPassword())) {
+//			user.setId("kimpo");
+//			isValid = true;
+//		}
+//		if ("tax".equals(authenticationToken.getId()) && "tax1!".equals(authenticationToken.getPassword())) {
+//			user.setId("tax");
+//			isValid = true;
+//		}
+//		if ("law".equals(authenticationToken.getId()) && "law1!".equals(authenticationToken.getPassword())) {
+//			user.setId("law");
+//			isValid = true;
+//		}
+//		if (!isValid) {
 //			authenticationToken.setDetails(AuthenticationCode.INVALID_LOGIN_ID);
 //			return authenticationToken;
 //		}
-//
-//		if (user.getDeleted() == 1) {
-//			authenticationToken.setDetails(AuthenticationCode.EXPIRED);
-//			return authenticationToken;
-//		}
-//
-//		if (!this.passwordEncoder.matches(authenticationToken.getPassword(), user.getPassword())) {
+		
+		
+		AdminUser adminUser = adminUserMapper.selectById(authenticationToken.getId());
+		authenticationToken.setAdminUser(adminUser);
+		if (ObjectUtils.isEmpty(adminUser)) {
+			authenticationToken.setDetails(AuthenticationCode.INVALID_LOGIN_ID);
+			return authenticationToken;
+		}
+		
+		log.debug("test 1: "+authenticationToken.getPassword());
+		log.debug(adminUser.getPassword());
+		
+//		if (!this.passwordEncoder.matches(authenticationToken.getPassword(), adminUser.getPassword())) {
 //			authenticationToken.setDetails(AuthenticationCode.INVALID_LOGIN_PASSWORD);
 //			return authenticationToken;
 //		}

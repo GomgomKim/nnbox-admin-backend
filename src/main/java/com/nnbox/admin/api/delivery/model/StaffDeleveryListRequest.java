@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class StaffDeleveryListRequest extends ListRequest {
 
-	@ApiModelProperty(value = "유저(라이더) IDX", dataType = "Integer", example = "1", required = false, hidden = true)
+	@ApiModelProperty(value = "직원 이름", dataType = "String", example = "김이박", required = false, hidden = true)
 	private Integer userIdx;
 
 	@ApiModelProperty(value = "시작 일자", dataType = "Date", example = "2021-01-01", required = true, hidden = false)

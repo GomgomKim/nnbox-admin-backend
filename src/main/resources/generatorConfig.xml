@@ -9,7 +9,7 @@
   </commentGenerator>
   
     <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-    connectionURL="jdbc:mysql://121.78.187.111:3306/nnbox?serverTimezone=UTC"
+    connectionURL="jdbc:mysql://121.78.82.151:13306/nnbox?serverTimezone=UTC"
     userId="admin" password="zhstjxm!2" />
 
     <javaModelGenerator targetPackage="com.nnbox.admin.data.model" targetProject="nnbox-admin-backend" />

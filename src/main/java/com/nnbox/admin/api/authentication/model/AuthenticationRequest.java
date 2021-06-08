@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class AuthenticationRequest {
 	@NotEmpty
-	@ApiModelProperty(value = "ID", dataType = "String", example = "knowend")
+	@ApiModelProperty(value = "ID", dataType = "String", example = "admin")
 	String id;
 
 	@NotEmpty

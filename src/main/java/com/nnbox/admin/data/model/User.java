@@ -34,7 +34,7 @@ public class User {
 
   @ApiModelProperty(value = "내 상태(1: 근무, 2: 휴식, 3: 퇴근)", dataType = "Integer", example = "3")
   private Integer userStatus;
-
+  
   private String otpKey;
 
   private String otpUrl;
