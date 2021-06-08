@@ -9,7 +9,6 @@ import com.nnbox.admin.common.security.service.AuthService.AuthenticationCode;
 import com.nnbox.admin.common.security.token.UserAuthenticationToken;
 import com.nnbox.admin.data.mapper.UserLoginLogMapper;
 import com.nnbox.admin.data.mapper.UserMapper;
-import com.nnbox.admin.data.model.User;
 import com.nnbox.admin.data.model.UserLoginLog;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +29,12 @@ public class AuthenticationService {
 		UserLoginLog userLoginLog = new UserLoginLog();
 		log.debug("token: {}", token);
 		log.debug("token: {}", token.getUser());
-		log.debug("token: {}", token.getUser().getIdx());
-		userLoginLog.setUserIdx(token.getUser() == null ? 0 : token.getUser().getIdx());
+//		log.debug("token: {}", token.getUser().getIdx());
+//		userLoginLog.setUserIdx(token.getUser() == null ? 0 : token.getUser().getIdx());
 		
 		if (!token.isAuthenticated()) {
 			response.setReason((AuthenticationCode)token.getDetails());
-			userLoginLog.setResult(((AuthenticationCode)token.getDetails()).name());	
+//			userLoginLog.setResult(((AuthenticationCode)token.getDetails()).name());	
 		}
 		else {
 			token.getUser().setPassword(null);
@@ -45,17 +44,17 @@ public class AuthenticationService {
 			token.getUser().setOtpUrl(null);
 			response.setUser(token.getUser());
 			
-			if(loginRequest.getPushToken() != null && !loginRequest.getPushToken().equals(token.getUser().getPushToken())) {
-				User user = new User();
-				user.setIdx(token.getUser().getIdx());
-				user.setPushToken(loginRequest.getPushToken());
-				userMapper.updateByPrimaryKeySelective(user);
-				token.getUser().setPushToken(loginRequest.getPushToken());
-			}
+//			if(loginRequest.getPushToken() != null && !loginRequest.getPushToken().equals(token.getUser().getPushToken())) {
+//				User user = new User();
+//				user.setIdx(token.getUser().getIdx());
+//				user.setPushToken(loginRequest.getPushToken());
+//				userMapper.updateByPrimaryKeySelective(user);
+//				token.getUser().setPushToken(loginRequest.getPushToken());
+//			}
 
 			userLoginLog.setResult("SUCCESS");	
 		}
-		userLoginLogMapper.insertSelective(userLoginLog);
+//		userLoginLogMapper.insertSelective(userLoginLog);
 		
 		return response;
 	}

@@ -44,8 +44,8 @@
     <result column="RIDER_NAME" jdbcType="VARCHAR" property="riderName" />
     <result column="RIDER_PHONE" jdbcType="VARCHAR" property="riderPhone" />
     <!-- order payments -->
-    <collection property="orderPayments" column="IDX" javaType="java.util.ArrayList"
-      ofType="com.nnbox.admin.data.model.OrderPayment" select="selectOrderPaymentList" />
+   <!--  <collection property="orderPayments" column="IDX" javaType="java.util.ArrayList"
+      ofType="com.nnbox.admin.data.model.OrderPayment" select="selectOrderPaymentList" /> -->
   </resultMap>
   <sql id="Order_List_Table">
     nyamnyam_order o inner join `user` u
