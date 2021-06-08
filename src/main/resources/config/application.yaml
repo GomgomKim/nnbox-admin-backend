@@ -34,10 +34,14 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      jdbcUrl: "jdbc:mysql://121.78.82.134:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC"
+      jdbcUrl: "jdbc:mysql://dev01.nnbox.net:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC&allowMultiQueries=true"
+      ### LIVE DB ###
+      #jdbcUrl: "jdbc:mysql://121.78.82.136:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC&allowMultiQueries=true"
+      ### STAGE DB ###
+      #jdbcUrl: "jdbc:mysql://121.78.82.134:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC&allowMultiQueries=true"
       username: admin
       password: zhstjxm!2
-      driverClassName: com.mysql.jdbc.Driver
+      driverClassName: com.mysql.cj.jdbc.Driver
       cachePrepStmts: true
       prepStmtCacheSize: 250
       prepStmtCacheSqlLimit: 2048

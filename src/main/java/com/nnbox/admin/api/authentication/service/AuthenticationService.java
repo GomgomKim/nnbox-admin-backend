@@ -28,6 +28,9 @@ public class AuthenticationService {
 		response.setResult(token.isAuthenticated());
 
 		UserLoginLog userLoginLog = new UserLoginLog();
+		log.debug("token: {}", token);
+		log.debug("token: {}", token.getUser());
+		log.debug("token: {}", token.getUser().getIdx());
 		userLoginLog.setUserIdx(token.getUser() == null ? 0 : token.getUser().getIdx());
 		
 		if (!token.isAuthenticated()) {

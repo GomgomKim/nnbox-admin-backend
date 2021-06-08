@@ -31,10 +31,7 @@ public class AuthenticationController {
 		if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
 		
 		UserAuthenticationToken token = (UserAuthenticationToken)authenticationManager.authenticate(new UserAuthenticationToken(loginRequest.getId(), loginRequest.getPassword(), null, false));
-//		return authenticationService.postLogin(token, loginRequest);
-		AuthenticationResponse response = new AuthenticationResponse();
-		response.setResult(token.isAuthenticated());
-		return response;
+		return authenticationService.postLogin(token, loginRequest);
 		
 	}
 

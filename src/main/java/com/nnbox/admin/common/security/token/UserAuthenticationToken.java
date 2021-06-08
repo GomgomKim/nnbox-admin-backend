@@ -11,12 +11,13 @@ import com.nnbox.admin.data.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
+@SuppressWarnings("serial")
 @Getter
 @Setter
 public class UserAuthenticationToken extends AbstractAuthenticationToken {
 
 	String id;
-	String password;	
+	String password;
 	User user;
 
 	public UserAuthenticationToken(String id, String password, Collection<? extends GrantedAuthority> authorities, boolean authenticated) {
@@ -51,5 +52,5 @@ public class UserAuthenticationToken extends AbstractAuthenticationToken {
 		return Objects.hash(getCredentials(), getPrincipal());
 	}
 
-	
+
 }
