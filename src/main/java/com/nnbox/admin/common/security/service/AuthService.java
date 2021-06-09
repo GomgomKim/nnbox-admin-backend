@@ -37,31 +37,6 @@ public class AuthService {
 		if (authenticationToken.isAuthenticated()) {
 			return authenticationToken;
 		}
-		boolean isValid = false;
-//		User user = new User();
-//		authenticationToken.setUser(user);
-//		if ("admin".equals(authenticationToken.getId()) && "nnbox1!".equals(authenticationToken.getPassword())) {
-//			user.setId("admin");
-//			isValid = true;
-//		}
-//		if ("kimpo".equals(authenticationToken.getId()) && "kimpo1!".equals(authenticationToken.getPassword())) {
-//			user.setId("kimpo");
-//			isValid = true;
-//		}
-//		if ("tax".equals(authenticationToken.getId()) && "tax1!".equals(authenticationToken.getPassword())) {
-//			user.setId("tax");
-//			isValid = true;
-//		}
-//		if ("law".equals(authenticationToken.getId()) && "law1!".equals(authenticationToken.getPassword())) {
-//			user.setId("law");
-//			isValid = true;
-//		}
-//		if (!isValid) {
-//			authenticationToken.setDetails(AuthenticationCode.INVALID_LOGIN_ID);
-//			return authenticationToken;
-//		}
-		
-		
 		AdminUser adminUser = adminUserMapper.selectById(authenticationToken.getId());
 		authenticationToken.setAdminUser(adminUser);
 		if (ObjectUtils.isEmpty(adminUser)) {

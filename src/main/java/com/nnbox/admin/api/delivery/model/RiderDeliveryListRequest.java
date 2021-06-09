@@ -11,8 +11,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RiderDeliveryListRequest extends ListRequest {
-	@ApiModelProperty(value = "라이더 이름", dataType = "String", example = "1", required = false)
-	private Integer riderName;
+	@ApiModelProperty(value = "라이더 or 직원 이름", dataType = "String", example = "1", required = false)
+	private Integer userName;
+	
+	@ApiModelProperty(value = "라이더 or 직원 or 가맹점 전화번호", dataType = "String", example = "1", required = false)
+	private Integer userPhone;
+	
+	@ApiModelProperty(value = "가맹점 이름", dataType = "String", example = "1", required = false)
+	private Integer frName;
 
 	@ApiModelProperty(value = "월(month)", dataType = "Date", example = "2021-01", required = false)
 	private Date searchMonth;

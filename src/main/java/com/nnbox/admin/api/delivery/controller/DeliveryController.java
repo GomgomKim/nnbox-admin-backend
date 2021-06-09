@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nnbox.admin.api.delivery.model.RiderDeliveryListRequest;
 import com.nnbox.admin.api.delivery.model.RiderDeliveryListResponse;
-import com.nnbox.admin.api.delivery.model.StaffDeleveryListRequest;
-import com.nnbox.admin.api.delivery.model.StaffDeliveryListResponse;
 import com.nnbox.admin.api.delivery.service.DeliveryService;
 
 import io.swagger.annotations.Api;
@@ -27,16 +25,9 @@ public class DeliveryController {
 	DeliveryService deliveryService;
 
 
-	@RequestMapping(value = "/rider/list", method = RequestMethod.GET, produces = "application/json")
-	@ApiOperation(value = "배달내역 조회(라이더)", notes = "배달내역(라이더)을 불러온다.", tags = { "배달내역", "라이더" })
-	public RiderDeliveryListResponse getRiderDeliveryList(@ModelAttribute RiderDeliveryListRequest listRequest, BindingResult bindingResult) throws Exception {
-		return deliveryService.getRiderDeliveryList(listRequest);
+	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "배달내역 조회 전체", notes = "배달내역을 불러온다. 정직원, 라이더 배달내역은 특정 컬럼을 뽑아 사용하면 된다.", tags = { "배달내역", "라이더" })
+	public RiderDeliveryListResponse getDeliveryList(@ModelAttribute RiderDeliveryListRequest listRequest, BindingResult bindingResult) throws Exception {
+		return deliveryService.getDeliveryList(listRequest);
 	}
-
-	@RequestMapping(value = "/staff/list", method = RequestMethod.GET, produces = "application/json")
-	@ApiOperation(value = "배달내역 조회(직원)", notes = "배달내역(직원)을 불러온다.", tags = { "배달내역", "직원" })
-	public StaffDeliveryListResponse getStaffDeliveryList(@ModelAttribute StaffDeleveryListRequest listRequest, BindingResult bindingResult) throws Exception {
-		return deliveryService.getStaffDeliveryList(listRequest);
-	}
-
 }

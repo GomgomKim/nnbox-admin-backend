@@ -4,15 +4,9 @@
   <resultMap id="OrderResultMap" type="com.nnbox.admin.data.model.Order">
     <id column="IDX" jdbcType="INTEGER" property="idx" />
     <result column="ORDER_DATE" jdbcType="TIMESTAMP" property="orderDate" />
-    <result column="FR_IDX" jdbcType="INTEGER" property="frIdx" />
     <result column="FR_ID" jdbcType="VARCHAR" property="frId" />
     <result column="FR_NAME" jdbcType="VARCHAR" property="frName" />
     <result column="FR_PHONE" jdbcType="VARCHAR" property="frPhone" />
-    <result column="CUST_MESSAGE" jdbcType="VARCHAR" property="custMessage" />
-    <result column="CUST_PHONE" jdbcType="VARCHAR" property="custPhone" />
-    <result column="ARRIVE_REQ_TIME" jdbcType="TIMESTAMP" property="arriveReqTime" />
-    <result column="ITEM_PREPARING_TIME" jdbcType="INTEGER" property="itemPreparingTime" />
-    <result column="ITEM_PREPARED" jdbcType="BOOLEAN" property="itemPrepared" />
     <result column="ORDER_PRICE" jdbcType="INTEGER" property="orderPrice" />
     <result column="DELIVERY_PRICE" jdbcType="INTEGER" property="deliveryPrice" />
     <result column="BASIC_DELIVERY_PRICE" jdbcType="INTEGER" property="basicDeliveryPrice" />
@@ -21,28 +15,17 @@
     <result column="DEST_ADDR1" jdbcType="VARCHAR" property="destAddr1" />
     <result column="DEST_ADDR2" jdbcType="VARCHAR" property="destAddr2" />
     <result column="DEST_ADDR3" jdbcType="VARCHAR" property="destAddr3" />
-    <result column="LATITUDE" jdbcType="DOUBLE" property="latitude" />
-    <result column="LONGITUDE" jdbcType="DOUBLE" property="longitude" />
-    <result column="DISTANCE" jdbcType="INTEGER" property="distance" />
-    <result column="FR_LATITUDE" jdbcType="DOUBLE" property="frLatitude" />
-    <result column="FR_LONGITUDE" jdbcType="DOUBLE" property="frLongitude" />
-    <result column="NCASH_PAY_ENABLED" jdbcType="INTEGER" property="ncashPayEnabled" />
-    <result column="RIDER_CANCEL_PENALTY_AMOUNT" jdbcType="INTEGER" property="riderCancelPenaltyAmount" />
-    <result column="PACK_AMOUNT" jdbcType="INTEGER" property="packAmount" />
-    <result column="CANCEL_REASON" jdbcType="VARCHAR" property="cancelReason" />
-    <result column="MEMO" jdbcType="VARCHAR" property="memo" />    
     <result column="ORDER_IDX" jdbcType="INTEGER" property="orderIdx" />
     <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
-    <result column="ASSIGN_DATE" jdbcType="TIMESTAMP" property="assignDate" />
     <result column="DELIVERY_PRICE_FEE" jdbcType="INTEGER" property="deliveryPriceFee" />
-    <result column="PICKUP_DATE" jdbcType="TIMESTAMP" property="pickupDate" />
     <result column="COMPLETE_DATE" jdbcType="TIMESTAMP" property="completeDate" />
-    <result column="TID_NORMAL" jdbcType="VARCHAR" property="tidNormal" />
-    <result column="TID_PREPAY" jdbcType="VARCHAR" property="tidPrepay" />
-    <result column="TID_NORMAL_RATE" jdbcType="INTEGER" property="tidNormalRate" />
     <!-- rider -->
     <result column="RIDER_NAME" jdbcType="VARCHAR" property="riderName" />
     <result column="RIDER_PHONE" jdbcType="VARCHAR" property="riderPhone" />
+    <result column="RIDER_LEVEL" jdbcType="INTEGER" property="riderLevel" />
+    <result column="RIDER_STATUS" jdbcType="INTEGER" property="riderStatus" />
+    <result column="RIDER_GROUP" jdbcType="INTEGER" property="riderGroup" />
+    <result column="FEE_TYPE" jdbcType="INTEGER" property="feeType" />
     <!-- order payments -->
    <!--  <collection property="orderPayments" column="IDX" javaType="java.util.ArrayList"
       ofType="com.nnbox.admin.data.model.OrderPayment" select="selectOrderPaymentList" /> -->
@@ -51,34 +34,34 @@
     nyamnyam_order o inner join `user` u
       on u.IDX = o.FR_IDX inner join franchise f
       on u.IDX = f.USER_IDX left outer join assign_rider a
-      on o.IDX = a.ORDER_IDX
+      on o.IDX = a.ORDER_IDX inner join rider r
+      on a.USER_IDX = r.USER_IDX
   </sql>
   <sql id="Order_Base_Column_List">
-    o.IDX, o.ORDER_DATE, o.FR_IDX, o.CUST_MESSAGE, o.CUST_PHONE, o.ARRIVE_REQ_TIME, o.ITEM_PREPARING_TIME
-    , o.ITEM_PREPARED, o.ORDER_PRICE, o.DELIVERY_PRICE, o.BASIC_DELIVERY_PRICE, o.EXTRA_DELIVERY_PRICE, o.ORDER_STATUS
+    o.IDX, o.ORDER_DATE, o.ORDER_PRICE, o.DELIVERY_PRICE, o.BASIC_DELIVERY_PRICE, o.EXTRA_DELIVERY_PRICE
     , o.DEST_ADDR1, o.DEST_ADDR2, o.DEST_ADDR3
-    , o.LATITUDE, o.LONGITUDE, o.DISTANCE, o.NCASH_PAY_ENABLED, o.CANCEL_REASON, o.MEMO, o.RIDER_CANCEL_PENALTY_AMOUNT
-    , o.PACK_AMOUNT
   </sql>
   <sql id="Assign_Base_Column_List">
-    a.ORDER_IDX, a.USER_IDX, a.ASSIGN_DATE, a.DELIVERY_PRICE_FEE, a.PICKUP_DATE, a.COMPLETE_DATE
+    a.DELIVERY_PRICE_FEE, a.COMPLETE_DATE
   </sql>
   <sql id="User_Base_Column_List">
-    u.ID as FR_ID, f.FR_NAME, u.PHONE as FR_PHONE, f.LATITUDE as FR_LATITUDE, f.LONGITUDE as FR_LONGITUDE
-    , f.TID_NORMAL, f.TID_PREPAY, f.TID_NORMAL_RATE
+    f.FR_NAME, u.PHONE as FR_PHONE
   </sql>
   <sql id="Rider_Base_Column_List">
-    r.RIDER_NAME, ur.PHONE as RIDER_PHONE
+    r.RIDER_NAME, u.PHONE as RIDER_PHONE, r.RIDER_LEVEL, r.RIDER_STATUS, r.RIDER_SETTING_GROUP_IDX as RIDER_GROUP, r.DELIVERY_PRICE_FEE_TYPE as FEE_TYPE
   </sql>
   <select id="selectRiderDeliveryList" parameterType="com.nnbox.admin.api.delivery.model.RiderDeliveryListRequest" resultMap="OrderResultMap">
     select 
       <include refid="Order_Base_Column_List" />,
       <include refid="Assign_Base_Column_List" />,
-      <include refid="User_Base_Column_List" />
+      <include refid="User_Base_Column_List" />,
+      <include refid="Rider_Base_Column_List" />      
     from 
       <include refid="Order_List_Table" />
     where ORDER_STATUS = 4
-   		<if test="riderName != null">and r.RIDER_NAME like concat('%', #{riderName}, '%')</if>
+   		<if test="userName != null">and r.RIDER_NAME like concat('%', #{userName}, '%')</if>
+   		<if test="userPhone != null">and u.PHONE like concat('%', #{userPhone}, '%')</if>
+   		<if test="frName != null">and f.FR_NAME like concat('%', #{frName}, '%')</if>
    		<if test="searchMonth != null">and o.ORDER_DATE like concat(#{searchMonth}, '%')</if>
     order by o.IDX desc
     limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
@@ -97,15 +80,5 @@
         </foreach>
     order by o.IDX desc
     limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER};
-  </select>
-  <select id="selectOrderCompleteListByFrIdxCnt" parameterType="java.lang.Integer" resultType="int">
-    select count(*)
-    from 
-      <include refid="Order_List_Table" />
-    where u.IDX = #{userIdx,jdbcType=INTEGER}
-      and ORDER_STATUS in
-        <foreach collection="orderStatuses" item="item" index="index" separator="," open="(" close=")">
-          #{item}
-        </foreach>;
   </select>
 </mapper>

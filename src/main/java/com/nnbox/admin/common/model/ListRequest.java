@@ -5,6 +5,7 @@ import javax.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,6 +21,7 @@ public class ListRequest {
 	int pageNum = 1;
 
 	@JsonIgnore
+	@ApiModelProperty(hidden = true)
 	public int getLimitStart() {
 		return (pageNum - 1) * pageSize;
 	}

@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.nnbox.admin.api.delivery.model.RiderDeliveryListRequest;
 import com.nnbox.admin.api.delivery.model.RiderDeliveryListResponse;
-import com.nnbox.admin.api.delivery.model.StaffDeleveryListRequest;
-import com.nnbox.admin.api.delivery.model.StaffDeliveryListResponse;
 import com.nnbox.admin.common.constants.ErrorCode;
 import com.nnbox.admin.common.exception.BasicException;
 import com.nnbox.admin.common.security.token.UserAuthenticationToken;
@@ -26,7 +24,7 @@ public class DeliveryService {
 	@Autowired
 	OrderMapper orderMapper;
 
-	public RiderDeliveryListResponse getRiderDeliveryList(RiderDeliveryListRequest listRequest) throws Exception {
+	public RiderDeliveryListResponse getDeliveryList(RiderDeliveryListRequest listRequest) throws Exception {
 		UserAuthenticationToken token = SessionUtil.getSessionUserToken();
 		if (token == null) {
 			throw new BasicException(ErrorCode.COMMON_UNAUTHORIZED);
@@ -42,24 +40,4 @@ public class DeliveryService {
 		}
 	}
  
-	public StaffDeliveryListResponse getStaffDeliveryList(StaffDeleveryListRequest listRequest) throws Exception {
-	    UserAuthenticationToken token = SessionUtil.getSessionUserToken();
-	    if (token == null) {
-	      throw new BasicException(ErrorCode.COMMON_UNAUTHORIZED);
-	    } else {
-	      StaffDeliveryListResponse response = new StaffDeliveryListResponse();
-	
-	        response.setCurrentPage(listRequest.getPageNum());
-	        List<Order> orders = orderMapper.selectOrderCompleteListByFrIdx(listRequest);
-	        response.setOrders(orders);
-	        Integer currentCount = orders.size();
-	        response.setCurrentCount(currentCount);
-	        Integer totalCount = orderMapper.selectOrderCompleteListByFrIdxCnt(listRequest);
-	        response.setTotalCount(totalCount);
-	        response.setTotalPage(totalCount, currentCount);
-	
-	      return response;
-	    }
-	}
-
 }
