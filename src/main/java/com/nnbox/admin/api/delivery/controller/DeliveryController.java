@@ -19,14 +19,14 @@ import io.swagger.annotations.ApiOperation;
 @CrossOrigin
 @RestController
 @RequestMapping("/delivery")
-@Api(value = "주문", tags = { "주문" })
+@Api(value = "배달내역", tags = { "배달내역" })
 public class DeliveryController {
 	@Autowired
 	DeliveryService deliveryService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
-	@ApiOperation(value = "배달내역 조회 전체", notes = "배달내역을 불러온다. 정직원, 라이더 배달내역은 특정 컬럼을 뽑아 사용하면 된다.", tags = { "배달내역", "라이더" })
+	@ApiOperation(value = "배달내역 조회 전체", notes = "배달내역을 불러온다. 정직원, 라이더 배달내역은 특정 컬럼을 뽑아 사용하면 된다.", tags = { "배달내역" })
 	public RiderDeliveryListResponse getDeliveryList(@ModelAttribute RiderDeliveryListRequest listRequest, BindingResult bindingResult) throws Exception {
 		return deliveryService.getDeliveryList(listRequest);
 	}
