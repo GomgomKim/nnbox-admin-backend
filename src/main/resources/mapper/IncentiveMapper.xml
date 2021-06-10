@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.IncentiveMapper">
+  <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.Incentive">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CATEGORY" jdbcType="SMALLINT" property="category" />
+    <result column="INCEN_MONTH" jdbcType="CHAR" property="incenMonth" />
+    <result column="INCEN_DATE" jdbcType="TIMESTAMP" property="incenDate" />
+    <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="USER_LEVEL" jdbcType="SMALLINT" property="userLevel" />
+    <result column="IS_EXPECT" jdbcType="TINYINT" property="isExpect" />
+    <result column="INCEN_PAYED" jdbcType="TINYINT" property="incenPayed" />
+    <result column="INCEN_PAY_DATE" jdbcType="TIMESTAMP" property="incenPayDate" />
+    <result column="PAYED_AMOUNT" jdbcType="INTEGER" property="payedAmount" />
+    <result column="FR_SALES_IDX" jdbcType="INTEGER" property="frSalesIdx" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="DEFAULT_CNT" jdbcType="INTEGER" property="defaultCnt" />
+    <result column="DELIVERY_CNT" jdbcType="INTEGER" property="deliveryCnt" />
+    <result column="DELIVERY_PRICE_SUM" jdbcType="INTEGER" property="deliveryPriceSum" />
+    <result column="DEFAULT_DELIVERY_PRICE" jdbcType="INTEGER" property="defaultDeliveryPrice" />
+    <result column="MANAGE_INCEN_AMOUNT" jdbcType="INTEGER" property="manageIncenAmount" />
+    <result column="FR_INCEN_AMOUNT" jdbcType="INTEGER" property="frIncenAmount" />
+    <result column="TOTAL_INCEN_AMOUNT" jdbcType="INTEGER" property="totalIncenAmount" />
+  </resultMap>
+  
+  <resultMap id="IncenResultMap" type="com.nnbox.admin.data.model.Incentive">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="INCEN_MONTH" jdbcType="CHAR" property="incenMonth" />
+    <result column="INCEN_DATE" jdbcType="TIMESTAMP" property="incenDate" />
+    <result column="USER_LEVEL" jdbcType="SMALLINT" property="userLevel" />
+    <result column="INCEN_PAYED" jdbcType="TINYINT" property="incenPayed" />
+    <result column="DEFAULT_CNT" jdbcType="INTEGER" property="defaultCnt" />
+    <result column="DELIVERY_CNT" jdbcType="INTEGER" property="deliveryCnt" />
+    <result column="DEFAULT_DELIVERY_PRICE" jdbcType="INTEGER" property="defaultDeliveryPrice" />
+    <result column="MANAGE_INCEN_AMOUNT" jdbcType="INTEGER" property="manageIncenAmount" />
+    <result column="FR_INCEN_AMOUNT" jdbcType="INTEGER" property="frIncenAmount" />
+    <result column="TOTAL_INCEN_AMOUNT" jdbcType="INTEGER" property="totalIncenAmount" />
+  </resultMap>
+  
+  <!-- sql -->
+  <sql id="_Delivery_List_Table">
+    incen i inner join `user` u
+      on i.USER_IDX = u.IDX inner join rider r
+      on i.USER_IDX = r.USER_IDX
+  </sql>
+  
+  <sql id="Base_Column_List">
+    IDX, CREATE_DATE, CATEGORY, INCEN_MONTH, INCEN_DATE, USER_IDX, USER_LEVEL, IS_EXPECT, 
+    INCEN_PAYED, INCEN_PAY_DATE, PAYED_AMOUNT, FR_SALES_IDX, MEMO, DEFAULT_CNT, DELIVERY_CNT, 
+    DELIVERY_PRICE_SUM, DEFAULT_DELIVERY_PRICE, MANAGE_INCEN_AMOUNT, FR_INCEN_AMOUNT, 
+    TOTAL_INCEN_AMOUNT
+  </sql>
+  
+  <sql id="Incen_Column_List">
+    i.INCEN_MONTH, i.INCEN_DATE, i.USER_LEVEL, i.INCEN_PAYED, i.DEFAULT_CNT, i.DELIVERY_CNT, 
+    i.DEFAULT_DELIVERY_PRICE, i.MANAGE_INCEN_AMOUNT, i.FR_INCEN_AMOUNT, i.TOTAL_INCEN_AMOUNT
+  </sql>
+  
+  <!--  -->
+  <select id="getStaffDeliveryList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Incen_Column_List" />
+    from incentive
+    where IDX = #{idx,jdbcType=INTEGER}
+  </select>
+  
+</mapper>

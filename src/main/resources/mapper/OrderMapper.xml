@@ -4,7 +4,6 @@
   <resultMap id="OrderResultMap" type="com.nnbox.admin.data.model.Order">
     <id column="IDX" jdbcType="INTEGER" property="idx" />
     <result column="ORDER_DATE" jdbcType="TIMESTAMP" property="orderDate" />
-    <result column="FR_ID" jdbcType="VARCHAR" property="frId" />
     <result column="FR_NAME" jdbcType="VARCHAR" property="frName" />
     <result column="FR_PHONE" jdbcType="VARCHAR" property="frPhone" />
     <result column="ORDER_PRICE" jdbcType="INTEGER" property="orderPrice" />
@@ -50,7 +49,7 @@
   <sql id="Rider_Base_Column_List">
     r.RIDER_NAME, u.PHONE as RIDER_PHONE, r.RIDER_LEVEL, r.RIDER_STATUS, r.RIDER_SETTING_GROUP_IDX as RIDER_GROUP, r.DELIVERY_PRICE_FEE_TYPE as FEE_TYPE
   </sql>
-  <select id="selectRiderDeliveryList" parameterType="com.nnbox.admin.api.delivery.model.RiderDeliveryListRequest" resultMap="OrderResultMap">
+  <select id="selectDeliveryList" parameterType="com.nnbox.admin.api.delivery.model.OrderDeliveryListRequest" resultMap="OrderResultMap">
     select 
       <include refid="Order_Base_Column_List" />,
       <include refid="Assign_Base_Column_List" />,
@@ -59,26 +58,23 @@
     from 
       <include refid="Order_List_Table" />
     where ORDER_STATUS = 4
-   		<if test="userName != null">and r.RIDER_NAME like concat('%', #{userName}, '%')</if>
-   		<if test="userPhone != null">and u.PHONE like concat('%', #{userPhone}, '%')</if>
+   		<if test="riderName != null">and r.RIDER_NAME like concat('%', #{riderName}, '%')</if>
+   		<if test="frPhone != null">and u.PHONE like concat('%', #{frPhone}, '%')</if>
    		<if test="frName != null">and f.FR_NAME like concat('%', #{frName}, '%')</if>
-   		<if test="searchMonth != null">and o.ORDER_DATE like concat(#{searchMonth}, '%')</if>
+   		<if test="startDate != null">and o.ORDER_DATE between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}</if>
     order by o.IDX desc
     limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
   </select>
-  <select id="selectOrderCompleteListByFrIdx" parameterType="java.lang.Integer" resultMap="OrderResultMap">
-    select 
-      <include refid="Order_Base_Column_List" />,
-      <include refid="Assign_Base_Column_List" />,
-      <include refid="User_Base_Column_List" />
+  
+  <select id="getTotalCount" parameterType="com.nnbox.admin.api.delivery.model.OrderDeliveryListRequest" resultType="int">
+    select count(*)
     from 
       <include refid="Order_List_Table" />
-    where u.IDX = #{userIdx,jdbcType=INTEGER}
-      and ORDER_STATUS in
-        <foreach collection="orderStatuses" item="item" index="index" separator="," open="(" close=")">
-          #{item}
-        </foreach>
-    order by o.IDX desc
-    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER};
+    where ORDER_STATUS = 4
+   		<if test="riderName != null">and r.RIDER_NAME like concat('%', #{riderName}, '%')</if>
+   		<if test="frPhone != null">and u.PHONE like concat('%', #{frPhone}, '%')</if>
+   		<if test="frName != null">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+   		<if test="startDate != null">and o.ORDER_DATE between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}</if>
   </select>
+  
 </mapper>

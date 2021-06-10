@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class StaffDeleveryListRequest extends ListRequest {
+public class StaffDeliveryListRequest extends ListRequest {
 
 	@ApiModelProperty(value = "직원 이름", dataType = "String", example = "김이박", required = false, hidden = true)
 	private Integer userIdx;

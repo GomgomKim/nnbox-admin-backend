@@ -22,6 +22,6 @@ public interface UserMapper {
 	int updateByPrimaryKey(User record);
 
 	User selectById(String id);
-
+	
 	List<User> selectList(UserListRequest listRequest);
 }

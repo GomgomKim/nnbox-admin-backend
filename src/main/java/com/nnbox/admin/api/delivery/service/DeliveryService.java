@@ -6,13 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nnbox.admin.api.delivery.model.OrderDeliveryListRequest;
+import com.nnbox.admin.api.delivery.model.OrderDeliveryListResponse;
 import com.nnbox.admin.api.delivery.model.RiderDeliveryListRequest;
 import com.nnbox.admin.api.delivery.model.RiderDeliveryListResponse;
-import com.nnbox.admin.common.constants.ErrorCode;
-import com.nnbox.admin.common.exception.BasicException;
-import com.nnbox.admin.common.security.token.UserAuthenticationToken;
-import com.nnbox.admin.common.utils.SessionUtil;
+import com.nnbox.admin.data.mapper.IncomeMapper;
 import com.nnbox.admin.data.mapper.OrderMapper;
+import com.nnbox.admin.data.model.Income;
 import com.nnbox.admin.data.model.Order;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,21 +23,50 @@ public class DeliveryService {
 
 	@Autowired
 	OrderMapper orderMapper;
+	
+	@Autowired
+	IncomeMapper incomeMapper;
 
-	public RiderDeliveryListResponse getDeliveryList(RiderDeliveryListRequest listRequest) throws Exception {
-		UserAuthenticationToken token = SessionUtil.getSessionUserToken();
-		if (token == null) {
-			throw new BasicException(ErrorCode.COMMON_UNAUTHORIZED);
-		} else {
-			RiderDeliveryListResponse response = new RiderDeliveryListResponse();
+	public OrderDeliveryListResponse getDeliveryList(OrderDeliveryListRequest listRequest) throws Exception {
+		OrderDeliveryListResponse response = new OrderDeliveryListResponse();
 
-		    response.setCurrentPage(listRequest.getPageNum());
-		    List<Order> orders = orderMapper.selectRiderDeliveryList(listRequest);
+	    response.setCurrentPage(listRequest.getPageNum());
+	    List<Order> orders = orderMapper.selectDeliveryList(listRequest);
+	    Integer totalCount = orderMapper.getTotalCount(listRequest);
 
-		    response.setOrders(orders);
+	    response.setOrders(orders);
+	    response.setTotalCount(totalCount);
+	    response.setTotalPage(totalCount, 10);
 
-		    return response;
-		}
+	    return response;
 	}
- 
+	
+	public RiderDeliveryListResponse getRiderDeliveryList(RiderDeliveryListRequest listRequest) throws Exception {
+		RiderDeliveryListResponse response = new RiderDeliveryListResponse();
+		
+	    response.setCurrentPage(listRequest.getPageNum());
+	    List<Income> incomes = incomeMapper.selectRiderDeliveryList(listRequest);
+	    Integer totalCount = incomeMapper.getTotalCount(listRequest);
+
+	    response.setIncomes(incomes);
+	    response.setTotalCount(totalCount);
+	    response.setTotalPage(totalCount, 10);
+
+	    return response;
+	}
+	
+//	public StaffDeliveryListResponse getStaffDeliveryList(StaffDeliveryListRequest listRequest) throws Exception {
+//		StaffDeliveryListResponse response = new StaffDeliveryListResponse();
+//		
+//	    response.setCurrentPage(listRequest.getPageNum());
+//	    List<Income> incomes = incomeMapper.selectRiderDeliveryList(listRequest);
+//	    Integer totalCount = incomeMapper.getTotalCount(listRequest);
+//
+//	    response.setIncomes(incomes);
+//	    response.setTotalCount(totalCount);
+//	    response.setTotalPage(totalCount, 10);
+//
+//	    return response;
+//	}
+	
 }

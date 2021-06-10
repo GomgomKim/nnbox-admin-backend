@@ -16,7 +16,7 @@
     <sqlMapGenerator targetPackage="com.nnbox.admin.data.xml" targetProject="nnbox-admin-backend" />
     <javaClientGenerator targetPackage="com.nnbox.admin.data.mapper" targetProject="nnbox-admin-backend" type="XMLMAPPER" />
 	
-	<table schema="nnbox" tableName="admin_user" domainObjectName="AdminUser" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>
+	<table schema="nnbox" tableName="incentive" domainObjectName="Incentive" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>
 	
 	
 	</context>
