@@ -1,7 +1,5 @@
 package com.nnbox.admin.api.delivery.model;
 
-import java.util.Date;
-
 import com.nnbox.admin.common.model.ListRequest;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -20,9 +18,9 @@ public class OrderDeliveryListRequest extends ListRequest {
 	@ApiModelProperty(value = "가맹점 이름", dataType = "String", example = "1", required = false)
 	private String frName;
 
-	@ApiModelProperty(value = "시작일", dataType = "Date", example = "2021-01-11", required = false)
-	private Date startDate;
+	@ApiModelProperty(value = "시작일", dataType = "String", example = "2021-01-11", required = false)
+	private String startDate;
 	
-	@ApiModelProperty(value = "종료일", dataType = "Date", example = "2021-01-11", required = false)
-	private Date endDate;
+	@ApiModelProperty(value = "종료일", dataType = "String", example = "2021-01-11", required = false)
+	private String endDate;
 }

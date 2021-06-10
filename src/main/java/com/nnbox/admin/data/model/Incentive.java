@@ -8,35 +8,15 @@ import lombok.Data;
 public class Incentive {
     private Integer idx;
 
-    private Date createDate;
-
-    private Short category;
-
     private String incenMonth;
 
     private Date incenDate;
 
-    private Integer userIdx;
-
-    private Short userLevel;
-
-    private Byte isExpect;
-
     private Byte incenPayed;
-
-    private Date incenPayDate;
-
-    private Integer payedAmount;
-
-    private Integer frSalesIdx;
-
-    private String memo;
 
     private Integer defaultCnt;
 
     private Integer deliveryCnt;
-
-    private Integer deliveryPriceSum;
 
     private Integer defaultDeliveryPrice;
 
@@ -45,4 +25,13 @@ public class Incentive {
     private Integer frIncenAmount;
 
     private Integer totalIncenAmount;
+    
+    // rider
+    private String staffName;
+    
+    private String staffPhone;
+    
+    private Integer basicDeliveryPrice;
+    
+    private Integer staffLevel;
 }

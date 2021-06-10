@@ -35,4 +35,7 @@ public class Income {
     
     // 수수료
     private Integer feeAmount;
+    
+    // 배달요금
+    private Integer deliveryPrice;
 }

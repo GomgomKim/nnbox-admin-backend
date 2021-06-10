@@ -13,6 +13,8 @@ import com.nnbox.admin.api.delivery.model.OrderDeliveryListRequest;
 import com.nnbox.admin.api.delivery.model.OrderDeliveryListResponse;
 import com.nnbox.admin.api.delivery.model.RiderDeliveryListRequest;
 import com.nnbox.admin.api.delivery.model.RiderDeliveryListResponse;
+import com.nnbox.admin.api.delivery.model.StaffDeliveryListRequest;
+import com.nnbox.admin.api.delivery.model.StaffDeliveryListResponse;
 import com.nnbox.admin.api.delivery.service.DeliveryService;
 
 import io.swagger.annotations.Api;
@@ -38,9 +40,9 @@ public class DeliveryController {
 		return deliveryService.getRiderDeliveryList(listRequest);
 	}
 	
-//	@RequestMapping(value = "/staff/list", method = RequestMethod.GET, produces = "application/json")
-//	@ApiOperation(value = "라이더 배달내역", notes = "라이더 배달내역을 불러온다.")
-//	public StaffDeliveryListResponse getStaffDeliveryList(@ModelAttribute StaffDeliveryListRequest listRequest, BindingResult bindingResult) throws Exception {
-//		return deliveryService.getStaffDeliveryList(listRequest);
-//	}
+	@RequestMapping(value = "/staff/list", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "직원 배달내역", notes = "직원 배달내역을 불러온다.")
+	public StaffDeliveryListResponse getStaffDeliveryList(@ModelAttribute StaffDeliveryListRequest listRequest, BindingResult bindingResult) throws Exception {
+		return deliveryService.getStaffDeliveryList(listRequest);
+	}
 }

@@ -23,6 +23,7 @@
     <result column="RIDER_GROUP" jdbcType="INTEGER" property="riderGroup" />
     <result column="FEE_TYPE" jdbcType="INTEGER" property="feeType" />
     <result column="FEE_AMOUNT" jdbcType="INTEGER" property="feeAmount" />
+    <result column="DELIVERY_PRICE" jdbcType="INTEGER" property="deliveryPrice" />
   </resultMap>
   
   <!-- sql -->
@@ -37,6 +38,7 @@
   <sql id="Rider_Base_Column_List">
     r.RIDER_NAME, u.PHONE as RIDER_PHONE, r.RIDER_SETTING_GROUP_IDX as RIDER_GROUP
     , r.DELIVERY_PRICE_FEE_TYPE as FEE_TYPE, r.DELIVERY_PRICE_FEE_AMOUNT as FEE_AMOUNT
+    , r.BASIC_DELIVERY_PRICE as DELIVERY_PRICE
   </sql>
   
   <sql id="Base_Column_List">
