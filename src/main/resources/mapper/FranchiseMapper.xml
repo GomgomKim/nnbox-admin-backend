@@ -3,6 +3,7 @@
 <mapper namespace="com.nnbox.admin.data.mapper.FranchiseMapper">
 
   <resultMap id="FrListResultMap" type="com.nnbox.admin.data.model.Franchise">
+    <result column="USER_IDX" property="userIdx" />
     <result column="FR_NAME" property="frName" />
     <result column="ADDR1" property="addr1" />
     <result column="ADDR2" property="addr2" />
@@ -21,7 +22,7 @@
   </sql>
   
   <sql id="Fr_Base_Column_List">
-    f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
+    f.USER_IDX, f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
     , f.TID_NORMAL_RATE, f.FR_PHONE, V_ACCOUNT_NUMBER
   </sql>
   
