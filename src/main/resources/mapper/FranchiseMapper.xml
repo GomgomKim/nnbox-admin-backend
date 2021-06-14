@@ -33,29 +33,16 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.Franchise">
     update franchise
     <set>
-      <if test="frName != null">
-        FR_NAME = #{frName,jdbcType=VARCHAR},
-      </if>
-      <if test="addr1 != null">
-        ADDR1 = #{addr1,jdbcType=VARCHAR},
-      </if>
-      <if test="addr2 != null">
-        ADDR2 = #{addr2,jdbcType=VARCHAR},
-      </if>
-      <if test="addr3 != null">
-        ADDR3 = #{addr3,jdbcType=VARCHAR},
-      </if>
-      <if test="tidNormalRate != null">
-        TID_NORMAL_RATE = #{tidNormalRate,jdbcType=SMALLINT},
-      </if>
-      <if test="frPhone != null">
-        FR_PHONE = #{frPhone,jdbcType=VARCHAR},
-      </if>
-      <if test="vanNumber != null">
-        V_ACCOUNT_NUMBER = #{vanNumber,jdbcType=VARCHAR},
-      </if>
+      USER_IDX = #{userIdx}
+      <if test="frName != null">FR_NAME = #{frName},</if>
+      <if test="addr1 != null">ADDR1 = #{addr1},</if>
+      <if test="addr2 != null">ADDR2 = #{addr2},</if>
+      <if test="addr3 != null">ADDR3 = #{addr3},</if>
+      <if test="tidNormalRate != null">TID_NORMAL_RATE = #{tidNormalRate},</if>
+      <if test="frPhone != null">FR_PHONE = #{frPhone},</if>
+      <if test="vanNumber != null">V_ACCOUNT_NUMBER = #{vanNumber},</if>
     </set>
-    where USER_IDX = #{userIdx,jdbcType=INTEGER}
+    where USER_IDX = #{userIdx}
   </update>
   
   <!-- custom sql -->

@@ -38,10 +38,10 @@ public class FrController {
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json")
-	  @ApiOperation(value = "가맹점 정보 수정", notes = "가맹점 정보 수정")
-	  public FrUpdateResponse updateFr(@Valid @RequestBody FrUpdateRequest request, BindingResult bindingResult) throws Exception {
-	    if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
-	    return frService.updateFr(request);
-	  }
+    @ApiOperation(value = "가맹점 정보 수정", notes = "가맹점 정보 수정")
+    public FrUpdateResponse updateFr(@Valid @RequestBody FrUpdateRequest request, BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
+		return frService.updateFr(request);
+    }
 
 }
