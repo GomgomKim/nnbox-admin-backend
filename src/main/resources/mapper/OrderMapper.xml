@@ -3,7 +3,7 @@
 <mapper namespace="com.nnbox.admin.data.mapper.OrderMapper">
   <resultMap id="OrderResultMap" type="com.nnbox.admin.data.model.Order">
     <id column="IDX" jdbcType="INTEGER" property="idx" />
-    <result column="ORDER_DATE" jdbcType="TIMESTAMP" property="orderDate" />
+    <result column="ORDER_DATE" property="orderDate" />
     <result column="FR_NAME" jdbcType="VARCHAR" property="frName" />
     <result column="FR_PHONE" jdbcType="VARCHAR" property="frPhone" />
     <result column="ORDER_PRICE" jdbcType="INTEGER" property="orderPrice" />
@@ -61,7 +61,7 @@
    		<if test="riderName != null">and r.RIDER_NAME like concat('%', #{riderName}, '%')</if>
    		<if test="frPhone != null">and u.PHONE like concat('%', #{frPhone}, '%')</if>
    		<if test="frName != null">and f.FR_NAME like concat('%', #{frName}, '%')</if>
-   		<if test="startDate != null">and o.ORDER_DATE between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}</if>
+   		<if test="startDate != null">and o.ORDER_DATE between #{startDate} and concat(#{endDate}, ' 23:59:59')</if>
     order by o.IDX desc
     limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
   </select>
@@ -74,7 +74,7 @@
    		<if test="riderName != null">and r.RIDER_NAME like concat('%', #{riderName}, '%')</if>
    		<if test="frPhone != null">and u.PHONE like concat('%', #{frPhone}, '%')</if>
    		<if test="frName != null">and f.FR_NAME like concat('%', #{frName}, '%')</if>
-   		<if test="startDate != null">and o.ORDER_DATE between #{startDate,jdbcType=DATE} and #{endDate,jdbcType=DATE}</if>
+   		<if test="startDate != null">and o.ORDER_DATE between #{startDate} and concat(#{endDate}, ' 23:59:59')</if>
   </select>
   
 </mapper>

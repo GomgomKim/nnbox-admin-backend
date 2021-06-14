@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
@@ -13,9 +12,9 @@ public class Order {
 	private Integer idx;
 	
 	// 주문 시간
-	@ApiModelProperty(value = "주문 시간. 미입력시 현재 시각", dataType = "Timestamp", required = false, hidden = true)
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime orderDate;
+//	@ApiModelProperty(value = "주문 시간. 미입력시 현재 시각", dataType = "Timestamp", required = false, hidden = true)
+//	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private String orderDate;
 
 	// 주문 금액
 	private Integer orderPrice;
