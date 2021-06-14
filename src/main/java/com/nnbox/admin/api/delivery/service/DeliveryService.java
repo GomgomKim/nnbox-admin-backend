@@ -19,9 +19,6 @@ import com.nnbox.admin.data.model.Incentive;
 import com.nnbox.admin.data.model.Income;
 import com.nnbox.admin.data.model.Order;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class DeliveryService {
 
