@@ -34,7 +34,7 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.Franchise">
     update franchise
     <set>
-      USER_IDX = #{userIdx}
+      USER_IDX = #{userIdx},
       <if test="frName != null">FR_NAME = #{frName},</if>
       <if test="addr1 != null">ADDR1 = #{addr1},</if>
       <if test="addr2 != null">ADDR2 = #{addr2},</if>
