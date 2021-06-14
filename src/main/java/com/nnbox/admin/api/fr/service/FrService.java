@@ -5,9 +5,12 @@ import java.util.List;
 //import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nnbox.admin.api.fr.model.FrListRequest;
 import com.nnbox.admin.api.fr.model.FrListResponse;
+import com.nnbox.admin.api.fr.model.FrUpdateRequest;
+import com.nnbox.admin.api.fr.model.FrUpdateResponse;
 import com.nnbox.admin.data.mapper.FranchiseMapper;
 import com.nnbox.admin.data.model.Franchise;
 
@@ -30,4 +33,12 @@ public class FrService {
 
 	    return response;
 	}
+	
+	@Transactional
+    public FrUpdateResponse updateFr(FrUpdateRequest request) throws Exception {
+		Franchise fr = request;
+	    FrUpdateResponse result = franchiseMapper.updateByPrimaryKeySelective(fr) > 0 ? FrUpdateResponse.SUCCESS : FrUpdateResponse.FAIL;
+	    
+	    return result;
+    }
 }

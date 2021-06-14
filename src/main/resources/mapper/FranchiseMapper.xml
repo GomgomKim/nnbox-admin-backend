@@ -7,7 +7,6 @@
     <result column="ADDR1" property="addr1" />
     <result column="ADDR2" property="addr2" />
     <result column="ADDR3" property="addr3" />
-    <result column="NCASH_PAY_ENABLED" property="ncashPayEnabled" />
     <result column="TID_NORMAL_RATE" property="tidNormalRate" />
     <result column="FR_PHONE" property="frPhone" />
     <result column="V_ACCOUNT_NUMBER" property="vanNumber" />
@@ -22,7 +21,7 @@
   </sql>
   
   <sql id="Fr_Base_Column_List">
-    f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3, f.NCASH_PAY_ENABLED
+    f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
     , f.TID_NORMAL_RATE, f.FR_PHONE, V_ACCOUNT_NUMBER
   </sql>
   
@@ -37,12 +36,6 @@
       <if test="frName != null">
         FR_NAME = #{frName,jdbcType=VARCHAR},
       </if>
-      <if test="frStatus != null">
-        FR_STATUS = #{frStatus,jdbcType=SMALLINT},
-      </if>
-      <if test="businessNumber != null">
-        BUSINESS_NUMBER = #{businessNumber,jdbcType=CHAR},
-      </if>
       <if test="addr1 != null">
         ADDR1 = #{addr1,jdbcType=VARCHAR},
       </if>
@@ -52,68 +45,14 @@
       <if test="addr3 != null">
         ADDR3 = #{addr3,jdbcType=VARCHAR},
       </if>
-      <if test="latitude != null">
-        LATITUDE = #{latitude,jdbcType=DOUBLE},
-      </if>
-      <if test="longitude != null">
-        LONGITUDE = #{longitude,jdbcType=DOUBLE},
-      </if>
-      <if test="ncashPayEnabled != null">
-        NCASH_PAY_ENABLED = #{ncashPayEnabled,jdbcType=TINYINT},
-      </if>
-      <if test="tidNormal != null">
-        TID_NORMAL = #{tidNormal,jdbcType=VARCHAR},
-      </if>
-      <if test="tidPrepay != null">
-        TID_PREPAY = #{tidPrepay,jdbcType=VARCHAR},
-      </if>
       <if test="tidNormalRate != null">
         TID_NORMAL_RATE = #{tidNormalRate,jdbcType=SMALLINT},
       </if>
       <if test="frPhone != null">
         FR_PHONE = #{frPhone,jdbcType=VARCHAR},
       </if>
-      <if test="birthday != null">
-        BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
-      </if>
-      <if test="corporateNumber != null">
-        CORPORATE_NUMBER = #{corporateNumber,jdbcType=CHAR},
-      </if>
-      <if test="prepayBank != null">
-        PREPAY_BANK = #{prepayBank,jdbcType=VARCHAR},
-      </if>
-      <if test="prepayAccount != null">
-        PREPAY_ACCOUNT = #{prepayAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="prepayDepositor != null">
-        PREPAY_DEPOSITOR = #{prepayDepositor,jdbcType=VARCHAR},
-      </if>
-      <if test="vAccountBank != null">
-        V_ACCOUNT_BANK = #{vAccountBank,jdbcType=VARCHAR},
-      </if>
-      <if test="vAccountNumber != null">
-        V_ACCOUNT_NUMBER = #{vAccountNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="vAccountDepositor != null">
-        V_ACCOUNT_DEPOSITOR = #{vAccountDepositor,jdbcType=VARCHAR},
-      </if>
-      <if test="duesAutoChargeEnabled != null">
-        DUES_AUTO_CHARGE_ENABLED = #{duesAutoChargeEnabled,jdbcType=TINYINT},
-      </if>
-      <if test="chargeDate != null">
-        CHARGE_DATE = #{chargeDate,jdbcType=SMALLINT},
-      </if>
-      <if test="dues != null">
-        DUES = #{dues,jdbcType=INTEGER},
-      </if>
-      <if test="basicDeliveryPrice != null">
-        BASIC_DELIVERY_PRICE = #{basicDeliveryPrice,jdbcType=INTEGER},
-      </if>
-      <if test="registDate != null">
-        REGIST_DATE = #{registDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="frSettingGroupIdx != null">
-        FR_SETTING_GROUP_IDX = #{frSettingGroupIdx,jdbcType=INTEGER},
+      <if test="vanNumber != null">
+        V_ACCOUNT_NUMBER = #{vanNumber,jdbcType=VARCHAR},
       </if>
     </set>
     where USER_IDX = #{userIdx,jdbcType=INTEGER}
