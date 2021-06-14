@@ -7,11 +7,16 @@ import lombok.Data;
 @Data
 public class Incentive {
     private Integer idx;
-    
+
+    private Integer userIdx;
+	    
     // 인센티브 지급 달
     private String incenMonth;
 
     private Date incenDate;
+    
+    // 카테고리
+    private Integer category;
 
     // 인센티브 지급 여부
     private Byte incenPayed;
@@ -24,7 +29,10 @@ public class Incentive {
 
     // 기본배달료
     private Integer defaultDeliveryPrice;
-
+    
+    // 인센티브 지급액
+    private Integer payedAmount;
+    
     // 관리 인센티브
     private Integer manageIncenAmount;
 
@@ -33,7 +41,7 @@ public class Incentive {
 
     // 추가 인센티브
     private Integer additionalIncenAmount;
-    
+
     // 직원 정보
     // 이름
     private String staffName;

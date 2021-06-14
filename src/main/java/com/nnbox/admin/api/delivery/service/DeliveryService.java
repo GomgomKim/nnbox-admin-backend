@@ -1,5 +1,6 @@
 package com.nnbox.admin.api.delivery.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //import org.json.JSONObject;
@@ -66,8 +67,24 @@ public class DeliveryService {
 	    response.setCurrentPage(listRequest.getPageNum());
 	    List<Incentive> incentives = incentiveMapper.selectStaffDeliveryList(listRequest);
 	    Integer totalCount = incentiveMapper.getTotalCount(listRequest);
+	    
+	    List<Incentive> resultIncentives = new ArrayList<>();
+	    Incentive temp = new Incentive();
+	    int curUser = incentives.get(0).getUserIdx();
+	    temp = incentives.get(0);
+	    for(Incentive incentive : incentives) {
+	    	if(incentive.getUserIdx() != curUser) {
+	    		resultIncentives.add(temp);
+	    		temp = incentive;
+	    		curUser = incentive.getUserIdx();
+	    	}
+	    	if(incentive.getCategory() == 2) temp.setManageIncenAmount(incentive.getPayedAmount());
+	    	if(incentive.getCategory() == 3) temp.setFrIncenAmount(incentive.getPayedAmount());
+	    	if(incentive.getCategory() == 5) temp.setAdditionalIncenAmount(incentive.getPayedAmount());
+	    }
+	    resultIncentives.add(temp);
 
-	    response.setIncentives(incentives);
+	    response.setIncentives(resultIncentives);
 	    response.setTotalCount(totalCount);
 	    response.setTotalPage(totalCount, 10);
 

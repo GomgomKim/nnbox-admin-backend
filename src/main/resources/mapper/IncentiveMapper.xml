@@ -19,13 +19,13 @@
     <result column="DELIVERY_CNT" jdbcType="INTEGER" property="deliveryCnt" />
     <result column="DELIVERY_PRICE_SUM" jdbcType="INTEGER" property="deliveryPriceSum" />
     <result column="DEFAULT_DELIVERY_PRICE" jdbcType="INTEGER" property="defaultDeliveryPrice" />
-    <result column="MANAGE_INCEN_AMOUNT" jdbcType="INTEGER" property="manageIncenAmount" />
-    <result column="FR_INCEN_AMOUNT" jdbcType="INTEGER" property="frIncenAmount" />
-    <result column="ADDITIONAL_INCEN_AMOUNT" jdbcType="INTEGER" property="additionalIncenAmount" />
   </resultMap>
   
   <resultMap id="IncenResultMap" type="com.nnbox.admin.data.model.Incentive">
     <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <id column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="CATEGORY" property="category" />
+    <result column="PAYED_AMOUNT" jdbcType="INTEGER" property="payedAmount" />
     <result column="INCEN_MONTH" jdbcType="CHAR" property="incenMonth" />
     <result column="INCEN_DATE" jdbcType="TIMESTAMP" property="incenDate" />
     <result column="USER_LEVEL" jdbcType="SMALLINT" property="userLevel" />
@@ -33,9 +33,6 @@
     <result column="DEFAULT_CNT" jdbcType="INTEGER" property="defaultCnt" />
     <result column="DELIVERY_CNT" jdbcType="INTEGER" property="deliveryCnt" />
     <result column="DEFAULT_DELIVERY_PRICE" jdbcType="INTEGER" property="defaultDeliveryPrice" />
-    <result column="MANAGE_INCEN_AMOUNT" jdbcType="INTEGER" property="manageIncenAmount" />
-    <result column="FR_INCEN_AMOUNT" jdbcType="INTEGER" property="frIncenAmount" />
-    <result column="ADDITIONAL_INCEN_AMOUNT" jdbcType="INTEGER" property="additionalIncenAmount" />
     <!-- rider -->
     <result column="STAFF_NAME" jdbcType="VARCHAR" property="staffName" />
     <result column="STAFF_PHONE" jdbcType="VARCHAR" property="staffPhone" />
@@ -52,7 +49,7 @@
   
   <sql id="Incen_Base_Column_List">
     i.IDX, i.INCEN_MONTH, i.INCEN_DATE, i.USER_LEVEL as STAFF_LEVEL, i.INCEN_PAYED, i.DEFAULT_CNT, i.DELIVERY_CNT 
-    , i.DEFAULT_DELIVERY_PRICE, i.MANAGE_INCEN_AMOUNT, i.FR_INCEN_AMOUNT, i.ADDITIONAL_INCEN_AMOUNT
+    , i.DEFAULT_DELIVERY_PRICE, i.CATEGORY, i.PAYED_AMOUNT, i.USER_IDX
   </sql>
   
   <sql id="Rider_Base_Column_List">
@@ -70,6 +67,10 @@
     	<if test="staffName != null">and r.RIDER_NAME like concat('%', #{staffName}, '%')</if>
    		<if test="staffPhone != null">and u.PHONE like concat('%', #{staffPhone}, '%')</if>
    		<if test="searchMonth != null">and i.INCEN_DATE like concat(#{searchMonth}, '%')</if>
+   		and i.CATEGORY in 
+        <foreach collection="categories" item="item" index="index" separator="," open="(" close=")">
+          #{item}
+        </foreach>
  	order by i.IDX desc
  	limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
   </select>
