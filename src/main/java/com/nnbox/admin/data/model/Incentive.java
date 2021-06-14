@@ -32,7 +32,7 @@ public class Incentive {
     private Integer frIncenAmount;
 
     // 추가 인센티브
-    private Integer totalIncenAmount;
+    private Integer additionalIncenAmount;
     
     // 직원 정보
     // 이름
