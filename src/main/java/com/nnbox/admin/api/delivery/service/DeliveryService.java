@@ -35,7 +35,6 @@ public class DeliveryService {
 	public OrderDeliveryListResponse getDeliveryList(OrderDeliveryListRequest listRequest) throws Exception {
 		OrderDeliveryListResponse response = new OrderDeliveryListResponse();
 
-//		log.debug("date  :"+listRequest.getStartDate());
 	    response.setCurrentPage(listRequest.getPageNum());
 	    List<Order> orders = orderMapper.selectDeliveryList(listRequest);
 	    Integer totalCount = orderMapper.getTotalCount(listRequest);
@@ -69,20 +68,25 @@ public class DeliveryService {
 	    Integer totalCount = incentiveMapper.getTotalCount(listRequest);
 	    
 	    List<Incentive> resultIncentives = new ArrayList<>();
-	    Incentive temp = new Incentive();
-	    int curUser = incentives.get(0).getUserIdx();
-	    temp = incentives.get(0);
-	    for(Incentive incentive : incentives) {
-	    	if(incentive.getUserIdx() != curUser) {
-	    		resultIncentives.add(temp);
-	    		temp = incentive;
-	    		curUser = incentive.getUserIdx();
-	    	}
-	    	if(incentive.getCategory() == 2) temp.setManageIncenAmount(incentive.getPayedAmount());
-	    	if(incentive.getCategory() == 3) temp.setFrIncenAmount(incentive.getPayedAmount());
-	    	if(incentive.getCategory() == 5) temp.setAdditionalIncenAmount(incentive.getPayedAmount());
+	    if(incentives.size() > 1) {
+	    	Incentive temp = new Incentive();
+		    int curUser = incentives.get(0).getUserIdx();
+		    temp = incentives.get(0);
+		    temp.setCategory(0);
+		    for(Incentive incentive : incentives) {
+		    	if(incentive.getUserIdx() != curUser) {
+		    		resultIncentives.add(temp);
+		    		temp = incentive;
+		    		temp.setCategory(0);
+		    		curUser = incentive.getUserIdx();
+		    	}
+		    	if(incentive.getCategory() == 2) temp.setManageIncenAmount(incentive.getPayedAmount());
+		    	if(incentive.getCategory() == 3) temp.setFrIncenAmount(incentive.getPayedAmount());
+		    	if(incentive.getCategory() == 5) temp.setAdditionalIncenAmount(incentive.getPayedAmount());
+		    }
+		    resultIncentives.add(temp);
 	    }
-	    resultIncentives.add(temp);
+	    
 
 	    response.setIncentives(resultIncentives);
 	    response.setTotalCount(totalCount);
