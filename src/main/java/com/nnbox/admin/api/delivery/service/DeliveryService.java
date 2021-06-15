@@ -72,12 +72,10 @@ public class DeliveryService {
 	    	Incentive temp = new Incentive();
 		    int curUser = incentives.get(0).getUserIdx();
 		    temp = incentives.get(0);
-		    temp.setCategory(0);
 		    for(Incentive incentive : incentives) {
 		    	if(incentive.getUserIdx() != curUser) {
 		    		resultIncentives.add(temp);
 		    		temp = incentive;
-		    		temp.setCategory(0);
 		    		curUser = incentive.getUserIdx();
 		    	}
 		    	if(incentive.getCategory() == 2) temp.setManageIncenAmount(incentive.getPayedAmount());

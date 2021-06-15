@@ -71,7 +71,7 @@
         <foreach collection="categories" item="item" index="index" separator="," open="(" close=")">
           #{item}
         </foreach>
- 	order by i.IDX desc
+ 	order by i.USER_IDX desc
  	limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
   </select>
   
