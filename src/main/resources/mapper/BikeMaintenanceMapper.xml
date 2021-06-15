@@ -96,17 +96,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.BikeMaintenance">
     update bike_maintenance
     <set>
-      <if test="createDate != null">
-        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="bikeIdx != null">
         BIKE_IDX = #{bikeIdx,jdbcType=INTEGER},
       </if>
       <if test="startDate != null">
         START_DATE = #{startDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endDate != null">
-        END_DATE = #{endDate,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null">
         CONTENT = #{content,jdbcType=VARCHAR},
@@ -119,9 +113,6 @@
       </if>
       <if test="worker != null">
         WORKER = #{worker,jdbcType=VARCHAR},
-      </if>
-      <if test="mileage != null">
-        MILEAGE = #{mileage,jdbcType=INTEGER},
       </if>
     </set>
     where IDX = #{idx,jdbcType=INTEGER}
