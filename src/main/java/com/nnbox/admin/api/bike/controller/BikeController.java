@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nnbox.admin.api.bike.model.BikeMaintenanceCreateRequest;
+import com.nnbox.admin.api.bike.model.BikeMaintenanceCreateResponse;
+import com.nnbox.admin.api.bike.model.BikeMaintenanceDeleteRequest;
+import com.nnbox.admin.api.bike.model.BikeMaintenanceDeleteResponse;
 import com.nnbox.admin.api.bike.model.BikeMaintenanceListRequest;
 import com.nnbox.admin.api.bike.model.BikeMaintenanceListResponse;
 import com.nnbox.admin.api.bike.model.BikeMaintenanceUpdateRequest;
@@ -43,6 +47,22 @@ public class BikeController {
 		if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
 		return bikeService.updateBikeMaintenance(request);
     }
+	
+	@RequestMapping(value = "/maintenance/delete", method = RequestMethod.POST, produces = "application/json")
+    @ApiOperation(value = "바이크 정비 이력 삭제", notes = "바이크 정비 이력 삭제")
+    public BikeMaintenanceDeleteResponse deleteBikeMaintenance(@Valid @RequestBody BikeMaintenanceDeleteRequest request, BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
+		return bikeService.deleteBikeMaintenance(request);
+    }
+	
+	@RequestMapping(value = "/maintenance/create", method = RequestMethod.POST, produces = "application/json")
+    @ApiOperation(value = "바이크 정비 이력 등록", notes = "바이크 정비 이력 등록")
+    public BikeMaintenanceCreateResponse createBikeMaintenance(@Valid @RequestBody BikeMaintenanceCreateRequest request, BindingResult bindingResult) throws Exception {
+		if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
+		return bikeService.createBikeMaintenance(request);
+    }
+	
+	
 	
 	
 	

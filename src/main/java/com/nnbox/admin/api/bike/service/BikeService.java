@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nnbox.admin.api.bike.model.BikeMaintenanceCreateRequest;
+import com.nnbox.admin.api.bike.model.BikeMaintenanceCreateResponse;
+import com.nnbox.admin.api.bike.model.BikeMaintenanceDeleteRequest;
+import com.nnbox.admin.api.bike.model.BikeMaintenanceDeleteResponse;
 import com.nnbox.admin.api.bike.model.BikeMaintenanceListRequest;
 import com.nnbox.admin.api.bike.model.BikeMaintenanceListResponse;
 import com.nnbox.admin.api.bike.model.BikeMaintenanceUpdateRequest;
@@ -41,4 +45,18 @@ public class BikeService {
 	    
 	    return result;
     }
+	
+	public BikeMaintenanceDeleteResponse deleteBikeMaintenance(BikeMaintenanceDeleteRequest request) throws Exception {
+		BikeMaintenanceDeleteResponse result = bikeMaintenanceMapper.deleteByPrimaryKey(request.getIdx()) > 0 ? BikeMaintenanceDeleteResponse.SUCCESS : BikeMaintenanceDeleteResponse.FAIL;
+		
+		return result;
+	}
+	
+	public BikeMaintenanceCreateResponse createBikeMaintenance(BikeMaintenanceCreateRequest request) throws Exception {
+		BikeMaintenance bikeMaintenance = request;
+		bikeMaintenance.setMileage(0);
+		BikeMaintenanceCreateResponse result = bikeMaintenanceMapper.insertSelective(bikeMaintenance) > 0 ? BikeMaintenanceCreateResponse.SUCCESS : BikeMaintenanceCreateResponse.FAIL;
+		
+		return result;
+	}
 }

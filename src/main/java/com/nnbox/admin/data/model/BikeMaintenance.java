@@ -30,4 +30,7 @@ public class BikeMaintenance {
 
     @ApiModelProperty(value = "바이크 넘버", dataType = "String", example = "10가2345", required = false)
     private String bikeNumber;
+    
+    @ApiModelProperty(value = "마일리지", dataType = "Integer", example = "0", required = false)
+    private Integer mileage;
 }

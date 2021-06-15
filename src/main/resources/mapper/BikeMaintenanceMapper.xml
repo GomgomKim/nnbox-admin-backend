@@ -32,17 +32,11 @@
       <if test="idx != null">
         IDX,
       </if>
-      <if test="createDate != null">
-        CREATE_DATE,
-      </if>
       <if test="bikeIdx != null">
         BIKE_IDX,
       </if>
       <if test="startDate != null">
         START_DATE,
-      </if>
-      <if test="endDate != null">
-        END_DATE,
       </if>
       <if test="content != null">
         CONTENT,
@@ -64,17 +58,11 @@
       <if test="idx != null">
         #{idx,jdbcType=INTEGER},
       </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="bikeIdx != null">
         #{bikeIdx,jdbcType=INTEGER},
       </if>
       <if test="startDate != null">
         #{startDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="endDate != null">
-        #{endDate,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
@@ -117,6 +105,11 @@
     </set>
     where IDX = #{idx,jdbcType=INTEGER}
   </update>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bike_maintenance
+    where IDX = #{idx}
+  </delete>
 
   <!-- custom sql -->
   <select id="selectBikeMaintenanceList" parameterType="com.nnbox.admin.api.bike.model.BikeMaintenanceListRequest" resultMap="BikeMaintenanceResultMap">
