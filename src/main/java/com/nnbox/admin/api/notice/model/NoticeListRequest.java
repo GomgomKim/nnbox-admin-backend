@@ -11,7 +11,7 @@ import lombok.Setter;
 public class NoticeListRequest extends ListRequest {
 	  // 제목
       @ApiModelProperty(value = "제목", dataType = "String")
-      private String title;
+      private String title;  
       
       // 시작일
       @ApiModelProperty(value = "시작일", dataType = "String")
