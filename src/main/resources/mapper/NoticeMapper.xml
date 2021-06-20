@@ -153,11 +153,18 @@
   
   <!-- custom query -->
   <select id="selectNoticeList" parameterType="com.nnbox.admin.api.notice.model.NoticeListRequest" resultMap="BaseResultMap">
-    select * from notice
+    select *
+    from notice
     where IDX >= 1
-      <if test="branchName != null">and TITLE like concat('%', #{title}, '%')</if>
-      <if test="startDate != null">and CREATE_DATE between #{startDate} and concat(#{endDate}, ' 23:59:59')</if>
-    order by IDX desc
+    <if test="title != null">and TITLE like concat('%', #{title}, '%')</if>
+    order by SORT_ORDER desc
     limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getTotalCount" parameterType="com.nnbox.admin.api.notice.model.NoticeListRequest" resultType="int">
+    select count(*)
+    from notice n
+    where IDX >= 1
+    <if test="title != null">and TITLE like concat('%', #{title}, '%')</if>
   </select>
 </mapper>
