@@ -1,9 +1,5 @@
 package com.nnbox.admin.data.model;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -20,16 +16,14 @@ public class Notice {
     private String content;
 
     // 공지 생성 날짜
-    @ApiModelProperty(value = "공지 생성 날짜", dataType = "LocalDate")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createDate;
+    @ApiModelProperty(value = "공지 생성 날짜", dataType = "String")
+    private String createDate;
 
     // 삭제 여부
 	private Byte deleted;
 	
 	// 삭제 일자
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime deleteDate;
+    private String deleteDate;
 
 	// 카테고리(1: 전체, 2: 라이더, 3: 가맹점)
     @ApiModelProperty(value = "카테고리(1: 전체, 2: 라이더, 3: 가맹점)", dataType = "Integer")
