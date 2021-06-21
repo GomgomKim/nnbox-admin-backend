@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.InquiryMapper">
+  <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.Inquiry">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="CATEGORY" jdbcType="VARCHAR" property="category" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="CONTENT" jdbcType="VARCHAR" property="content" />
+    <result column="ANSWER" jdbcType="VARCHAR" property="answer" />
+    <result column="COMPANY" jdbcType="VARCHAR" property="company" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="UPDATE_DATE" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    IDX, CATEGORY, TITLE, CONTENT, ANSWER, COMPANY, NAME, EMAIL, PHONE, STATUS, MEMO, 
+    CREATE_DATE, UPDATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from inquiry
+    where IDX = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from inquiry
+    where IDX = #{idx,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nnbox.admin.data.model.Inquiry">
+    insert into inquiry (IDX, CATEGORY, TITLE, 
+      CONTENT, ANSWER, COMPANY, 
+      NAME, EMAIL, PHONE, 
+      STATUS, MEMO, CREATE_DATE, 
+      UPDATE_DATE)
+    values (#{idx,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.Inquiry">
+    insert into inquiry
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        IDX,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+      <if test="answer != null">
+        ANSWER,
+      </if>
+      <if test="company != null">
+        COMPANY,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="email != null">
+        EMAIL,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.Inquiry">
+    update inquiry
+    <set>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        CONTENT = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        ANSWER = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        COMPANY = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnbox.admin.data.model.Inquiry">
+    update inquiry
+    set CATEGORY = #{category,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=VARCHAR},
+      ANSWER = #{answer,jdbcType=VARCHAR},
+      COMPANY = #{company,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP}
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  
+  <!-- custom query -->
+  <select id="selectInquiryList" parameterType="com.nnbox.admin.api.inquiry.model.InquiryListRequest" resultMap="BaseResultMap">
+    select *
+    from inquiry
+    order by IDX desc
+    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getTotalCount" parameterType="com.nnbox.admin.api.inquiry.model.InquiryListRequest" resultType="int">
+    select count(*)
+    from inquiry
+  </select>
+</mapper>

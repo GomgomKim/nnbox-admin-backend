@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.WithdrawMapper">
+  <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.Withdraw">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="BANK" jdbcType="VARCHAR" property="bank" />
+    <result column="BANK_ACCOUNT" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="DEPOSITOR" jdbcType="VARCHAR" property="depositor" />
+    <result column="REQ_DATE" jdbcType="TIMESTAMP" property="reqDate" />
+    <result column="WITHDRAW_STATUS" jdbcType="SMALLINT" property="withdrawStatus" />
+    <result column="REQ_AMOUNT" jdbcType="INTEGER" property="reqAmount" />
+    <result column="PROC_DATE" jdbcType="TIMESTAMP" property="procDate" />
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    IDX, USER_IDX, CREATE_DATE, BANK, BANK_ACCOUNT, DEPOSITOR, REQ_DATE, WITHDRAW_STATUS, 
+    REQ_AMOUNT, PROC_DATE, ADMIN_ID, MEMO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from withdraw
+    where IDX = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from withdraw
+    where IDX = #{idx,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nnbox.admin.data.model.Withdraw">
+    insert into withdraw (IDX, USER_IDX, CREATE_DATE, 
+      BANK, BANK_ACCOUNT, DEPOSITOR, 
+      REQ_DATE, WITHDRAW_STATUS, REQ_AMOUNT, 
+      PROC_DATE, ADMIN_ID, MEMO
+      )
+    values (#{idx,jdbcType=INTEGER}, #{userIdx,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{bank,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{depositor,jdbcType=VARCHAR}, 
+      #{reqDate,jdbcType=TIMESTAMP}, #{withdrawStatus,jdbcType=SMALLINT}, #{reqAmount,jdbcType=INTEGER}, 
+      #{procDate,jdbcType=TIMESTAMP}, #{adminId,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.Withdraw">
+    insert into withdraw
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        IDX,
+      </if>
+      <if test="userIdx != null">
+        USER_IDX,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="bank != null">
+        BANK,
+      </if>
+      <if test="bankAccount != null">
+        BANK_ACCOUNT,
+      </if>
+      <if test="depositor != null">
+        DEPOSITOR,
+      </if>
+      <if test="reqDate != null">
+        REQ_DATE,
+      </if>
+      <if test="withdrawStatus != null">
+        WITHDRAW_STATUS,
+      </if>
+      <if test="reqAmount != null">
+        REQ_AMOUNT,
+      </if>
+      <if test="procDate != null">
+        PROC_DATE,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="userIdx != null">
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="depositor != null">
+        #{depositor,jdbcType=VARCHAR},
+      </if>
+      <if test="reqDate != null">
+        #{reqDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="withdrawStatus != null">
+        #{withdrawStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="reqAmount != null">
+        #{reqAmount,jdbcType=INTEGER},
+      </if>
+      <if test="procDate != null">
+        #{procDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.Withdraw">
+    update withdraw
+    <set>
+      <if test="userIdx != null">
+        USER_IDX = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bank != null">
+        BANK = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        BANK_ACCOUNT = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="depositor != null">
+        DEPOSITOR = #{depositor,jdbcType=VARCHAR},
+      </if>
+      <if test="reqDate != null">
+        REQ_DATE = #{reqDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="withdrawStatus != null">
+        WITHDRAW_STATUS = #{withdrawStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="reqAmount != null">
+        REQ_AMOUNT = #{reqAmount,jdbcType=INTEGER},
+      </if>
+      <if test="procDate != null">
+        PROC_DATE = #{procDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnbox.admin.data.model.Withdraw">
+    update withdraw
+    set USER_IDX = #{userIdx,jdbcType=INTEGER},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      BANK = #{bank,jdbcType=VARCHAR},
+      BANK_ACCOUNT = #{bankAccount,jdbcType=VARCHAR},
+      DEPOSITOR = #{depositor,jdbcType=VARCHAR},
+      REQ_DATE = #{reqDate,jdbcType=TIMESTAMP},
+      WITHDRAW_STATUS = #{withdrawStatus,jdbcType=SMALLINT},
+      REQ_AMOUNT = #{reqAmount,jdbcType=INTEGER},
+      PROC_DATE = #{procDate,jdbcType=TIMESTAMP},
+      ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR}
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -36,7 +36,7 @@ public class NoticeController {
 	NoticeService noticeService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET, produces = "application/json")
-	@ApiOperation(value = "공지사항 리스트", notes = "정비 이력을 불러온다.")
+	@ApiOperation(value = "공지사항 리스트", notes = "공지사항 리스트.")
 	public NoticeListResponse getNoticeList(@ModelAttribute NoticeListRequest listRequest, BindingResult bindingResult) throws Exception {
 		return noticeService.getNoticeList(listRequest);
 	}
