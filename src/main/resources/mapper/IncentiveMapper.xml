@@ -82,5 +82,9 @@
     	<if test="staffName != null">and r.RIDER_NAME like concat('%', #{staffName}, '%')</if>
    		<if test="staffPhone != null">and u.PHONE like concat('%', #{staffPhone}, '%')</if>
    		<if test="searchMonth != null">and i.INCEN_DATE like concat(#{searchMonth}, '%')</if>
+   		and i.CATEGORY in 
+        <foreach collection="categories" item="item" index="index" separator="," open="(" close=")">
+          #{item}
+        </foreach>
   </select>
 </mapper>
