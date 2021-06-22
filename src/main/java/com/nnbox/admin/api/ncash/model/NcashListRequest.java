@@ -9,15 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NcashListRequest extends ListRequest {
-	  // 제목
-      @ApiModelProperty(value = "제목", dataType = "String")
-      private String title;  
+	  // 아이디
+      @ApiModelProperty(value = "아이디", dataType = "String")
+      private String userId;  
       
-      // 시작일
-      @ApiModelProperty(value = "시작일", dataType = "String")
-      private String startDate;
-      
-      // 종료일
-      @ApiModelProperty(value = "종료일", dataType = "String")
-      private String endDate;
+      // 유저 유형
+      @ApiModelProperty(value = "유저 유형(1: 라이더, 2: 가맹점)", dataType = "Integer", example = "1", required = true, hidden = false)
+      private Integer userType;
 }

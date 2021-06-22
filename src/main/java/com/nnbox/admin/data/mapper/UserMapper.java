@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.nnbox.admin.api.ncash.model.NcashCreateRequest;
 import com.nnbox.admin.api.sample.model.UserListRequest;
 import com.nnbox.admin.data.model.User;
 
@@ -24,4 +25,6 @@ public interface UserMapper {
 	User selectById(String id);
 	
 	List<User> selectList(UserListRequest listRequest);
+	
+	Integer sendNcashByAdmin(NcashCreateRequest record);
 }

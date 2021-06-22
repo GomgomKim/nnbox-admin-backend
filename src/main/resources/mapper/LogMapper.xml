@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.LogMapper">
+  <resultMap id="DepositResultMap" type="com.nnbox.admin.data.model.DepositLog">
+    <id column="CREATE_DATE" property="createDate" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="SEND_AMOUNT" jdbcType="INTEGER" property="sendAmount" />
+    <result column="CATEGORY" jdbcType="VARCHAR" property="category" />
+  </resultMap>
+   
+  <sql id="Deposit_Column_List">
+    nl.CREATE_DATE, nl.USER_ID, nl.SEND_AMOUNT, nl.CATEGORY
+  </sql>
+  
+  <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.Log">
+    insert into nyamnyam_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="idx != null">
+        IDX,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="userIdx != null">
+        USER_IDX,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="nickname != null">
+        NICKNAME,
+      </if>
+      <if test="frName != null">
+        FR_NAME,
+      </if>
+      <if test="userGroup != null">
+        USER_GROUP,
+      </if>
+      <if test="myStatus != null">
+        MY_STATUS,
+      </if>
+      <if test="orderIdx != null">
+        ORDER_IDX,
+      </if>
+      <if test="orderDate != null">
+        ORDER_DATE,
+      </if>
+      <if test="custMessage != null">
+        CUST_MESSAGE,
+      </if>
+      <if test="custPhone != null">
+        CUST_PHONE,
+      </if>
+      <if test="orderPrice != null">
+        ORDER_PRICE,
+      </if>
+      <if test="deliveryPrice != null">
+        DELIVERY_PRICE,
+      </if>
+      <if test="orderStatus != null">
+        ORDER_STATUS,
+      </if>
+      <if test="destAddr1 != null">
+        DEST_ADDR1,
+      </if>
+      <if test="destAddr2 != null">
+        DEST_ADDR2,
+      </if>
+      <if test="destAddr3 != null">
+        DEST_ADDR3,
+      </if>
+      <if test="cancelReason != null">
+        CANCEL_REASON,
+      </if>
+      <if test="riderIdx != null">
+        RIDER_IDX,
+      </if>
+      <if test="paymentIdx != null">
+        PAYMENT_IDX,
+      </if>
+      <if test="payments != null">
+        PAYMENTS,
+      </if>
+      <if test="paymentMethod != null">
+        PAYMENT_METHOD,
+      </if>
+      <if test="paymentAmount != null">
+        PAYMENT_AMOUNT,
+      </if>
+      <if test="paymentStatus != null">
+        PAYMENT_STATUS,
+      </if>
+      <if test="bank != null">
+        BANK,
+      </if>
+      <if test="bankAccount != null">
+        BANK_ACCOUNT,
+      </if>
+      <if test="depositor != null">
+        DEPOSITOR,
+      </if>
+      <if test="withdrawReqDate != null">
+        WITHDRAW_REQ_DATE,
+      </if>
+      <if test="withdrawStatus != null">
+        WITHDRAW_STATUS,
+      </if>
+      <if test="withdrawReqAmount != null">
+        WITHDRAW_REQ_AMOUNT,
+      </if>
+      <if test="procDate != null">
+        PROC_DATE,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="sendAmount != null">
+        SEND_AMOUNT,
+      </if>
+      <if test="receiveIdx != null">
+        RECEIVE_IDX,
+      </if>
+      <if test="receiveId != null">
+        RECEIVE_ID,
+      </if>
+      <if test="incenCategory != null">
+        INCEN_CATEGORY,
+      </if>
+      <if test="incenMonth != null">
+        INCEN_MONTH,
+      </if>
+      <if test="userLevel != null">
+        USER_LEVEL,
+      </if>
+      <if test="payedAmount != null">
+        PAYED_AMOUNT,
+      </if>
+      <if test="frSalesIdx != null">
+        FR_SALES_IDX,
+      </if>
+      <if test="beforeNcash != null">
+        BEFORE_NCASH,
+      </if>
+      <if test="afterNcash != null">
+        AFTER_NCASH,
+      </if>
+      <if test="ncashDelta != null">
+        NCASH_DELTA,
+      </if>
+      <if test="workCategory != null">
+        WORK_CATEGORY,
+      </if>
+      <if test="batchIdx != null">
+        BATCH_IDX,
+      </if>
+      <if test="productIdx != null">
+        PRODUCT_IDX,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="buyStatus != null">
+        BUY_STATUS,
+      </if>
+      <if test="frIdx != null">
+        FR_IDX,
+      </if>
+      <if test="direction != null">
+        DIRECTION,
+      </if>
+      <if test="arriveReqTime != null">
+        ARRIVE_REQ_TIME,
+      </if>
+      <if test="branchIdx != null">
+        BRANCH_IDX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null">
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="frName != null">
+        #{frName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGroup != null">
+        #{userGroup,jdbcType=SMALLINT},
+      </if>
+      <if test="myStatus != null">
+        #{myStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="orderIdx != null">
+        #{orderIdx,jdbcType=INTEGER},
+      </if>
+      <if test="orderDate != null">
+        #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="custMessage != null">
+        #{custMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="custPhone != null">
+        #{custPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="orderPrice != null">
+        #{orderPrice,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryPrice != null">
+        #{deliveryPrice,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="destAddr1 != null">
+        #{destAddr1,jdbcType=VARCHAR},
+      </if>
+      <if test="destAddr2 != null">
+        #{destAddr2,jdbcType=VARCHAR},
+      </if>
+      <if test="destAddr3 != null">
+        #{destAddr3,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelReason != null">
+        #{cancelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="riderIdx != null">
+        #{riderIdx,jdbcType=INTEGER},
+      </if>
+      <if test="paymentIdx != null">
+        #{paymentIdx,jdbcType=INTEGER},
+      </if>
+      <if test="payments != null">
+        #{payments,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentMethod != null">
+        #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentAmount != null">
+        #{paymentAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentStatus != null">
+        #{paymentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null">
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="depositor != null">
+        #{depositor,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawReqDate != null">
+        #{withdrawReqDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="withdrawStatus != null">
+        #{withdrawStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="withdrawReqAmount != null">
+        #{withdrawReqAmount,jdbcType=INTEGER},
+      </if>
+      <if test="procDate != null">
+        #{procDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendAmount != null">
+        #{sendAmount,jdbcType=INTEGER},
+      </if>
+      <if test="receiveIdx != null">
+        #{receiveIdx,jdbcType=INTEGER},
+      </if>
+      <if test="receiveId != null">
+        #{receiveId,jdbcType=VARCHAR},
+      </if>
+      <if test="incenCategory != null">
+        #{incenCategory,jdbcType=SMALLINT},
+      </if>
+      <if test="incenMonth != null">
+        #{incenMonth,jdbcType=CHAR},
+      </if>
+      <if test="userLevel != null">
+        #{userLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="payedAmount != null">
+        #{payedAmount,jdbcType=INTEGER},
+      </if>
+      <if test="frSalesIdx != null">
+        #{frSalesIdx,jdbcType=INTEGER},
+      </if>
+      <if test="beforeNcash != null">
+        #{beforeNcash,jdbcType=INTEGER},
+      </if>
+      <if test="afterNcash != null">
+        #{afterNcash,jdbcType=INTEGER},
+      </if>
+      <if test="ncashDelta != null">
+        #{ncashDelta,jdbcType=INTEGER},
+      </if>
+      <if test="workCategory != null">
+        #{workCategory,jdbcType=SMALLINT},
+      </if>
+      <if test="batchIdx != null">
+        #{batchIdx,jdbcType=INTEGER},
+      </if>
+      <if test="productIdx != null">
+        #{productIdx,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="buyStatus != null">
+        #{buyStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="frIdx != null">
+        #{frIdx,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=SMALLINT},
+      </if>
+      <if test="arriveReqTime != null">
+        #{arriveReqTime,jdbcType=SMALLINT},
+      </if>
+      <if test="branchIdx != null">
+        #{branchIdx,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- custom query -->
+  <select id="selectNcashList" parameterType="com.nnbox.admin.api.ncash.model.NcashListRequest" resultMap="DepositResultMap">
+    select 
+    <include refid="Deposit_Column_List" />
+    from nyamnyam_log nl
+    where NCASH_DELTA &gt; 0
+      and USER_TYPE = #{userType}
+      <if test="userId != null and !userId.isEmpty()">and USER_ID like concat('%', #{userId}, '%')</if>
+    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getTotalCount" parameterType="com.nnbox.admin.api.ncash.model.NcashListRequest" resultType="int">
+    select count(*)
+    from nyamnyam_log
+    where NCASH_DELTA &gt; 0
+      and USER_TYPE = #{userType}
+      <if test="userId != null and !userId.isEmpty()">and USER_ID like concat('%', #{userId}, '%')</if>
+  </select>
+  
+</mapper>

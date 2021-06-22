@@ -34,7 +34,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      jdbcUrl: "jdbc:mysql://dev01.nnbox.net:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC&allowMultiQueries=true"
+      jdbcUrl: "jdbc:mysql://dev01.nnbox.net:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=Asia/Seoul&allowMultiQueries=true"
       ### LIVE DB ###
       #jdbcUrl: "jdbc:mysql://121.78.82.136:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC&allowMultiQueries=true"
       ### STAGE DB ###
