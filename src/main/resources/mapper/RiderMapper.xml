@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.RiderMapper">
+  <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.Rider">
+    <id column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="RIDER_NAME" jdbcType="VARCHAR" property="riderName" />
+    <result column="RIDER_STATUS" jdbcType="SMALLINT" property="riderStatus" />
+    <result column="RIDER_LEVEL" jdbcType="SMALLINT" property="riderLevel" />
+    <result column="DELIVERY_PRICE_FEE_TYPE" jdbcType="SMALLINT" property="deliveryPriceFeeType" />
+    <result column="DELIVERY_PRICE_FEE_AMOUNT" jdbcType="INTEGER" property="deliveryPriceFeeAmount" />
+    <result column="BASIC_DELIVERY_PRICE" jdbcType="INTEGER" property="basicDeliveryPrice" />
+    <result column="MONTH_BASIC_AMOUNT" jdbcType="SMALLINT" property="monthBasicAmount" />
+    <result column="MANAGEMENT_INCEN_SHOULD_BE_PAYED" jdbcType="TINYINT" property="managementIncenShouldBePayed" />
+    <result column="FR_INCEN_SHOULD_BE_PAYED" jdbcType="TINYINT" property="frIncenShouldBePayed" />
+    <result column="PREPAYMENT_INCEN_SHOULD_BE_PAYED" jdbcType="TINYINT" property="prepaymentIncenShouldBePayed" />
+    <result column="RIDER_SETTING_GROUP_IDX" jdbcType="INTEGER" property="riderSettingGroupIdx" />
+    <result column="DRIVER_LICENSE_FILE_IDX" jdbcType="INTEGER" property="driverLicenseFileIdx" />
+    <result column="DRIVER_LICENSE_NUMBER" jdbcType="VARCHAR" property="driverLicenseNumber" />
+    <result column="TEAM_MANAGER_IDX" jdbcType="INTEGER" property="teamManagerIdx" />
+    <result column="DRIVER_LICENSE_NAME" jdbcType="VARCHAR" property="driverLicenseName" />
+    <result column="DRIVER_LICENSE_ISSUE_DATE" jdbcType="CHAR" property="driverLicenseIssueDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USER_IDX, RIDER_NAME, RIDER_STATUS, RIDER_LEVEL, DELIVERY_PRICE_FEE_TYPE, DELIVERY_PRICE_FEE_AMOUNT, 
+    BASIC_DELIVERY_PRICE, MONTH_BASIC_AMOUNT, MANAGEMENT_INCEN_SHOULD_BE_PAYED, FR_INCEN_SHOULD_BE_PAYED, 
+    PREPAYMENT_INCEN_SHOULD_BE_PAYED, RIDER_SETTING_GROUP_IDX, DRIVER_LICENSE_FILE_IDX, 
+    DRIVER_LICENSE_NUMBER, TEAM_MANAGER_IDX, DRIVER_LICENSE_NAME, DRIVER_LICENSE_ISSUE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rider
+    where USER_IDX = #{userIdx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rider
+    where USER_IDX = #{userIdx,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nnbox.admin.data.model.Rider">
+    insert into rider (USER_IDX, RIDER_NAME, RIDER_STATUS, 
+      RIDER_LEVEL, DELIVERY_PRICE_FEE_TYPE, DELIVERY_PRICE_FEE_AMOUNT, 
+      BASIC_DELIVERY_PRICE, MONTH_BASIC_AMOUNT, 
+      MANAGEMENT_INCEN_SHOULD_BE_PAYED, FR_INCEN_SHOULD_BE_PAYED, 
+      PREPAYMENT_INCEN_SHOULD_BE_PAYED, RIDER_SETTING_GROUP_IDX, 
+      DRIVER_LICENSE_FILE_IDX, DRIVER_LICENSE_NUMBER, 
+      TEAM_MANAGER_IDX, DRIVER_LICENSE_NAME, DRIVER_LICENSE_ISSUE_DATE
+      )
+    values (#{userIdx,jdbcType=INTEGER}, #{riderName,jdbcType=VARCHAR}, #{riderStatus,jdbcType=SMALLINT}, 
+      #{riderLevel,jdbcType=SMALLINT}, #{deliveryPriceFeeType,jdbcType=SMALLINT}, #{deliveryPriceFeeAmount,jdbcType=INTEGER}, 
+      #{basicDeliveryPrice,jdbcType=INTEGER}, #{monthBasicAmount,jdbcType=SMALLINT}, 
+      #{managementIncenShouldBePayed,jdbcType=TINYINT}, #{frIncenShouldBePayed,jdbcType=TINYINT}, 
+      #{prepaymentIncenShouldBePayed,jdbcType=TINYINT}, #{riderSettingGroupIdx,jdbcType=INTEGER}, 
+      #{driverLicenseFileIdx,jdbcType=INTEGER}, #{driverLicenseNumber,jdbcType=VARCHAR}, 
+      #{teamManagerIdx,jdbcType=INTEGER}, #{driverLicenseName,jdbcType=VARCHAR}, #{driverLicenseIssueDate,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.Rider">
+    insert into rider
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userIdx != null">
+        USER_IDX,
+      </if>
+      <if test="riderName != null">
+        RIDER_NAME,
+      </if>
+      <if test="riderStatus != null">
+        RIDER_STATUS,
+      </if>
+      <if test="riderLevel != null">
+        RIDER_LEVEL,
+      </if>
+      <if test="deliveryPriceFeeType != null">
+        DELIVERY_PRICE_FEE_TYPE,
+      </if>
+      <if test="deliveryPriceFeeAmount != null">
+        DELIVERY_PRICE_FEE_AMOUNT,
+      </if>
+      <if test="basicDeliveryPrice != null">
+        BASIC_DELIVERY_PRICE,
+      </if>
+      <if test="monthBasicAmount != null">
+        MONTH_BASIC_AMOUNT,
+      </if>
+      <if test="managementIncenShouldBePayed != null">
+        MANAGEMENT_INCEN_SHOULD_BE_PAYED,
+      </if>
+      <if test="frIncenShouldBePayed != null">
+        FR_INCEN_SHOULD_BE_PAYED,
+      </if>
+      <if test="prepaymentIncenShouldBePayed != null">
+        PREPAYMENT_INCEN_SHOULD_BE_PAYED,
+      </if>
+      <if test="riderSettingGroupIdx != null">
+        RIDER_SETTING_GROUP_IDX,
+      </if>
+      <if test="driverLicenseFileIdx != null">
+        DRIVER_LICENSE_FILE_IDX,
+      </if>
+      <if test="driverLicenseNumber != null">
+        DRIVER_LICENSE_NUMBER,
+      </if>
+      <if test="teamManagerIdx != null">
+        TEAM_MANAGER_IDX,
+      </if>
+      <if test="driverLicenseName != null">
+        DRIVER_LICENSE_NAME,
+      </if>
+      <if test="driverLicenseIssueDate != null">
+        DRIVER_LICENSE_ISSUE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userIdx != null">
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="riderName != null">
+        #{riderName,jdbcType=VARCHAR},
+      </if>
+      <if test="riderStatus != null">
+        #{riderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="riderLevel != null">
+        #{riderLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="deliveryPriceFeeType != null">
+        #{deliveryPriceFeeType,jdbcType=SMALLINT},
+      </if>
+      <if test="deliveryPriceFeeAmount != null">
+        #{deliveryPriceFeeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="basicDeliveryPrice != null">
+        #{basicDeliveryPrice,jdbcType=INTEGER},
+      </if>
+      <if test="monthBasicAmount != null">
+        #{monthBasicAmount,jdbcType=SMALLINT},
+      </if>
+      <if test="managementIncenShouldBePayed != null">
+        #{managementIncenShouldBePayed,jdbcType=TINYINT},
+      </if>
+      <if test="frIncenShouldBePayed != null">
+        #{frIncenShouldBePayed,jdbcType=TINYINT},
+      </if>
+      <if test="prepaymentIncenShouldBePayed != null">
+        #{prepaymentIncenShouldBePayed,jdbcType=TINYINT},
+      </if>
+      <if test="riderSettingGroupIdx != null">
+        #{riderSettingGroupIdx,jdbcType=INTEGER},
+      </if>
+      <if test="driverLicenseFileIdx != null">
+        #{driverLicenseFileIdx,jdbcType=INTEGER},
+      </if>
+      <if test="driverLicenseNumber != null">
+        #{driverLicenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="teamManagerIdx != null">
+        #{teamManagerIdx,jdbcType=INTEGER},
+      </if>
+      <if test="driverLicenseName != null">
+        #{driverLicenseName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicenseIssueDate != null">
+        #{driverLicenseIssueDate,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.Rider">
+    update rider
+    <set>
+      <if test="riderName != null">
+        RIDER_NAME = #{riderName,jdbcType=VARCHAR},
+      </if>
+      <if test="riderStatus != null">
+        RIDER_STATUS = #{riderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="riderLevel != null">
+        RIDER_LEVEL = #{riderLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="deliveryPriceFeeType != null">
+        DELIVERY_PRICE_FEE_TYPE = #{deliveryPriceFeeType,jdbcType=SMALLINT},
+      </if>
+      <if test="deliveryPriceFeeAmount != null">
+        DELIVERY_PRICE_FEE_AMOUNT = #{deliveryPriceFeeAmount,jdbcType=INTEGER},
+      </if>
+      <if test="basicDeliveryPrice != null">
+        BASIC_DELIVERY_PRICE = #{basicDeliveryPrice,jdbcType=INTEGER},
+      </if>
+      <if test="monthBasicAmount != null">
+        MONTH_BASIC_AMOUNT = #{monthBasicAmount,jdbcType=SMALLINT},
+      </if>
+      <if test="managementIncenShouldBePayed != null">
+        MANAGEMENT_INCEN_SHOULD_BE_PAYED = #{managementIncenShouldBePayed,jdbcType=TINYINT},
+      </if>
+      <if test="frIncenShouldBePayed != null">
+        FR_INCEN_SHOULD_BE_PAYED = #{frIncenShouldBePayed,jdbcType=TINYINT},
+      </if>
+      <if test="prepaymentIncenShouldBePayed != null">
+        PREPAYMENT_INCEN_SHOULD_BE_PAYED = #{prepaymentIncenShouldBePayed,jdbcType=TINYINT},
+      </if>
+      <if test="riderSettingGroupIdx != null">
+        RIDER_SETTING_GROUP_IDX = #{riderSettingGroupIdx,jdbcType=INTEGER},
+      </if>
+      <if test="driverLicenseFileIdx != null">
+        DRIVER_LICENSE_FILE_IDX = #{driverLicenseFileIdx,jdbcType=INTEGER},
+      </if>
+      <if test="driverLicenseNumber != null">
+        DRIVER_LICENSE_NUMBER = #{driverLicenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="teamManagerIdx != null">
+        TEAM_MANAGER_IDX = #{teamManagerIdx,jdbcType=INTEGER},
+      </if>
+      <if test="driverLicenseName != null">
+        DRIVER_LICENSE_NAME = #{driverLicenseName,jdbcType=VARCHAR},
+      </if>
+      <if test="driverLicenseIssueDate != null">
+        DRIVER_LICENSE_ISSUE_DATE = #{driverLicenseIssueDate,jdbcType=CHAR},
+      </if>
+    </set>
+    where USER_IDX = #{userIdx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnbox.admin.data.model.Rider">
+    update rider
+    set RIDER_NAME = #{riderName,jdbcType=VARCHAR},
+      RIDER_STATUS = #{riderStatus,jdbcType=SMALLINT},
+      RIDER_LEVEL = #{riderLevel,jdbcType=SMALLINT},
+      DELIVERY_PRICE_FEE_TYPE = #{deliveryPriceFeeType,jdbcType=SMALLINT},
+      DELIVERY_PRICE_FEE_AMOUNT = #{deliveryPriceFeeAmount,jdbcType=INTEGER},
+      BASIC_DELIVERY_PRICE = #{basicDeliveryPrice,jdbcType=INTEGER},
+      MONTH_BASIC_AMOUNT = #{monthBasicAmount,jdbcType=SMALLINT},
+      MANAGEMENT_INCEN_SHOULD_BE_PAYED = #{managementIncenShouldBePayed,jdbcType=TINYINT},
+      FR_INCEN_SHOULD_BE_PAYED = #{frIncenShouldBePayed,jdbcType=TINYINT},
+      PREPAYMENT_INCEN_SHOULD_BE_PAYED = #{prepaymentIncenShouldBePayed,jdbcType=TINYINT},
+      RIDER_SETTING_GROUP_IDX = #{riderSettingGroupIdx,jdbcType=INTEGER},
+      DRIVER_LICENSE_FILE_IDX = #{driverLicenseFileIdx,jdbcType=INTEGER},
+      DRIVER_LICENSE_NUMBER = #{driverLicenseNumber,jdbcType=VARCHAR},
+      TEAM_MANAGER_IDX = #{teamManagerIdx,jdbcType=INTEGER},
+      DRIVER_LICENSE_NAME = #{driverLicenseName,jdbcType=VARCHAR},
+      DRIVER_LICENSE_ISSUE_DATE = #{driverLicenseIssueDate,jdbcType=CHAR}
+    where USER_IDX = #{userIdx,jdbcType=INTEGER}
+  </update>
+  
+  <!-- custom sql -->
+  <select id="selectRiderList" parameterType="com.nnbox.admin.api.rider.model.RiderListRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from rider
+    order by USER_IDX desc
+    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getTotalCount" parameterType="com.nnbox.admin.api.rider.model.RiderListRequest" resultType="int">
+    select count(*)
+    from rider
+  </select>
+</mapper>
