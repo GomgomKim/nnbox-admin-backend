@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.Withdraw">
     <id column="IDX" jdbcType="INTEGER" property="idx" />
     <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="BANK" jdbcType="VARCHAR" property="bank" />
     <result column="BANK_ACCOUNT" jdbcType="VARCHAR" property="bankAccount" />
@@ -16,8 +17,11 @@
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
   </resultMap>
   <sql id="Base_Column_List">
-    IDX, USER_IDX, CREATE_DATE, BANK, BANK_ACCOUNT, DEPOSITOR, REQ_DATE, WITHDRAW_STATUS, 
-    REQ_AMOUNT, PROC_DATE, ADMIN_ID, MEMO
+    w.IDX, w.USER_IDX, w.CREATE_DATE, w.BANK, w.BANK_ACCOUNT, w.DEPOSITOR, w.REQ_DATE, w.WITHDRAW_STATUS, 
+    w.REQ_AMOUNT, w.PROC_DATE, w.ADMIN_ID, w.MEMO
+  </sql>
+  <sql id="User_Column_List">
+    u.ID as USER_ID
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -174,4 +178,28 @@
       MEMO = #{memo,jdbcType=VARCHAR}
     where IDX = #{idx,jdbcType=INTEGER}
   </update>
+  
+  <!-- custom query -->
+  <select id="selectWithdrawList" parameterType="com.nnbox.admin.api.ncash.model.WithdrawListRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />,
+    <include refid="User_Column_List" />
+    from withdraw w inner join user u
+      on w.USER_IDX = u.IDX
+    <where>
+      <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
+    </where>
+    order by w.IDX desc
+    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getTotalCount" parameterType="com.nnbox.admin.api.ncash.model.WithdrawListRequest" resultType="int">
+    select count(*)
+    from withdraw w inner join user u
+      on w.USER_IDX = u.IDX
+    <where>
+      <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
+    </where>
+  </select>
+  
 </mapper>

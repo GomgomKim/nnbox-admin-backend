@@ -10,6 +10,8 @@ import com.nnbox.admin.api.ncash.model.NcashCreateRequest;
 import com.nnbox.admin.api.ncash.model.NcashCreateResponse;
 import com.nnbox.admin.api.ncash.model.NcashListRequest;
 import com.nnbox.admin.api.ncash.model.NcashListResponse;
+import com.nnbox.admin.api.ncash.model.WithdrawListRequest;
+import com.nnbox.admin.api.ncash.model.WithdrawListResponse;
 import com.nnbox.admin.common.constants.ErrorCode;
 import com.nnbox.admin.common.constants.NyamnyamLogCategoryCode;
 import com.nnbox.admin.common.exception.BasicException;
@@ -17,8 +19,10 @@ import com.nnbox.admin.common.security.token.UserAuthenticationToken;
 import com.nnbox.admin.common.utils.SessionUtil;
 import com.nnbox.admin.data.mapper.LogMapper;
 import com.nnbox.admin.data.mapper.UserMapper;
+import com.nnbox.admin.data.mapper.WithdrawMapper;
 import com.nnbox.admin.data.model.Log;
 import com.nnbox.admin.data.model.User;
+import com.nnbox.admin.data.model.Withdraw;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +35,9 @@ public class NcashService {
 	
 	@Autowired
 	UserMapper userMapper;
+	
+	@Autowired
+	WithdrawMapper withdrawMapper;
 
 	public NcashListResponse getNcashList(NcashListRequest listRequest) throws Exception {
 		NcashListResponse response = new NcashListResponse();
@@ -75,6 +82,20 @@ public class NcashService {
 	    }
 	}
 	
+	public WithdrawListResponse getWithdrawList(WithdrawListRequest listRequest) throws Exception {
+		WithdrawListResponse response = new WithdrawListResponse();
+		
+	    response.setCurrentPage(listRequest.getPageNum());
+	    List<Withdraw> withdraws = withdrawMapper.selectWithdrawList(listRequest);
+	    Integer totalCount = withdrawMapper.getTotalCount(listRequest);
+
+	    response.setWithdraws(withdraws);
+	    response.setTotalCount(totalCount);
+	    response.setTotalPage(totalCount, 10);
+
+	    return response;
+	}
+	
 	private void UserLog(NyamnyamLogCategoryCode category, UserAuthenticationToken token, NcashCreateRequest request) {
 	    try {
 	      // 받은 유저
@@ -93,7 +114,6 @@ public class NcashService {
 	      nyamnyamLog2.setBeforeNcash(user2.getNcash() - ncashDelta2);
 	      nyamnyamLog2.setAfterNcash(user2.getNcash());
 	      nyamnyamLog2.setNcashDelta(ncashDelta2);
-
 	      nyamnyamLog2.setAdminId(token.getId());
 	      nyamnyamLog2.setReceiveId(user2.getId());
 	      

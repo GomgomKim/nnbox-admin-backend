@@ -12,6 +12,15 @@ public class Withdraw {
 	  // IDX
 	  @ApiModelProperty(value = "IDX", dataType = "Integer", example = "1", required = false, hidden = true)
 	  private Integer idx;
+	  
+	  // 유저 아이디
+	  @ApiModelProperty(value = "유저 아이디", dataType = "String", example = "userId")
+	  private String userId;
+	  
+	  // 생성 일자
+	  @ApiModelProperty(value = "생성 일자", dataType = "LocalDateTime")
+	  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	  private LocalDateTime createDate;
 
 	  @ApiModelProperty(value = "요청 유저(라이더) IDX", dataType = "Integer", example = "1", required = false, hidden = true)
 	  private Integer userIdx;

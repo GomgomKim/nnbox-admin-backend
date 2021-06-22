@@ -16,6 +16,8 @@ import com.nnbox.admin.api.ncash.model.NcashCreateRequest;
 import com.nnbox.admin.api.ncash.model.NcashCreateResponse;
 import com.nnbox.admin.api.ncash.model.NcashListRequest;
 import com.nnbox.admin.api.ncash.model.NcashListResponse;
+import com.nnbox.admin.api.ncash.model.WithdrawListRequest;
+import com.nnbox.admin.api.ncash.model.WithdrawListResponse;
 import com.nnbox.admin.api.ncash.service.NcashService;
 import com.nnbox.admin.common.constants.ErrorCode;
 import com.nnbox.admin.common.exception.BasicException;
@@ -43,6 +45,12 @@ public class NcashController {
 		if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
 		return ncashService.createNcash(request);
     }
+	
+	@RequestMapping(value = "/withdraw/list", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "예치금 출금내역", notes = "유저별 예치금 출금 이력을 불러온다.")
+	public WithdrawListResponse getWithdrawList(@ModelAttribute WithdrawListRequest listRequest, BindingResult bindingResult) throws Exception {
+		return ncashService.getWithdrawList(listRequest);
+	}
 	
 	
 	
