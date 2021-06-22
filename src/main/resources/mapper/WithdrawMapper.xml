@@ -187,6 +187,7 @@
     from withdraw w inner join user u
       on w.USER_IDX = u.IDX
     <where>
+      u.USER_TYPE = #{userType}
       <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
     </where>
     order by w.IDX desc
@@ -198,6 +199,7 @@
     from withdraw w inner join user u
       on w.USER_IDX = u.IDX
     <where>
+      USER_TYPE = #{userType}
       <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
     </where>
   </select>
