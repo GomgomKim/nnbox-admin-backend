@@ -370,6 +370,7 @@
     where NCASH_DELTA &gt; 0
       and USER_TYPE = #{userType}
       <if test="userId != null and !userId.isEmpty()">and USER_ID like concat('%', #{userId}, '%')</if>
+    order by IDX desc
     limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
   </select>
   
