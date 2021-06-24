@@ -12,12 +12,13 @@
   <!-- 어드민 권한 MENU LIST -->
   <resultMap id="AdminAuthMenuMap" type="com.nnbox.admin.api.authentication.model.AdminAuthMenuResponse">
     <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <id column="ADMIN_USER_IDX" jdbcType="INTEGER" property="adminUserIdx" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
     <result column="NAME_KR" jdbcType="VARCHAR" property="nameKr" />
     <result column="PATH" jdbcType="VARCHAR" property="path" />
     <result column="PARENT_IDX" jdbcType="INTEGER" property="parentIdx" />
     <result column="AUTH" jdbcType="TINYINT" property="auth" />
-    <collection property="subMenu" column="IDX" javaType="java.util.ArrayList" select="selectSubMenu" 
+    <collection property="subMenu" column="{idx=IDX, adminUserIdx=ADMIN_USER_IDX}" javaType="java.util.ArrayList" select="selectSubMenu" 
           ofType="com.nnbox.admin.data.model.Menu"/>
   </resultMap>
   
@@ -117,12 +118,13 @@
       inner join menu m on aua.MENU_IDX = m.IDX
       inner join menu m2 on m.IDX = m2.PARENT_IDX
     where m.IDX = #{idx} 
+      and aua.ADMIN_USER_IDX = #{adminUserIdx}
       and aua.AUTH = 1
   </select>
   
   <!-- 모든 어드민 권한 MENU LIST -->
   <select id="getAllAdminAuthMenu" parameterType="java.lang.Integer" resultMap="AdminAuthMenuMap">
-    select M.IDX, M.`NAME`, M.NAME_KR, M.PATH, M.PARENT_IDX, AUA.AUTH
+    select M.IDX, M.`NAME`, M.NAME_KR, M.PATH, M.PARENT_IDX, AUA.AUTH, AUA.ADMIN_USER_IDX
     from admin_user_auth AUA 
       join menu M on AUA.MENU_IDX = M.IDX
     where AUA.ADMIN_USER_IDX = #{adminUserIdx,jdbcType=INTEGER} AND AUA.AUTH = 1 AND M.PARENT_IDX = 0

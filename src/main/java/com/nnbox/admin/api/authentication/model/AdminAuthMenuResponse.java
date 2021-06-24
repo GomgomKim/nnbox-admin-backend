@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class AdminAuthMenuResponse {
 	private Integer idx;
+
+	private Integer adminUserIdx;
 	
 	private String name;
 	
