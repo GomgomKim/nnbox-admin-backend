@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.Menu">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="NAME_KR" jdbcType="VARCHAR" property="nameKr" />
+    <result column="PATH" jdbcType="VARCHAR" property="path" />
+    <result column="PARENT_IDX" jdbcType="INTEGER" property="parentIdx" />
+  </resultMap>
+  
+  <!-- 어드민 권한 MENU LIST -->
+  <resultMap id="AdminAuthMenuMap" type="com.nnbox.admin.api.authentication.model.AdminAuthMenuResponse">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="NAME_KR" jdbcType="VARCHAR" property="nameKr" />
+    <result column="PATH" jdbcType="VARCHAR" property="path" />
+    <result column="PARENT_IDX" jdbcType="INTEGER" property="parentIdx" />
+    <result column="AUTH" jdbcType="TINYINT" property="auth" />
+    <collection property="subMenu" column="IDX" javaType="java.util.ArrayList" select="selectSubMenu" 
+          ofType="com.nnbox.admin.data.model.Menu"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    IDX, NAME, NAME_KR, PATH, PARENT_IDX
+  </sql>
+  
+  <sql id="Menu_Column_List">
+    m.IDX, m.`NAME`, m.NAME_KR, m.PATH, m.PARENT_IDX, aua.AUTH
+  </sql>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where IDX = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from menu
+    where IDX = #{idx,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nnbox.admin.data.model.Menu">
+    insert into menu (IDX, NAME, NAME_KR, 
+      PATH, PARENT_IDX)
+    values (#{idx,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{nameKr,jdbcType=VARCHAR}, 
+      #{path,jdbcType=VARCHAR}, #{parentIdx,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.Menu">
+    insert into menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        IDX,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="nameKr != null">
+        NAME_KR,
+      </if>
+      <if test="path != null">
+        PATH,
+      </if>
+      <if test="parentIdx != null">
+        PARENT_IDX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameKr != null">
+        #{nameKr,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parentIdx != null">
+        #{parentIdx,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.Menu">
+    update menu
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nameKr != null">
+        NAME_KR = #{nameKr,jdbcType=VARCHAR},
+      </if>
+      <if test="path != null">
+        PATH = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="parentIdx != null">
+        PARENT_IDX = #{parentIdx,jdbcType=INTEGER},
+      </if>
+    </set>
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnbox.admin.data.model.Menu">
+    update menu
+    set NAME = #{name,jdbcType=VARCHAR},
+      NAME_KR = #{nameKr,jdbcType=VARCHAR},
+      PATH = #{path,jdbcType=VARCHAR},
+      PARENT_IDX = #{parentIdx,jdbcType=INTEGER}
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  
+  <!-- custom query -->
+  <!-- sub MENU LIST -->
+  <select id="selectSubMenu" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select m2.IDX, m2.NAME, m2.NAME_KR, m2.PATH, m2.PARENT_IDX
+    from admin_user_auth aua 
+      inner join menu m on aua.MENU_IDX = m.IDX
+      inner join menu m2 on m.IDX = m2.PARENT_IDX
+    where m.IDX = #{idx} 
+      and aua.AUTH = 1
+  </select>
+  
+  <!-- 모든 어드민 권한 MENU LIST -->
+  <select id="getAllAdminAuthMenu" parameterType="java.lang.Integer" resultMap="AdminAuthMenuMap">
+    select M.IDX, M.`NAME`, M.NAME_KR, M.PATH, M.PARENT_IDX, AUA.AUTH
+    from admin_user_auth AUA 
+      join menu M on AUA.MENU_IDX = M.IDX
+    where AUA.ADMIN_USER_IDX = #{adminUserIdx,jdbcType=INTEGER} AND AUA.AUTH = 1 AND M.PARENT_IDX = 0
+  </select>
+  
+  <!-- PARENT MENU LIST -->
+  <select id="getMenuParent" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where PARENT_IDX = 0
+  </select>
+  <!-- SUB MENU LIST -->
+  <select id="getMenuSub" parameterType="java.lang.Integer" resultMap="AdminAuthMenuMap">
+    select M.IDX, M.`NAME`, M.NAME_KR, M.PATH, M.PARENT_IDX, AUA.AUTH
+    from admin_user_auth AUA 
+      join menu M on AUA.MENU_IDX = M.IDX
+    where M.PARENT_IDX = #{parentIdx,jdbcType=INTEGER} AND AUA.AUTH = 1
+      <if test="idx != 0">and AUA.ADMIN_USER_IDX = #{idx}</if>
+  </select>
+  <!-- SUB MENU ALL LIST -->
+  <select id="allSubMenu" parameterType="java.lang.Integer" resultMap="AdminAuthMenuMap">
+    select IDX, NAME, NAME_KR, PATH, PARENT_IDX, 0 AUTH
+    from menu
+    where PARENT_IDX = #{idx,jdbcType=INTEGER}
+  </select>
+  <!-- PARENT MENU 내정보 수정 빼고 LIST -->
+  <select id="getMenuParentOutInfo" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from menu
+    where PARENT_IDX = 0 and `NAME` != 'MY_INFO'
+  </select>
+  <!-- MY INFO 검색 -->
+  <select id="getMyInfo" resultMap="AdminAuthMenuMap">
+    select IDX, `NAME`, NAME_KR, PATH, PARENT_IDX, 1 AUTH
+    from menu
+    where `NAME` = 'MY_INFO'
+  </select>
+  
+  <select id="getAdminAuthMenu" parameterType="java.lang.Integer" resultMap="AdminAuthMenuMap">
+    select M.IDX, M.`NAME`, M.NAME_KR, M.PATH, M.PARENT_IDX, AUA.AUTH
+    from admin_user_auth AUA 
+      join menu M on AUA.MENU_IDX = M.IDX
+    where AUA.ADMIN_USER_IDX = #{adminUserIdx,jdbcType=INTEGER} AND AUA.AUTH = 1 and M.PARENT_IDX = 0
+  </select>
+  
+</mapper>

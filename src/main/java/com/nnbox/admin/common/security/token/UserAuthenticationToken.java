@@ -1,6 +1,6 @@
 package com.nnbox.admin.common.security.token;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -18,14 +18,19 @@ import lombok.Setter;
 public class UserAuthenticationToken extends AbstractAuthenticationToken {
 
 	String id;
+	
 	String password;
+	
 	AdminUser adminUser;
+	
+	List<GrantedAuthority> authorities;
 
-	public UserAuthenticationToken(String id, String password, Collection<? extends GrantedAuthority> authorities, boolean authenticated) {
+	public UserAuthenticationToken(String id, String password, List<GrantedAuthority> authorities, boolean authenticated) {
 		super(authorities);
 		super.setAuthenticated(authenticated);
 		this.id = id;
 		this.password = password;
+		this.authorities = authorities;
 	}
 
 	@Override
