@@ -112,7 +112,7 @@
   
   <!-- custom query -->
   <!-- sub MENU LIST -->
-  <select id="selectSubMenu" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectSubMenu" parameterType="java.util.Map" resultMap="BaseResultMap">
     select m2.IDX, m2.NAME, m2.NAME_KR, m2.PATH, m2.PARENT_IDX
     from admin_user_auth aua 
       inner join menu m on aua.MENU_IDX = m.IDX
