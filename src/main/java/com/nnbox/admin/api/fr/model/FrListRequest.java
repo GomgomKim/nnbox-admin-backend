@@ -9,9 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FrListRequest extends ListRequest {
-	@ApiModelProperty(value = "지점 이름", dataType = "String", example = "1", required = false)
-	private String branchName;
-	
-	@ApiModelProperty(value = "가맹점 이름", dataType = "String", example = "1", required = false)
+	@ApiModelProperty(value = "가맹점 이름", dataType = "String", example = "frName", required = false)
 	private String frName;
 }

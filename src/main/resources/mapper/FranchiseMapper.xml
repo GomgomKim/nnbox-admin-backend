@@ -65,7 +65,7 @@
     from
     <include refid="Fr_List_Table" />
     <where>
-      <if test="frName != null or !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+      <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
     </where>
   </select>
 </mapper>
