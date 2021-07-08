@@ -27,9 +27,9 @@ public class NoticeService {
 	public NoticeListResponse getNoticeList(NoticeListRequest listRequest) throws Exception {
 		NoticeListResponse response = new NoticeListResponse();
 		
-		if (listRequest.getStartDate().equals("")) listRequest.setStartDate(null);
-		if (listRequest.getEndDate().equals("")) listRequest.setEndDate(null);
-		if (listRequest.getTitle().equals("")) listRequest.setTitle(null);
+		if (listRequest.getStartDate() != null && listRequest.getStartDate().equals("")) listRequest.setStartDate(null);
+		if (listRequest.getEndDate() != null && listRequest.getEndDate().equals("")) listRequest.setEndDate(null);
+		if (listRequest.getTitle() != null && listRequest.getTitle().equals("")) listRequest.setTitle(null);
 	    response.setCurrentPage(listRequest.getPageNum());
 	    List<Notice> notices = noticeMapper.selectNoticeList(listRequest);
 	    Integer totalCount = noticeMapper.getTotalCount(listRequest);

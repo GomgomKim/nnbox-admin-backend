@@ -158,6 +158,7 @@
     where IDX >= 1
     <if test="title != null">and TITLE like concat('%', #{title}, '%')</if>
     <if test="startDate != null">and CREATE_DATE between #{startDate} and concat(#{endDate}, ' 23:59:59')</if>
+    <if test="deleted != null">and DELETED = #{deleted}</if>
     order by SORT_ORDER desc
     limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
   </select>

@@ -20,4 +20,8 @@ public class NoticeListRequest extends ListRequest {
       // 종료일
       @ApiModelProperty(value = "종료일", dataType = "String")
       private String endDate;
+      
+   // 종료일
+      @ApiModelProperty(value = "삭제여부", dataType = "Integer")
+      private Integer deleted;
 }
