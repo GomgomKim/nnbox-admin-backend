@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class Inquiry {
-	@ApiModelProperty(value = "IDX", dataType = "Integer", example = "1", required = false, hidden = true)
+	@ApiModelProperty(value = "IDX", dataType = "Integer", example = "1", required = false, hidden = false)
     private Integer idx;
 
 	@ApiModelProperty(value = "카테고리", dataType = "String", example = "FRAN", required = true, hidden = false)
@@ -36,8 +36,8 @@ public class Inquiry {
 	@ApiModelProperty(value = "휴대전화 번호", dataType = "String", example = "01012345678", required = false, hidden = false)
     private String phone;
 
-	@ApiModelProperty(value = "문의 상태(NEW, COMPELETE)", dataType = "String", example = "NEW", required = false, hidden = false)
-    private String status;
+	@ApiModelProperty(value = "문의 상태(NEW, COMPELETE)", dataType = "Integer", example = "1", required = false, hidden = false)
+    private Integer status;
 
 	@ApiModelProperty(value = "관리자 메모", dataType = "String", example = "특이사항 메모", required = false, hidden = false)
     private String memo;

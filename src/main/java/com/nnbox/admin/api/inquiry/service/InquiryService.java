@@ -5,9 +5,12 @@ import java.util.List;
 //import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nnbox.admin.api.inquiry.model.InquiryListRequest;
 import com.nnbox.admin.api.inquiry.model.InquiryListResponse;
+import com.nnbox.admin.api.inquiry.model.InquiryUpdateRequest;
+import com.nnbox.admin.api.inquiry.model.InquiryUpdateResponse;
 import com.nnbox.admin.data.mapper.InquiryMapper;
 import com.nnbox.admin.data.model.Inquiry;
 
@@ -30,4 +33,13 @@ public class InquiryService {
 
 	    return response;
 	}
+	
+	@Transactional
+    public InquiryUpdateResponse completeInquiry(InquiryUpdateRequest request) throws Exception {
+		Inquiry inquiry = request;
+	    InquiryUpdateResponse result = inquiryMapper.updateByPrimaryKeySelective(inquiry) > 0 ? InquiryUpdateResponse.SUCCESS : InquiryUpdateResponse.FAIL;
+	    return result;
+    }
+	
+	
 }
