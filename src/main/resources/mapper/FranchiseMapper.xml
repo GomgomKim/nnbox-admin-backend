@@ -23,7 +23,7 @@
   
   <sql id="Fr_Base_Column_List">
     f.USER_IDX, f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
-    , f.TID_NORMAL_RATE, f.FR_PHONE, V_ACCOUNT_NUMBER
+    , f.TID_NORMAL_RATE, f.FR_PHONE, V_ACCOUNT_NUMBER, b.BRANCH_NAME
   </sql>
   
   <sql id="Branch_Base_Column_List">
@@ -54,7 +54,8 @@
     from
     <include refid="Fr_List_Table" />
     <where>
-   		<if test="frName != null">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+   		<if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+   		<if test="branchName != null and !branchName.equals('')">and b.BRANCH_NAME like concat('%', #{branchName}, '%')</if>
   	</where>
   	order by f.USER_IDX desc
   	limit #{pageSize} offset #{limitStart}
@@ -66,6 +67,7 @@
     <include refid="Fr_List_Table" />
     <where>
       <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+      <if test="branchName != null and !branchName.equals('')">and b.BRANCH_NAME like concat('%', #{branchName}, '%')</if>
     </where>
   </select>
 </mapper>
