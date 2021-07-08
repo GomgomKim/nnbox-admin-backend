@@ -20,6 +20,9 @@ import com.nnbox.admin.data.model.Incentive;
 import com.nnbox.admin.data.model.Income;
 import com.nnbox.admin.data.model.Order;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class DeliveryService {
 
@@ -66,30 +69,44 @@ public class DeliveryService {
 	    response.setCurrentPage(listRequest.getPageNum());
 	    List<Incentive> incentives = incentiveMapper.selectStaffDeliveryList(listRequest);
 //	    Integer totalCount = incentiveMapper.getTotalCount(listRequest);
-	    
 	    Integer totalCount = 0;
 	    List<Incentive> resultIncentives = new ArrayList<>();
 	    if(incentives.size() > 1) {
 	    	Incentive temp = new Incentive();
 		    int curUser = incentives.get(0).getUserIdx();
+		    String curMonth = incentives.get(0).getIncenMonth();
 		    temp = incentives.get(0);
+		    int manageIncenAmount = 0;
+		    int frIncenAmount = 0;
+		    int additionalIncenAmount = 0;
 		    for(Incentive incentive : incentives) {
-		    	if(incentive.getUserIdx() != curUser) {
+		    	if(incentive.getUserIdx() != curUser || !incentive.getIncenMonth().equals(curMonth)) {
+		    		temp.setManageIncenAmount(manageIncenAmount);
+		    		temp.setFrIncenAmount(frIncenAmount);
+		    		temp.setAdditionalIncenAmount(additionalIncenAmount);
 		    		resultIncentives.add(temp);
 		    		totalCount++;
 		    		temp = incentive;
 		    		curUser = incentive.getUserIdx();
+		    		curMonth = incentive.getIncenMonth();
+		    		
+		    		additionalIncenAmount = 0;
+				    manageIncenAmount = 0;
+				    frIncenAmount = 0;
 		    	}
-		    	if(incentive.getCategory() == 2) temp.setManageIncenAmount(incentive.getPayedAmount());
-		    	if(incentive.getCategory() == 3) temp.setFrIncenAmount(incentive.getPayedAmount());
-		    	if(incentive.getCategory() == 5) temp.setAdditionalIncenAmount(incentive.getPayedAmount());
+
+		    	if(incentive.getManageIncenAmount() != null) manageIncenAmount += incentive.getManageIncenAmount();
+		    	if(incentive.getFrIncenAmount() != null) frIncenAmount += incentive.getFrIncenAmount();
+		    	if(incentive.getManageIncenAmount() != null) additionalIncenAmount += incentive.getManageIncenAmount();
+		    	
 		    }
 		    resultIncentives.add(temp);
+		    log.debug(resultIncentives.toString());
 		    totalCount++;
 	    }
 	    
 
-	    response.setIncentives(resultIncentives);
+	    response.setIncentives(incentives);
 	    response.setTotalCount(totalCount);
 	    response.setTotalPage(totalCount, 10);
 

@@ -38,6 +38,9 @@
     <result column="STAFF_PHONE" jdbcType="VARCHAR" property="staffPhone" />
     <result column="BASIC_DELIVERY_PRICE" jdbcType="INTEGER" property="basicDeliveryPrice" />
     <result column="STAFF_LEVEL" jdbcType="SMALLINT" property="staffLevel" />
+    <collection property="manageIncenAmount" column="{userIdx=USER_IDX, incenMonth=INCEN_MONTH}" javaType="java.lang.Integer" ofType="java.lang.Integer" select="selectManageIncenAmount" />
+    <collection property="frIncenAmount" column="{userIdx=USER_IDX, incenMonth=INCEN_MONTH}" javaType="java.lang.Integer" ofType="java.lang.Integer" select="selectFrIncenAmount" />
+    <collection property="additionalIncenAmount" column="{userIdx=USER_IDX, incenMonth=INCEN_MONTH}" javaType="java.lang.Integer" ofType="java.lang.Integer" select="selectAdditionalIncenAmount" />
   </resultMap>
   
   <!-- custom sql -->
@@ -48,7 +51,7 @@
   </sql>
   
   <sql id="Incen_Base_Column_List">
-    i.IDX, i.INCEN_MONTH, i.INCEN_DATE, i.USER_LEVEL as STAFF_LEVEL, i.INCEN_PAYED, i.DEFAULT_CNT, i.DELIVERY_CNT 
+    i.IDX, i.INCEN_MONTH, i.INCEN_DATE,i.USER_LEVEL as STAFF_LEVEL,  i.INCEN_PAYED, i.DEFAULT_CNT, i.DELIVERY_CNT 
     , i.DEFAULT_DELIVERY_PRICE, i.CATEGORY, i.PAYED_AMOUNT, i.USER_IDX
   </sql>
   
@@ -57,13 +60,32 @@
   </sql>
   
   <!-- custom query -->
+  <select id="selectManageIncenAmount" parameterType="java.util.Map" resultType="int">
+    select sum(INCEN_AMOUNT) from incentive
+    where USER_IDX = #{userIdx}
+    and CATEGORY = 2
+    and INCEN_MONTH = #{incenMonth}
+  </select>
+  <select id="selectFrIncenAmount" parameterType="java.util.Map" resultType="int">
+    select sum(INCEN_AMOUNT) from incentive
+    where USER_IDX = #{userIdx}
+    and CATEGORY = 3
+    and INCEN_MONTH = #{incenMonth}
+  </select>
+  <select id="selectAdditionalIncenAmount" parameterType="java.util.Map" resultType="int">
+    select sum(INCEN_AMOUNT) from incentive
+    where USER_IDX = #{userIdx}
+    and CATEGORY = 5
+    and INCEN_MONTH = #{incenMonth}
+  </select>
+  
   <select id="selectStaffDeliveryList" parameterType="com.nnbox.admin.api.delivery.model.StaffDeliveryListRequest" resultMap="IncenResultMap">
     select 
     <include refid="Incen_Base_Column_List" />,
     <include refid="Rider_Base_Column_List" />
     from 
     <include refid="Incen_Delivery_List_Table" />
-    where i.IDX >= 1
+    where r.RIDER_LEVEL > 1
     	<if test="staffName != null">and r.RIDER_NAME like concat('%', #{staffName}, '%')</if>
    		<if test="staffPhone != null">and u.PHONE like concat('%', #{staffPhone}, '%')</if>
    		<if test="searchMonth != null">and i.INCEN_DATE like concat(#{searchMonth}, '%')</if>
@@ -78,7 +100,7 @@
   <select id="getTotalCount" parameterType="com.nnbox.admin.api.delivery.model.StaffDeliveryListRequest" resultType="int">
     select count(*) from 
     <include refid="Incen_Delivery_List_Table" />
-    where i.IDX >= 1
+    where r.RIDER_LEVEL > 1
     	<if test="staffName != null">and r.RIDER_NAME like concat('%', #{staffName}, '%')</if>
    		<if test="staffPhone != null">and u.PHONE like concat('%', #{staffPhone}, '%')</if>
    		<if test="searchMonth != null">and i.INCEN_DATE like concat(#{searchMonth}, '%')</if>
