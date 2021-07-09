@@ -68,8 +68,8 @@ public class DeliveryService {
 		
 	    response.setCurrentPage(listRequest.getPageNum());
 	    List<Incentive> incentives = incentiveMapper.selectStaffDeliveryList(listRequest);
-//	    Integer totalCount = incentiveMapper.getTotalCount(listRequest);
-	    Integer totalCount = 0;
+	    Integer totalCount = incentiveMapper.getTotalCount(listRequest);
+//	    Integer totalCount = 0;
 	    List<Incentive> resultIncentives = new ArrayList<>();
 	    if(incentives.size() > 1) {
 	    	Incentive temp = new Incentive();
@@ -85,9 +85,10 @@ public class DeliveryService {
 		    		temp.setFrIncenAmount(frIncenAmount);
 		    		temp.setAdditionalIncenAmount(additionalIncenAmount);
 		    		resultIncentives.add(temp);
-		    		totalCount++;
+//		    		totalCount++;
 		    		temp = incentive;
 		    		curUser = incentive.getUserIdx();
+		    		
 		    		curMonth = incentive.getIncenMonth();
 		    		
 		    		additionalIncenAmount = 0;
