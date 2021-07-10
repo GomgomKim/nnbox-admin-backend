@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,4 +45,10 @@ public class FrController {
 		return frService.updateFr(request);
     }
 
+	
+	@RequestMapping(value = "/regist/pg/{userIdx}", method = RequestMethod.POST, produces = "application/json")
+    @ApiOperation(value = "가맹점 PG등록", notes = "가맹점 PG등록")
+    public boolean frRegistPg(@PathVariable("userIdx") Integer userIdx) throws Exception {
+		return frService.frRegistPg(userIdx);
+    }
 }

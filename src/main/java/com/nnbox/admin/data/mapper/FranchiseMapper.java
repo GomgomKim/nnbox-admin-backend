@@ -14,4 +14,6 @@ public interface FranchiseMapper {
     List<Franchise> selectFrList(FrListRequest request);
     
     int getTotalCount(FrListRequest request);
+    
+    Franchise selectFrByUserIdx(Integer userIdx);
 }

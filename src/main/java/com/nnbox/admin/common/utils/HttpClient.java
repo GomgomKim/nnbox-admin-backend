@@ -39,7 +39,7 @@ public class HttpClient {
 		return execute(request);
 	}
 	
-	public static String executePost(String url, HashMap<String, Object> params, boolean bjson) throws Exception {
+	public static String executePost(String url, HashMap<String, Object> params, boolean bjson, String authorization) throws Exception {
 
 		RequestConfig requestConfig = RequestConfig.custom()
 				  .setSocketTimeout(10*1000)
@@ -49,6 +49,10 @@ public class HttpClient {
 		
 		HttpPost post = new HttpPost(url);
 		post.setConfig(requestConfig);
+		
+		if (authorization != null) {
+			post.addHeader("Authorization", authorization);
+		}
 		
 		if (bjson) {
 			post.addHeader("content-type", "application/json");

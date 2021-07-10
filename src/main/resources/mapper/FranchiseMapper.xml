@@ -10,20 +10,32 @@
     <result column="ADDR3" property="addr3" />
     <result column="TID_NORMAL_RATE" property="tidNormalRate" />
     <result column="FR_PHONE" property="frPhone" />
-    <result column="V_ACCOUNT_NUMBER" property="vanNumber" />
+    <result column="WALLET_ID" property="walletId" />
+    <result column="TID_NORMAL" property="tidNormal" />
+    <result column="TID_PREPAY" property="tidPrepay" />
+    <result column="BUSINESS_NUMBER" property="businessNumber" />
+    <result column="OWNER_NAME" property="ownerName" />
+    <result column="V_ACCOUNT_BANK" property="vAccountBank" />
+    <result column="V_ACCOUNT_NUMBER" property="vAccountNumber" />
+    <result column="V_ACCOUNT_DEPOSITOR" property="vAccountDepositor" />
+
+    <result column="USER_ID" property="userId" />
+    <result column="USER_EMAIL" property="userEmail" />
+    <result column="USER_PHONE" property="userPhone" />
+    
     <result column="BRANCH_NAME" property="branchName" />
   </resultMap>
   
   <!-- sql -->
   <sql id="Fr_List_Table">
-    franchise f inner join `user` u
-      on f.USER_IDX = u.IDX inner join branch b
-      on u.BRANCH_IDX = b.IDX
+    franchise f 
+    inner join `user` u on f.USER_IDX = u.IDX 
+    inner join branch b on u.BRANCH_IDX = b.IDX
   </sql>
   
   <sql id="Fr_Base_Column_List">
     f.USER_IDX, f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
-    , f.TID_NORMAL_RATE, f.FR_PHONE, V_ACCOUNT_NUMBER, b.BRANCH_NAME
+    , f.TID_NORMAL_RATE, f.FR_PHONE, f.WALLET_ID, f.TID_NORMAL, f.TID_PREPAY, f.BUSINESS_NUMBER, f.OWNER_NAME, f.V_ACCOUNT_BANK, f.V_ACCOUNT_NUMBER, f.V_ACCOUNT_DEPOSITOR, u.ID USER_ID, u.EMAIL USER_EMAIL, u.PHONE USER_PHONE, b.BRANCH_NAME
   </sql>
   
   <sql id="Branch_Base_Column_List">
@@ -41,7 +53,12 @@
       <if test="addr3 != null">ADDR3 = #{addr3},</if>
       <if test="tidNormalRate != null">TID_NORMAL_RATE = #{tidNormalRate},</if>
       <if test="frPhone != null">FR_PHONE = #{frPhone},</if>
-      <if test="vanNumber != null">V_ACCOUNT_NUMBER = #{vanNumber},</if>
+      <if test="walletId != null">WALLET_ID = #{walletId},</if>
+      <if test="tidNormal != null">TID_NORMAL = #{tidNormal},</if>
+      <if test="tidPrepay != null">TID_PREPAY = #{tidPrepay},</if>
+      <if test="vAccountBank != null">V_ACCOUNT_BANK = #{vAccountBank},</if>
+      <if test="vAccountNumber != null">V_ACCOUNT_NUMBER = #{vAccountNumber},</if>
+      <if test="vAccountDepositor != null">V_ACCOUNT_DEPOSITOR = #{vAccountDepositor},</if>
     </set>
     where USER_IDX = #{userIdx}
   </update>
@@ -69,5 +86,14 @@
       <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
       <if test="branchName != null and !branchName.equals('')">and b.BRANCH_NAME like concat('%', #{branchName}, '%')</if>
     </where>
+  </select>
+  
+  <select id="selectFrByUserIdx" parameterType="java.lang.Integer" resultMap="FrListResultMap">
+    select 
+    <include refid="Fr_Base_Column_List" />,
+    <include refid="Branch_Base_Column_List" />
+    from
+    <include refid="Fr_List_Table" />
+    where f.USER_IDX = #{userIdx}
   </select>
 </mapper>
