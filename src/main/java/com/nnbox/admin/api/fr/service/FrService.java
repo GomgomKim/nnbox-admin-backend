@@ -72,7 +72,7 @@ public class FrService {
     	mcht.put("phone", franchise.getUserPhone());
     	mcht.put("email", franchise.getUserEmail());
     	mcht.put("addr1", franchise.getAddr1());
-    	mcht.put("addr2", franchise.getAddr3());
+    	mcht.put("addr2", franchise.getAddr2());
     	mcht.put("trackId", "TRK_" + new Date().getTime());
     	mcht.put("udf", "");
     	mcht.put("summary", "사업자등록");
@@ -87,7 +87,7 @@ public class FrService {
 //    		String response = "{  \"result\": {    \"resultCd\": \"0000\",    \"resultMsg\": \"등록완료\",    \"advanceMsg\": \"사업자 계정이 등록되었습니다.\",    \"create\": \"20190717172256\"  },  \"mcht\": {    \"walletId\": \"W156335177694f125d\",    \"userId\": \"mcht1\",    \"name\": \"가맹1\",    \"status\": \"사용\",    \"identity\": \"4198800046\",    \"ceo\": \"대표\",    \"industry\": \"서비스\",    \"category\": \"결제대행\",    \"taxType\": \"과세\",    \"tel\": \"02-1588-1838\",    \"phone\": \"010-1234-5678\",    \"email\": \"mtouch@mtouch.com\",    \"zip\": \"15834\",    \"addr1\": \"서울시 ADDR1\",    \"addr2\": \"내다 ADDR2\",    \"accntId\": \"A15633517763e5bf2a\",    \"vaccntId\": \"V156335177689f9430\",    \"balance\": 0,    \"accnt\": {      \"accntId\": \"A15633517763e5bf2a\",      \"walletId\": \"W156335177694f125d\",      \"userId\": \"mcht1\",      \"status\": \"사용\",      \"bankName\": \"우리은행\",      \"bankCd\": \"020\",      \"account\": \"1005902772439\",      \"beneficiary\": \"(주)광원\",      \"verify\": \"허가\",      \"accountVerify\": true,      \"trxId\": \"T15633517757e2c8e9\",      \"trackId\": \"TRK_190104092854\",      \"create\": \"20190717172256\"    },    \"vaccnt\": {      \"vaccntId\": \"V156335177689f9430\",      \"walletId\": \"W156335177694f125d\",      \"userId\": \"mcht1\",      \"status\": \"사용\",      \"bankName\": \"우리은행\",      \"bankCd\": \"020\",      \"account\": \"28087795218958\",      \"beneficiary\": \"가맹1\",      \"trxId\": \"T15633517757e2c8e9\",      \"trackId\": \"TRK_190104092854\",      \"create\": \"20190717172256\"    },    \"trxId\": \"T15633517757e2c8e9\",    \"trackId\": \"TRK_190104092854\",    \"udf\": \"UDF\",    \"summary\": \"사업자등록\",    \"create\": \"20190717172256\"  }}";
     		JsonObject obj = new JsonParser().parse(response).getAsJsonObject();
     		String resultCd = obj.get("result").getAsJsonObject().get("resultCd").getAsString();
-    		log.debug(resultCd);
+    		log.debug(response);
     		if (!"0000".equals(resultCd)) return false;
 
     		String walletId = obj.get("mcht").getAsJsonObject().get("walletId").getAsString();

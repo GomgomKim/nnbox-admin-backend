@@ -12,6 +12,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -56,7 +57,7 @@ public class HttpClient {
 		
 		if (bjson) {
 			post.addHeader("content-type", "application/json");
-			post.setEntity(new StringEntity(new Gson().toJson(params)));
+			post.setEntity(new StringEntity(new Gson().toJson(params), ContentType.APPLICATION_JSON));
 		}
 		else {
 			List<NameValuePair> nvp = new ArrayList<NameValuePair>(); 
