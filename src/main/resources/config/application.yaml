@@ -110,7 +110,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
-      jdbcUrl: "jdbc:mysql://121.78.82.136:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC"
+      jdbcUrl: "jdbc:mysql://192.168.33.11:13306/nnbox?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false&requireSSL=false&serverTimezone=UTC"
       username: admin
       password: zhstjxm!2
       driverClassName: com.mysql.jdbc.Driver
