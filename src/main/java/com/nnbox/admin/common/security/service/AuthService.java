@@ -55,10 +55,11 @@ public class AuthService {
 		log.debug("test 1: "+authenticationToken.getPassword());
 		log.debug(adminUser.getPassword());
 		
-//		if (!this.passwordEncoder.matches(authenticationToken.getPassword(), adminUser.getPassword())) {
-//			authenticationToken.setDetails(AuthenticationCode.INVALID_LOGIN_PASSWORD);
-//			return authenticationToken;
-//		}
+		if (!this.passwordEncoder.matches(authenticationToken.getPassword(), adminUser.getPassword())) {
+			authenticationToken.setDetails(AuthenticationCode.INVALID_LOGIN_PASSWORD);
+			return authenticationToken;
+		}
+		
 		List<AdminAuthMenuResponse> userMenuAuthes = menuMapper.getAllAdminAuthMenu(authenticationToken.getAdminUser().getIdx());
 		adminUser.setAdminAuth(userMenuAuthes);
 		authenticationToken.setAdminUser(adminUser);

@@ -44,10 +44,10 @@ public class AuthenticationService {
 			response.setAdminUser(token.getAdminUser());
 			
 //			if(loginRequest.getPushToken() != null && !loginRequest.getPushToken().equals(token.getAdminUser().getPushToken())) {
-//				User user = new User();
-//				user.setIdx(token.getAdminUser().getIdx());
-//				user.setPushToken(loginRequest.getPushToken());
-//				userMapper.updateByPrimaryKeySelective(user);
+//				AdminUser adminUser = new AdminUser();
+//				adminUser.setIdx(token.getAdminUser().getIdx());
+//				adminUser.setPushToken(loginRequest.getPushToken());
+//				adminUserMapper.updateByPrimaryKeySelective(adminUser);
 //				token.getAdminUser().setPushToken(loginRequest.getPushToken());
 //			}
 
