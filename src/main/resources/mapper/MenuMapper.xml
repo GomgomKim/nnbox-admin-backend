@@ -114,9 +114,9 @@
   <!-- sub MENU LIST -->
   <select id="selectSubMenu" parameterType="java.util.Map" resultMap="BaseResultMap">
     select m2.IDX, m2.NAME, m2.NAME_KR, m2.PATH, m2.PARENT_IDX
-    from admin_user_auth aua 
-      inner join menu m on aua.MENU_IDX = m.IDX
+    from menu m 
       inner join menu m2 on m.IDX = m2.PARENT_IDX
+      inner join admin_user_auth aua on aua.MENU_IDX = m2.IDX 
     where m.IDX = #{idx} 
       and aua.ADMIN_USER_IDX = #{adminUserIdx}
       and aua.AUTH = 1
