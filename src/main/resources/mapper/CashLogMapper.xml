@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.CashLogMapper">
+  <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.CashLog">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CATEGORY" jdbcType="VARCHAR" property="category" />
+    <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="SEND_AMOUNT" jdbcType="INTEGER" property="sendAmount" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_TYPE" jdbcType="INTEGER" property="userType" />
+    <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
+    <result column="RECEIVE_IDX" jdbcType="INTEGER" property="receiveIdx" />
+    <result column="RECEIVE_ID" jdbcType="VARCHAR" property="receiveId" />
+    <result column="BEFORE_NCASH" jdbcType="INTEGER" property="beforeNcash" />
+    <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
+    <result column="BRANCH_IDX" jdbcType="INTEGER" property="branchIdx" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    IDX, CREATE_DATE, CATEGORY, USER_IDX, SEND_AMOUNT, MEMO, USER_ID, USER_TYPE, ADMIN_ID, 
+    RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, NCASH_DELTA, BRANCH_IDX
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cash_log
+    where IDX = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cash_log
+    where IDX = #{idx,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nnbox.admin.data.model.CashLog">
+    insert into cash_log (IDX, CREATE_DATE, CATEGORY, 
+      USER_IDX, SEND_AMOUNT, MEMO, 
+      USER_ID, USER_TYPE, ADMIN_ID, 
+      RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, 
+      NCASH_DELTA, BRANCH_IDX)
+    values (#{idx,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{category,jdbcType=VARCHAR}, 
+      #{userIdx,jdbcType=INTEGER}, #{sendAmount,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{adminId,jdbcType=VARCHAR}, 
+      #{receiveIdx,jdbcType=INTEGER}, #{receiveId,jdbcType=VARCHAR}, #{beforeNcash,jdbcType=INTEGER}, 
+      #{ncashDelta,jdbcType=INTEGER}, #{branchIdx,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.CashLog">
+    insert into cash_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        IDX,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="userIdx != null">
+        USER_IDX,
+      </if>
+      <if test="sendAmount != null">
+        SEND_AMOUNT,
+      </if>
+      <if test="memo != null">
+        MEMO,
+      </if>
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="userType != null">
+        USER_TYPE,
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID,
+      </if>
+      <if test="receiveIdx != null">
+        RECEIVE_IDX,
+      </if>
+      <if test="receiveId != null">
+        RECEIVE_ID,
+      </if>
+      <if test="beforeNcash != null">
+        BEFORE_NCASH,
+      </if>
+      <if test="ncashDelta != null">
+        NCASH_DELTA,
+      </if>
+      <if test="branchIdx != null">
+        BRANCH_IDX,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null">
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="sendAmount != null">
+        #{sendAmount,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null">
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveIdx != null">
+        #{receiveIdx,jdbcType=INTEGER},
+      </if>
+      <if test="receiveId != null">
+        #{receiveId,jdbcType=VARCHAR},
+      </if>
+      <if test="beforeNcash != null">
+        #{beforeNcash,jdbcType=INTEGER},
+      </if>
+      <if test="ncashDelta != null">
+        #{ncashDelta,jdbcType=INTEGER},
+      </if>
+      <if test="branchIdx != null">
+        #{branchIdx,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.CashLog">
+    update cash_log
+    <set>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="userIdx != null">
+        USER_IDX = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="sendAmount != null">
+        SEND_AMOUNT = #{sendAmount,jdbcType=INTEGER},
+      </if>
+      <if test="memo != null">
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        USER_TYPE = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null">
+        ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveIdx != null">
+        RECEIVE_IDX = #{receiveIdx,jdbcType=INTEGER},
+      </if>
+      <if test="receiveId != null">
+        RECEIVE_ID = #{receiveId,jdbcType=VARCHAR},
+      </if>
+      <if test="beforeNcash != null">
+        BEFORE_NCASH = #{beforeNcash,jdbcType=INTEGER},
+      </if>
+      <if test="ncashDelta != null">
+        NCASH_DELTA = #{ncashDelta,jdbcType=INTEGER},
+      </if>
+      <if test="branchIdx != null">
+        BRANCH_IDX = #{branchIdx,jdbcType=INTEGER},
+      </if>
+    </set>
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnbox.admin.data.model.CashLog">
+    update cash_log
+    set CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      CATEGORY = #{category,jdbcType=VARCHAR},
+      USER_IDX = #{userIdx,jdbcType=INTEGER},
+      SEND_AMOUNT = #{sendAmount,jdbcType=INTEGER},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_TYPE = #{userType,jdbcType=INTEGER},
+      ADMIN_ID = #{adminId,jdbcType=VARCHAR},
+      RECEIVE_IDX = #{receiveIdx,jdbcType=INTEGER},
+      RECEIVE_ID = #{receiveId,jdbcType=VARCHAR},
+      BEFORE_NCASH = #{beforeNcash,jdbcType=INTEGER},
+      NCASH_DELTA = #{ncashDelta,jdbcType=INTEGER},
+      BRANCH_IDX = #{branchIdx,jdbcType=INTEGER}
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+</mapper>
