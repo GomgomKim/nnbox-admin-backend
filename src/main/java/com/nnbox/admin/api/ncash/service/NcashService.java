@@ -12,14 +12,17 @@ import com.nnbox.admin.api.ncash.model.NcashListRequest;
 import com.nnbox.admin.api.ncash.model.NcashListResponse;
 import com.nnbox.admin.api.ncash.model.WithdrawListRequest;
 import com.nnbox.admin.api.ncash.model.WithdrawListResponse;
+import com.nnbox.admin.common.constants.CashLogCategoryCode;
 import com.nnbox.admin.common.constants.ErrorCode;
 import com.nnbox.admin.common.constants.NyamnyamLogCategoryCode;
 import com.nnbox.admin.common.exception.BasicException;
 import com.nnbox.admin.common.security.token.UserAuthenticationToken;
 import com.nnbox.admin.common.utils.SessionUtil;
+import com.nnbox.admin.data.mapper.CashLogMapper;
 import com.nnbox.admin.data.mapper.LogMapper;
 import com.nnbox.admin.data.mapper.UserMapper;
 import com.nnbox.admin.data.mapper.WithdrawMapper;
+import com.nnbox.admin.data.model.CashLog;
 import com.nnbox.admin.data.model.Log;
 import com.nnbox.admin.data.model.User;
 import com.nnbox.admin.data.model.Withdraw;
@@ -38,6 +41,9 @@ public class NcashService {
 	
 	@Autowired
 	WithdrawMapper withdrawMapper;
+	
+	@Autowired
+	CashLogMapper cashLogMapper;
 
 	public NcashListResponse getNcashList(NcashListRequest listRequest) throws Exception {
 		NcashListResponse response = new NcashListResponse();
@@ -73,6 +79,7 @@ public class NcashService {
 	        
 	        // log 생성
 	        UserLog(NyamnyamLogCategoryCode.NCASH_SEND_BY_ADMIN, token, request);
+	        CashLog(CashLogCategoryCode.NCASH_SEND_BY_ADMIN, token, request);
 	        
 	        log.debug("send ncash => receiveUserIdx: " + receiveUserIdx + ", ncashAmount: " + ncashAmount + ", result: " + result);
 
@@ -118,6 +125,31 @@ public class NcashService {
 	      nyamnyamLog2.setReceiveId(user2.getId());
 	      
 	      logMapper.insertSelective(nyamnyamLog2);
+	    } catch (Exception ex) {
+	      log.debug("nyamnyamLog error: {}", ex.getMessage());
+	    }
+    }
+	
+	private void CashLog(CashLogCategoryCode category, UserAuthenticationToken token, NcashCreateRequest request) {
+	    try {
+	      // 받은 유저
+	      User user2 = userMapper.selectByPrimaryKey(request.getReceiveUserIdx());
+	      CashLog cashLog = new CashLog();
+	      cashLog.setCategory(category);
+	      cashLog.setMemo(category.getCategory());
+	      cashLog.setUserIdx(user2.getIdx());
+	      cashLog.setUserId(user2.getId());
+	      cashLog.setUserType(user2.getUserType());
+	      cashLog.setBranchIdx(user2.getBranchIdx());
+	      cashLog.setSendAmount(request.getNcashAmount());
+	      cashLog.setReceiveIdx(request.getReceiveUserIdx());
+	      Integer ncashDelta2 = request.getNcashAmount();
+	      cashLog.setBeforeNcash(user2.getNcash() - ncashDelta2);
+	      cashLog.setNcashDelta(ncashDelta2);
+	      cashLog.setAdminId(token.getId());
+	      cashLog.setReceiveId(user2.getId());
+	      
+	      cashLogMapper.insertSelective(cashLog);
 	    } catch (Exception ex) {
 	      log.debug("nyamnyamLog error: {}", ex.getMessage());
 	    }
