@@ -145,7 +145,7 @@
     <where>
       <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
     </where>
-    where cl.CATEGORY like 'DUES_PAY
+    where cl.CATEGORY like 'DUES_PAY'
   </select>
   
   <select id="selectFrChargeList" parameterType="com.nnbox.admin.api.fr.model.FrListRequest" resultMap="FrCashResultMap">
