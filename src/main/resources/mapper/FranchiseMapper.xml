@@ -145,7 +145,30 @@
     <where>
       <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
     </where>
-    where cl.CATEGORY like 'DUES_PAY'
+    where cl.CATEGORY like 'DUES_PAY
+  </select>
+  
+  <select id="selectFrChargeList" parameterType="com.nnbox.admin.api.fr.model.FrListRequest" resultMap="FrCashResultMap">
+    select 
+    <include refid="Fr_Cash_Base_Column_List" />,
+    <include refid="Ncash_Base_Column_List" />
+    from
+    <include refid="Fr_Cash_List_Table" />
+    <where>
+      <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+    </where>
+    where cl.NCASH_DELTA &lt; 0
+    order by cl.IDX desc
+    limit #{pageSize} offset #{limitStart}
+  </select>
+  
+   <select id="getFrChargeCount" parameterType="com.nnbox.admin.api.fr.model.FrListRequest" resultType="int">
+    select count(*) from
+    <include refid="Fr_Cash_List_Table" />
+    <where>
+      <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+    </where>
+    where cl.NCASH_DELTA &lt; 0
   </select>
   
   

@@ -75,13 +75,13 @@ public class FrService {
 	public FrListResponse getFrChargeList(FrListRequest listRequest) throws Exception {
 		FrListResponse response = new FrListResponse();
 
-//	    List<CashLog> franchises = cashLogMapper.selectFrCashList(listRequest);
-//	    Integer totalCount = franchiseMapper.getTotalCount(listRequest);
-//
-//	    response.setCurrentPage(listRequest.getPageNum());
-//	    response.setFranchises(franchises);
-//	    response.setTotalCount(totalCount);
-//	    response.setTotalPage(totalCount, 10);
+		List<Franchise> franchises = franchiseMapper.selectFrChargeList(listRequest);
+	    Integer totalCount = franchiseMapper.getFrChargeCount(listRequest);
+
+	    response.setCurrentPage(listRequest.getPageNum());
+	    response.setFranchises(franchises);
+	    response.setTotalCount(totalCount);
+	    response.setTotalPage(totalCount, 10);
 
 	    return response;
 	}
