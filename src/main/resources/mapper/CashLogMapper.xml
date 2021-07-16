@@ -17,10 +17,25 @@
     <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
     <result column="BRANCH_IDX" jdbcType="INTEGER" property="branchIdx" />
   </resultMap>
+  
+  <resultMap id="NcashResultMap" type="com.nnbox.admin.data.model.Ncash">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CATEGORY" jdbcType="VARCHAR" property="category" />
+    <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
+    <result column="ADMIN_ID" jdbcType="INTEGER" property="adminId"/>
+  </resultMap>
+  
   <sql id="Base_Column_List">
     IDX, CREATE_DATE, CATEGORY, USER_IDX, SEND_AMOUNT, MEMO, USER_ID, USER_TYPE, ADMIN_ID, 
     RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, NCASH_DELTA, BRANCH_IDX
   </sql>
+  
+  <sql id="Ncash_Column_List">
+    cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA
+  </sql>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -196,4 +211,29 @@
       BRANCH_IDX = #{branchIdx,jdbcType=INTEGER}
     where IDX = #{idx,jdbcType=INTEGER}
   </update>
+  
+  
+  <!-- custom sql -->
+  <select id="selectNcashList" parameterType="com.nnbox.admin.api.ncash.model.NcashAllListRequest" resultMap="NcashResultMap">
+    select 
+    <include refid="Ncash_Column_List" />
+    from cash_log cl
+    inner join user u
+    on u.IDX = cl.USER_IDX
+    <where>
+      <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
+    </where>
+    order by cl.IDX desc
+    limit #{pageSize} offset #{limitStart}
+  </select>
+  
+  <select id="getNcashTotalCount" parameterType="com.nnbox.admin.api.ncash.model.NcashAllListRequest" resultType="int">
+    select count(*)
+    from cash_log cl
+    inner join user u
+    on u.IDX = cl.USER_IDX
+    <where>
+      <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
+    </where>
+  </select>
 </mapper>

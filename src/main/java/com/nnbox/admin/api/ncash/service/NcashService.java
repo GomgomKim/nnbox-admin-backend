@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nnbox.admin.api.ncash.model.NcashAllListRequest;
+import com.nnbox.admin.api.ncash.model.NcashAllListResponse;
 import com.nnbox.admin.api.ncash.model.NcashCreateRequest;
 import com.nnbox.admin.api.ncash.model.NcashCreateResponse;
 import com.nnbox.admin.api.ncash.model.NcashListRequest;
@@ -24,6 +26,7 @@ import com.nnbox.admin.data.mapper.UserMapper;
 import com.nnbox.admin.data.mapper.WithdrawMapper;
 import com.nnbox.admin.data.model.CashLog;
 import com.nnbox.admin.data.model.Log;
+import com.nnbox.admin.data.model.Ncash;
 import com.nnbox.admin.data.model.User;
 import com.nnbox.admin.data.model.Withdraw;
 
@@ -97,6 +100,20 @@ public class NcashService {
 	    Integer totalCount = withdrawMapper.getTotalCount(listRequest);
 
 	    response.setWithdraws(withdraws);
+	    response.setTotalCount(totalCount);
+	    response.setTotalPage(totalCount, 10);
+
+	    return response;
+	}
+	
+	public NcashAllListResponse getAllList(NcashAllListRequest listRequest) throws Exception {
+		NcashAllListResponse response = new NcashAllListResponse();
+		
+	    response.setCurrentPage(listRequest.getPageNum());
+	    List<Ncash> ncash = cashLogMapper.selectNcashList(listRequest);
+	    Integer totalCount = cashLogMapper.getNcashTotalCount(listRequest);
+
+	    response.setNcash(ncash);
 	    response.setTotalCount(totalCount);
 	    response.setTotalPage(totalCount, 10);
 

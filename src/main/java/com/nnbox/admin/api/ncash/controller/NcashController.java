@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nnbox.admin.api.ncash.model.NcashAllListRequest;
+import com.nnbox.admin.api.ncash.model.NcashAllListResponse;
 import com.nnbox.admin.api.ncash.model.NcashCreateRequest;
 import com.nnbox.admin.api.ncash.model.NcashCreateResponse;
 import com.nnbox.admin.api.ncash.model.NcashListRequest;
@@ -50,6 +52,12 @@ public class NcashController {
 	@ApiOperation(value = "예치금 출금내역", notes = "유저별 예치금 출금 이력을 불러온다.")
 	public WithdrawListResponse getWithdrawList(@ModelAttribute WithdrawListRequest listRequest, BindingResult bindingResult) throws Exception {
 		return ncashService.getWithdrawList(listRequest);
+	}
+	
+	@RequestMapping(value = "/all/list", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "예치금 전체내역", notes = "예치금 전체 이력을 불러온다.")
+	public NcashAllListResponse getAllList(@ModelAttribute NcashAllListRequest listRequest, BindingResult bindingResult) throws Exception {
+		return ncashService.getAllList(listRequest);
 	}
 	
 	
