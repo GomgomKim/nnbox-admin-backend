@@ -63,4 +63,6 @@ public class Franchise {
 	@ApiModelProperty(value = "가상계좌예금주", dataType = "String", example = "냠냠-화통식당", required = false)
 	private String vAccountDepositor;
 	
+	@ApiModelProperty(value = "가맹비", dataType = "Integer", example = "1000", required = false)
+	private Integer ncashDelta;
 }

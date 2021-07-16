@@ -44,7 +44,18 @@ public class FrController {
 		if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
 		return frService.updateFr(request);
     }
-
+	
+	@RequestMapping(value = "/cash/list", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "가맹비 내역 조회", notes = "가맹비 내역을 불러온다.")
+	public FrListResponse getFrCashList(@ModelAttribute FrListRequest listRequest, BindingResult bindingResult) throws Exception {
+		return frService.getFrCashList(listRequest);
+	}
+	
+	@RequestMapping(value = "/charge/list", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "충전 내역 조회", notes = "충전 내역을 불러온다.")
+	public FrListResponse getFrChargeList(@ModelAttribute FrListRequest listRequest, BindingResult bindingResult) throws Exception {
+		return frService.getFrChargeList(listRequest);
+	}
 	
 	@RequestMapping(value = "/regist/pg/{userIdx}", method = RequestMethod.POST, produces = "application/json")
     @ApiOperation(value = "가맹점 PG등록", notes = "가맹점 PG등록")

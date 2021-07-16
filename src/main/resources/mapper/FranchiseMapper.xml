@@ -26,6 +26,19 @@
     <result column="BRANCH_NAME" property="branchName" />
   </resultMap>
   
+  <resultMap id="FrCashResultMap" type="com.nnbox.admin.data.model.Franchise">
+    <result column="USER_IDX" property="userIdx" />
+    <result column="FR_NAME" property="frName" />
+    <result column="ADDR1" property="addr1" />
+    <result column="ADDR2" property="addr2" />
+    <result column="ADDR3" property="addr3" />
+    <result column="FR_PHONE" property="frPhone" />
+    <result column="BUSINESS_NUMBER" property="businessNumber" />
+    <result column="OWNER_NAME" property="ownerName" />
+
+    <result column="NCASH_DELTA" property="ncashDelta" />
+  </resultMap>
+  
   <!-- sql -->
   <sql id="Fr_List_Table">
     franchise f 
@@ -33,13 +46,28 @@
     inner join branch b on u.BRANCH_IDX = b.IDX
   </sql>
   
+  <sql id="Fr_Cash_List_Table">
+    franchise f 
+    inner join `user` u on f.USER_IDX = u.IDX 
+    inner join cash_log cl on cl.USER_IDX = u.IDX
+  </sql>
+  
   <sql id="Fr_Base_Column_List">
     f.USER_IDX, f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
     , f.TID_NORMAL_RATE, f.FR_PHONE, f.WALLET_ID, f.TID_NORMAL, f.TID_PREPAY, f.BUSINESS_NUMBER, f.OWNER_NAME, f.V_ACCOUNT_BANK, f.V_ACCOUNT_NUMBER, f.V_ACCOUNT_DEPOSITOR, u.ID USER_ID, u.EMAIL USER_EMAIL, u.PHONE USER_PHONE, b.BRANCH_NAME
   </sql>
   
+  <sql id="Fr_Cash_Base_Column_List">
+    f.USER_IDX, f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
+    , f.FR_PHONE, f.BUSINESS_NUMBER, f.OWNER_NAME
+  </sql>
+  
   <sql id="Branch_Base_Column_List">
     b.BRANCH_NAME
+  </sql>
+  
+  <sql id="Ncash_Base_Column_List">
+    cl.NCASH_DELTA
   </sql>
   
   
@@ -96,4 +124,29 @@
     <include refid="Fr_List_Table" />
     where f.USER_IDX = #{userIdx}
   </select>
+  
+  <select id="selectFrCashList" parameterType="com.nnbox.admin.api.fr.model.FrListRequest" resultMap="FrCashResultMap">
+    select 
+    <include refid="Fr_Cash_Base_Column_List" />,
+    <include refid="Ncash_Base_Column_List" />
+    from
+    <include refid="Fr_Cash_List_Table" />
+    <where>
+      <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+    </where>
+    where cl.CATEGORY like 'DUES_PAY'
+    order by cl.IDX desc
+    limit #{pageSize} offset #{limitStart}
+  </select>
+  
+   <select id="getFrCashCount" parameterType="com.nnbox.admin.api.fr.model.FrListRequest" resultType="int">
+    select count(*) from
+    <include refid="Fr_Cash_List_Table" />
+    <where>
+      <if test="frName != null and !frName.equals('')">and f.FR_NAME like concat('%', #{frName}, '%')</if>
+    </where>
+    where cl.CATEGORY like 'DUES_PAY'
+  </select>
+  
+  
 </mapper>

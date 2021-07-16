@@ -17,6 +17,7 @@ import com.nnbox.admin.api.fr.model.FrListResponse;
 import com.nnbox.admin.api.fr.model.FrUpdateRequest;
 import com.nnbox.admin.api.fr.model.FrUpdateResponse;
 import com.nnbox.admin.common.utils.HttpClient;
+import com.nnbox.admin.data.mapper.CashLogMapper;
 import com.nnbox.admin.data.mapper.FranchiseMapper;
 import com.nnbox.admin.data.model.Franchise;
 
@@ -31,6 +32,9 @@ public class FrService {
 
 	@Autowired
 	FranchiseMapper franchiseMapper;
+	
+	@Autowired
+	CashLogMapper cashLogMapper;
 	
 	public FrListResponse getFrList(FrListRequest listRequest) throws Exception {
 		FrListResponse response = new FrListResponse();
@@ -53,6 +57,34 @@ public class FrService {
 	    
 	    return result;
     }
+	
+	public FrListResponse getFrCashList(FrListRequest listRequest) throws Exception {
+		FrListResponse response = new FrListResponse();
+
+		List<Franchise> franchises = franchiseMapper.selectFrCashList(listRequest);
+	    Integer totalCount = franchiseMapper.getFrCashCount(listRequest);
+
+	    response.setCurrentPage(listRequest.getPageNum());
+	    response.setFranchises(franchises);
+	    response.setTotalCount(totalCount);
+	    response.setTotalPage(totalCount, 10);
+
+	    return response;
+	}
+	
+	public FrListResponse getFrChargeList(FrListRequest listRequest) throws Exception {
+		FrListResponse response = new FrListResponse();
+
+//	    List<CashLog> franchises = cashLogMapper.selectFrCashList(listRequest);
+//	    Integer totalCount = franchiseMapper.getTotalCount(listRequest);
+//
+//	    response.setCurrentPage(listRequest.getPageNum());
+//	    response.setFranchises(franchises);
+//	    response.setTotalCount(totalCount);
+//	    response.setTotalPage(totalCount, 10);
+
+	    return response;
+	}
 	
     public boolean frRegistPg(Integer userIdx) throws Exception {
     	Franchise franchise = franchiseMapper.selectFrByUserIdx(userIdx);
