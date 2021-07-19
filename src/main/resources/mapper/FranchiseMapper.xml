@@ -94,7 +94,7 @@
     </set>
     where USER_IDX = #{userIdx}
   </update>
-  
+  ㅊ
   <!-- custom sql -->
   <select id="selectFrList" parameterType="com.nnbox.admin.api.fr.model.FrListRequest" resultMap="FrListResultMap">
     select 
