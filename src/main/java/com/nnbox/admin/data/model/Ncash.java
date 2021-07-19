@@ -25,6 +25,10 @@ public class Ncash {
 	  // 카테고리
 	  @ApiModelProperty(value = "카테고리", dataType = "String", example = "category")
 	  private String category;
+	  
+	  // 메모(카테고리 명)
+	  @ApiModelProperty(value = "메모(카테고리 명)", dataType = "String", example = "memo")
+	  private String categoryKr;
 
 	  // 금액
 	  @ApiModelProperty(value = "금액", dataType = "Integer", example = "10000")

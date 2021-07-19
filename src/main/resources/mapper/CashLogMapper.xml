@@ -23,6 +23,7 @@
     <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
     <result column="CATEGORY" jdbcType="VARCHAR" property="category" />
+    <result column="CATEGORY_KR" jdbcType="VARCHAR" property="categoryKr" />
     <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
     <result column="ADMIN_ID" jdbcType="INTEGER" property="adminId"/>
   </resultMap>
@@ -33,7 +34,7 @@
   </sql>
   
   <sql id="Ncash_Column_List">
-    cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA
+    cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA, cl.MEMO as CATEGORY_KR
   </sql>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
