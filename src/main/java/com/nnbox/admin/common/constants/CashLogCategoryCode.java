@@ -17,7 +17,11 @@ public enum CashLogCategoryCode {
   // 인센티브
   INCENTIVE_PAYED("인센티브 지급"),
   // 일차감(리스비, 대출)
-  BATCH_WORK_NCASH("일차감");
+  BATCH_WORK_NCASH("일차감"),
+  // 몰 상품 구매
+  BUY_PRODUCT("몰 상품 구매"),
+  // 몰 상품 구매 취소
+  BUY_PRODUCT_CANCEL("몰 상품 구매 취소");
 
   private final String category;
 
