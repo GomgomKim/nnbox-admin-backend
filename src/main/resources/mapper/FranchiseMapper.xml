@@ -35,6 +35,9 @@
     <result column="FR_PHONE" property="frPhone" />
     <result column="BUSINESS_NUMBER" property="businessNumber" />
     <result column="OWNER_NAME" property="ownerName" />
+    <result column="V_ACCOUNT_BANK" property="vAccountBank" />
+    <result column="V_ACCOUNT_NUMBER" property="vAccountNumber" />
+    <result column="V_ACCOUNT_DEPOSITOR" property="vAccountDepositor" />
 
     <result column="NCASH_DELTA" property="ncashDelta" />
   </resultMap>
@@ -60,6 +63,7 @@
   <sql id="Fr_Cash_Base_Column_List">
     f.USER_IDX, f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
     , f.FR_PHONE, f.BUSINESS_NUMBER, f.OWNER_NAME
+    , f.V_ACCOUNT_BANK, f.V_ACCOUNT_NUMBER, f.V_ACCOUNT_DEPOSITOR
   </sql>
   
   <sql id="Branch_Base_Column_List">
