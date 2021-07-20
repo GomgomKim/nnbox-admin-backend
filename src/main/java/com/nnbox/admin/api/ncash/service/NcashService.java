@@ -96,8 +96,8 @@ public class NcashService {
 		WithdrawListResponse response = new WithdrawListResponse();
 		
 	    response.setCurrentPage(listRequest.getPageNum());
-	    List<Withdraw> withdraws = withdrawMapper.selectWithdrawList(listRequest);
-	    Integer totalCount = withdrawMapper.getTotalCount(listRequest);
+	    List<Withdraw> withdraws = cashLogMapper.selectWithdrawList(listRequest);
+	    Integer totalCount = cashLogMapper.getWithdrawTotalCount(listRequest);
 
 	    response.setWithdraws(withdraws);
 	    response.setTotalCount(totalCount);

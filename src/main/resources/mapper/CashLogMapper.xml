@@ -28,9 +28,30 @@
     <result column="ADMIN_ID" jdbcType="INTEGER" property="adminId"/>
   </resultMap>
   
+  <resultMap id="WithdrawResultMap" type="com.nnbox.admin.data.model.Withdraw">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="BANK" jdbcType="VARCHAR" property="bank" />
+    <result column="BANK_ACCOUNT" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="DEPOSITOR" jdbcType="VARCHAR" property="depositor" />
+    <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     IDX, CREATE_DATE, CATEGORY, USER_IDX, SEND_AMOUNT, MEMO, USER_ID, USER_TYPE, ADMIN_ID, 
     RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, NCASH_DELTA, BRANCH_IDX
+  </sql>
+  
+  <sql id="Withdraw_Column_List">
+    cl.IDX, cl.USER_IDX, cl.CREATE_DATE, cl.NCASH_DELTA, cl.MEMO
+  </sql>
+  
+  <sql id="User_Column_List">
+    u.ID as USER_ID, u.BANK, u.BANK_ACCOUNT, u.DEPOSITOR
   </sql>
   
   <sql id="Ncash_Column_List">
@@ -235,6 +256,46 @@
     on u.IDX = cl.USER_IDX
     <where>
       <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
+    </where>
+  </select>
+  
+  <select id="selectWithdrawList" parameterType="com.nnbox.admin.api.ncash.model.WithdrawListRequest" resultMap="WithdrawResultMap">
+    select 
+    <include refid="Withdraw_Column_List" />,
+    <include refid="User_Column_List" />,
+    <if test="userType == 1">r.RIDER_NAME as USER_NAME</if>
+    <if test="userType == 2">f.FR_NAME as USER_NAME</if>
+    from cash_log cl
+      inner join user u
+      on cl.USER_IDX = u.IDX
+      <if test="userType == 1">
+        inner join rider r
+        on r.USER_IDX = u.IDX
+      </if>
+      <if test="userType == 2">
+        inner join franchise f
+        on f.USER_IDX = u.IDX
+      </if>
+    <where>
+      u.USER_TYPE = #{userType}
+      <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
+    </where>
+    order by cl.IDX desc
+    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getWithdrawTotalCount" parameterType="com.nnbox.admin.api.ncash.model.WithdrawListRequest" resultType="int">
+    select count(*)
+    from cash_log cl
+      inner join user u
+      on cl.USER_IDX = u.IDX
+      inner join rider r
+      on r.USER_IDX = u.IDX
+      inner join franchise f
+      on f.USER_IDX = u.IDX
+    <where>
+      u.USER_TYPE = #{userType}
+      <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
     </where>
   </select>
 </mapper>
