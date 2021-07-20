@@ -290,13 +290,18 @@
     from cash_log cl
       inner join user u
       on cl.USER_IDX = u.IDX
-      inner join rider r
-      on r.USER_IDX = u.IDX
-      inner join franchise f
-      on f.USER_IDX = u.IDX
+      <if test="userType == 1">
+        inner join rider r
+        on r.USER_IDX = u.IDX
+      </if>
+      <if test="userType == 2">
+        inner join franchise f
+        on f.USER_IDX = u.IDX
+      </if>
     <where>
       u.USER_TYPE = #{userType}
       <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
+      and cl.NCASH_DELTA &lt; 0
     </where>
   </select>
 </mapper>
