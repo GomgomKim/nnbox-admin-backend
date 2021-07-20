@@ -52,10 +52,10 @@ public class NcashService {
 		NcashListResponse response = new NcashListResponse();
 		
 	    response.setCurrentPage(listRequest.getPageNum());
-	    List<Log> logs = logMapper.selectNcashList(listRequest);
-	    Integer totalCount = logMapper.getTotalCount(listRequest);
+	    List<Withdraw> payments = cashLogMapper.selectPaymentList(listRequest);
+	    Integer totalCount = cashLogMapper.getPaymentTotalCount(listRequest);
 
-	    response.setLogs(logs);
+	    response.setPayments(payments);
 	    response.setTotalCount(totalCount);
 	    response.setTotalPage(totalCount, 10);
 

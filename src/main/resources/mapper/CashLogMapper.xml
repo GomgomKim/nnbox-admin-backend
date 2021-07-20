@@ -28,7 +28,7 @@
     <result column="ADMIN_ID" jdbcType="INTEGER" property="adminId"/>
   </resultMap>
   
-  <resultMap id="WithdrawResultMap" type="com.nnbox.admin.data.model.Withdraw">
+  <resultMap id="PayResultMap" type="com.nnbox.admin.data.model.Withdraw">
     <id column="IDX" jdbcType="INTEGER" property="idx" />
     <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
     <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
@@ -46,7 +46,7 @@
     RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, NCASH_DELTA, BRANCH_IDX
   </sql>
   
-  <sql id="Withdraw_Column_List">
+  <sql id="Pay_Column_List">
     cl.IDX, cl.USER_IDX, cl.CREATE_DATE, cl.NCASH_DELTA, cl.MEMO
   </sql>
   
@@ -71,6 +71,12 @@
       on f.USER_IDX = u.IDX
     </if>
   </sql>
+  <sql id="Payment_List_Table">
+    cash_log cl
+    inner join user u
+    on cl.USER_IDX = u.IDX
+  </sql>
+  
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -273,9 +279,9 @@
     </where>
   </select>
   
-  <select id="selectWithdrawList" parameterType="com.nnbox.admin.api.ncash.model.WithdrawListRequest" resultMap="WithdrawResultMap">
+  <select id="selectWithdrawList" parameterType="com.nnbox.admin.api.ncash.model.WithdrawListRequest" resultMap="PayResultMap">
     select 
-    <include refid="Withdraw_Column_List" />,
+    <include refid="Pay_Column_List" />,
     <include refid="User_Column_List" />,
     <if test="userType == 1">r.RIDER_NAME as USER_NAME</if>
     <if test="userType == 2">f.FR_NAME as USER_NAME</if>
@@ -298,6 +304,32 @@
       u.USER_TYPE = #{userType}
       <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
       and cl.NCASH_DELTA &lt; 0
+    </where>
+  </select>
+  
+  <select id="selectPaymentList" parameterType="com.nnbox.admin.api.ncash.model.NcashListRequest" resultMap="PayResultMap">
+    select
+    <include refid="Pay_Column_List" />,
+    <include refid="User_Column_List" />
+    from
+    <include refid="Payment_List_Table" />
+    <where>
+      u.USER_TYPE = #{userType}
+      <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
+      and cl.NCASH_DELTA &gt; 0
+    </where>
+    order by cl.IDX desc
+    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getPaymentTotalCount" parameterType="com.nnbox.admin.api.ncash.model.NcashListRequest" resultType="int">
+    select count(*)
+    from
+    <include refid="Payment_List_Table" />
+    <where>
+      u.USER_TYPE = #{userType}
+      <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
+      and cl.NCASH_DELTA &gt; 0
     </where>
   </select>
 </mapper>

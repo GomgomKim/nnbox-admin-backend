@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.nnbox.admin.api.ncash.model.NcashAllListRequest;
+import com.nnbox.admin.api.ncash.model.NcashListRequest;
 import com.nnbox.admin.api.ncash.model.WithdrawListRequest;
 import com.nnbox.admin.data.model.CashLog;
 import com.nnbox.admin.data.model.Ncash;
@@ -32,4 +33,8 @@ public interface CashLogMapper {
     List<Withdraw> selectWithdrawList(WithdrawListRequest request);
     
     int getWithdrawTotalCount(WithdrawListRequest request);
+    
+    List<Withdraw> selectPaymentList(NcashListRequest request);
+    
+    int getPaymentTotalCount(NcashListRequest request);
 }
