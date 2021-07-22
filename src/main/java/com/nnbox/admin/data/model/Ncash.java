@@ -17,6 +17,18 @@ public class Ncash {
 	  @ApiModelProperty(value = "유저 아이디", dataType = "String", example = "userId")
 	  private String userId;
 	  
+	  // 유저 이름
+	  @ApiModelProperty(value = "유저 이름", dataType = "String", example = "김냠냠")
+	  private String userName;
+	  
+	  // 유형(1: 라이더, 2: 매장)
+	  @ApiModelProperty(value = "유형(1: 라이더, 2: 매장)", dataType = "Integer", example = "1")
+	  private Integer userType;
+	  
+	  // 유저 잔액
+	  @ApiModelProperty(value = "유저 잔액", dataType = "Integer", example = "0")
+	  private Integer nCash;
+	  
 	  // 생성 일자
 	  @ApiModelProperty(value = "생성 일자", dataType = "LocalDateTime")
 	  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")

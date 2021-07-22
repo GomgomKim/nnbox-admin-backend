@@ -9,6 +9,8 @@
     <result column="SEND_AMOUNT" jdbcType="INTEGER" property="sendAmount" />
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
     <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="NCASH" jdbcType="INTEGER" property="nCash" />
     <result column="USER_TYPE" jdbcType="INTEGER" property="userType" />
     <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
     <result column="RECEIVE_IDX" jdbcType="INTEGER" property="receiveIdx" />
@@ -56,6 +58,7 @@
   
   <sql id="Ncash_Column_List">
     cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA, cl.MEMO as CATEGORY_KR
+    , u.NCASH, u.USER_TYPE
   </sql>
   
   <sql id="Ncash_List_Table">
@@ -264,6 +267,8 @@
     on u.IDX = cl.USER_IDX
     <where>
       <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
+      <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
+      and cl.NCASH_DELTA != 0
     </where>
     order by cl.IDX desc
     limit #{pageSize} offset #{limitStart}
@@ -276,6 +281,8 @@
     on u.IDX = cl.USER_IDX
     <where>
       <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
+      <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
+      and cl.NCASH_DELTA != 0
     </where>
   </select>
   
