@@ -60,5 +60,10 @@ public class NcashController {
 		return ncashService.getAllList(listRequest);
 	}
 	
+	@RequestMapping(value = "/connect9/balance", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "Connect9 본사 잔액", notes = "Connect9 본사 잔액을 불러온다.")
+	public int getConnect9Ncash() throws Exception {
+		return ncashService.getConnect9Ncash();
+	}
 	
 }

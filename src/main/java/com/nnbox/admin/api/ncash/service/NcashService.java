@@ -78,6 +78,8 @@ public class NcashService {
 	        } else {
 	          // 유저 잔액 증가
 	          result = userMapper.sendNcashByAdmin(request) == 1 ? NcashCreateResponse.SUCCESS : NcashCreateResponse.FAIL;
+	          // 본사 잔액 차감
+	          result = userMapper.withdrawC9Ncash(request) == 1 ? NcashCreateResponse.SUCCESS : NcashCreateResponse.FAIL;
 	        }
 	        
 	        // log 생성
@@ -120,6 +122,19 @@ public class NcashService {
 	    return response;
 	}
 	
+	public int getConnect9Ncash() throws Exception {
+		int c9Ncash = -1;
+		UserAuthenticationToken token = SessionUtil.getSessionUserToken();
+		if (token == null) {
+	      throw new BasicException(ErrorCode.COMMON_UNAUTHORIZED);
+	    } else {
+	    	c9Ncash = userMapper.getC9Ncash();
+	    }
+		if (c9Ncash == -1) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
+	    return c9Ncash;
+	}
+	
+	
 	private void UserLog(NyamnyamLogCategoryCode category, UserAuthenticationToken token, NcashCreateRequest request) {
 	    try {
 	      // 받은 유저
@@ -150,7 +165,7 @@ public class NcashService {
 	private void CashLog(CashLogCategoryCode category, UserAuthenticationToken token, NcashCreateRequest request) {
 	    try {
 	      // 받은 유저
-	      User user2 = userMapper.selectByPrimaryKey(request.getReceiveUserIdx());
+	      User user2 = userMapper.selectById("connect9");
 	      CashLog cashLog = new CashLog();
 	      cashLog.setCategory(category);
 	      cashLog.setMemo(category.getCategory());
