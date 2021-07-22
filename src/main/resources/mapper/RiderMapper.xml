@@ -19,12 +19,21 @@
     <result column="TEAM_MANAGER_IDX" jdbcType="INTEGER" property="teamManagerIdx" />
     <result column="DRIVER_LICENSE_NAME" jdbcType="VARCHAR" property="driverLicenseName" />
     <result column="DRIVER_LICENSE_ISSUE_DATE" jdbcType="CHAR" property="driverLicenseIssueDate" />
+    <result column="NCASH" jdbcType="INTEGER" property="ncash" />
   </resultMap>
   <sql id="Base_Column_List">
     USER_IDX, RIDER_NAME, RIDER_STATUS, RIDER_LEVEL, DELIVERY_PRICE_FEE_TYPE, DELIVERY_PRICE_FEE_AMOUNT, 
     BASIC_DELIVERY_PRICE, MONTH_BASIC_AMOUNT, MANAGEMENT_INCEN_SHOULD_BE_PAYED, FR_INCEN_SHOULD_BE_PAYED, 
     PREPAYMENT_INCEN_SHOULD_BE_PAYED, RIDER_SETTING_GROUP_IDX, DRIVER_LICENSE_FILE_IDX, 
     DRIVER_LICENSE_NUMBER, TEAM_MANAGER_IDX, DRIVER_LICENSE_NAME, DRIVER_LICENSE_ISSUE_DATE
+  </sql>
+  
+  <sql id="Rider_Column_List">
+    r.USER_IDX, r.RIDER_NAME, r.RIDER_STATUS, r.RIDER_LEVEL, r.DELIVERY_PRICE_FEE_TYPE, r.DELIVERY_PRICE_FEE_AMOUNT, 
+    r.BASIC_DELIVERY_PRICE, r.MONTH_BASIC_AMOUNT, r.MANAGEMENT_INCEN_SHOULD_BE_PAYED, r.FR_INCEN_SHOULD_BE_PAYED, 
+    r.PREPAYMENT_INCEN_SHOULD_BE_PAYED, r.RIDER_SETTING_GROUP_IDX, r.DRIVER_LICENSE_FILE_IDX, 
+    r.DRIVER_LICENSE_NUMBER, r.TEAM_MANAGER_IDX, r.DRIVER_LICENSE_NAME, r.DRIVER_LICENSE_ISSUE_DATE
+    , u.NCASH
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -241,8 +250,10 @@
   <!-- custom sql -->
   <select id="selectRiderList" parameterType="com.nnbox.admin.api.rider.model.RiderListRequest" resultMap="BaseResultMap">
     select 
-    <include refid="Base_Column_List" />
-    from rider
+    <include refid="Rider_Column_List" />
+    from rider r
+    inner join user u
+    on r.USER_IDX = u.IDX
     <where>
       <if test="riderName != null and !riderName.equals('')">and RIDER_NAME like concat('%', #{riderName}, '%')</if>
     </where>

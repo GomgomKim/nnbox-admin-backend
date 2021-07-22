@@ -37,4 +37,6 @@ public class Rider {
     private String driverLicenseName;
 
     private String driverLicenseIssueDate;
+    
+    private Integer ncash;
 }
