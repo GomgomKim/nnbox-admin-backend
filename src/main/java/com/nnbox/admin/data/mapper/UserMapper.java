@@ -27,4 +27,8 @@ public interface UserMapper {
 	List<User> selectList(UserListRequest listRequest);
 	
 	Integer sendNcashByAdmin(NcashCreateRequest record);
+	
+	int getC9Ncash();
+	
+	int withdrawC9Ncash(NcashCreateRequest request);
 }

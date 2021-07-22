@@ -67,4 +67,18 @@
       NCASH = NCASH + #{ncashAmount,jdbcType=INTEGER}
     where IDX = #{receiveUserIdx,jdbcType=INTEGER};
   </update>
+  
+  <select id="getC9Ncash" resultType="int">
+    select NCASH
+    from user u
+    where ID = 'connect9'
+  </select>
+  
+  <update id="withdrawC9Ncash" parameterType="com.nnbox.admin.api.ncash.model.NcashCreateRequest">
+    update `user`
+    set
+      NCASH = NCASH - #{ncashAmount,jdbcType=INTEGER}
+    where ID = 'connect9'
+  </update>
+  
 </mapper>
