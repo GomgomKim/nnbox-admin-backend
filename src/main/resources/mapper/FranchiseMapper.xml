@@ -18,7 +18,7 @@
     <result column="V_ACCOUNT_BANK" property="vAccountBank" />
     <result column="V_ACCOUNT_NUMBER" property="vAccountNumber" />
     <result column="V_ACCOUNT_DEPOSITOR" property="vAccountDepositor" />
-
+    <result column="NCASH" property="ncash" />
     <result column="USER_ID" property="userId" />
     <result column="USER_EMAIL" property="userEmail" />
     <result column="USER_PHONE" property="userPhone" />
@@ -57,7 +57,10 @@
   
   <sql id="Fr_Base_Column_List">
     f.USER_IDX, f.FR_NAME, f.ADDR1, f.ADDR2, f.ADDR3
-    , f.TID_NORMAL_RATE, f.FR_PHONE, f.WALLET_ID, f.TID_NORMAL, f.TID_PREPAY, f.BUSINESS_NUMBER, f.OWNER_NAME, f.V_ACCOUNT_BANK, f.V_ACCOUNT_NUMBER, f.V_ACCOUNT_DEPOSITOR, u.ID USER_ID, u.EMAIL USER_EMAIL, u.PHONE USER_PHONE, b.BRANCH_NAME
+    , f.TID_NORMAL_RATE, f.FR_PHONE, f.WALLET_ID, f.TID_NORMAL, f.TID_PREPAY
+    , f.BUSINESS_NUMBER, f.OWNER_NAME, f.V_ACCOUNT_BANK, f.V_ACCOUNT_NUMBER
+    , f.V_ACCOUNT_DEPOSITOR, u.ID USER_ID, u.EMAIL USER_EMAIL, u.PHONE USER_PHONE, b.BRANCH_NAME
+    , u.NCASH
   </sql>
   
   <sql id="Fr_Cash_Base_Column_List">
