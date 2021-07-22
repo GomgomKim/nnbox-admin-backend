@@ -168,7 +168,7 @@ public class NcashService {
 	private void CashLog(CashLogCategoryCode category, UserAuthenticationToken token, NcashCreateRequest request) {
 	    try {
 	      // 받은 유저
-	      User user2 = userMapper.selectById("connect9");
+	      User user2 = userMapper.selectByPrimaryKey(request.getReceiveUserIdx());
 	      CashLog cashLog = new CashLog();
 	      cashLog.setCategory(category);
 	      cashLog.setMemo(category.getCategory());

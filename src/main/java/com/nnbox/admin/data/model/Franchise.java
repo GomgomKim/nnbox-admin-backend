@@ -65,4 +65,7 @@ public class Franchise {
 	
 	@ApiModelProperty(value = "가맹비", dataType = "Integer", example = "1000", required = false)
 	private Integer ncashDelta;
+	
+	@ApiModelProperty(value = "잔액", dataType = "Integer", example = "1000", required = false)
+	private Integer ncash;
 }
