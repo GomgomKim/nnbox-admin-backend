@@ -79,7 +79,10 @@ public class NcashService {
 	          // 유저 잔액 증가
 	          result = userMapper.sendNcashByAdmin(request) == 1 ? NcashCreateResponse.SUCCESS : NcashCreateResponse.FAIL;
 	          // 본사 잔액 차감
-	          result = userMapper.withdrawC9Ncash(request) == 1 ? NcashCreateResponse.SUCCESS : NcashCreateResponse.FAIL;
+	          // 잔액 체크
+	          Integer connect9Ncash = getConnect9Ncash();
+	          if (connect9Ncash < request.getNcashAmount()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
+	          else result = userMapper.withdrawC9Ncash(request) == 1 ? NcashCreateResponse.SUCCESS : NcashCreateResponse.FAIL;
 	        }
 	        
 	        // log 생성
