@@ -60,7 +60,7 @@
     <result column="V_ACCOUNT_DEPOSITOR" jdbcType="VARCHAR" property="depositor" />
     <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
-    <result column="REGISTRATION_NUMBER" jdbcType="VARCHAR" property="registraionNumber" />
+    <result column="REGISTRATION_NUMBER" jdbcType="VARCHAR" property="registrationNumber" />
     <result column="PHONE" jdbcType="VARCHAR" property="phone" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
   </resultMap>
