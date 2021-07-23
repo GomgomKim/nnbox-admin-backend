@@ -23,6 +23,7 @@ import com.nnbox.admin.api.ncash.model.WithdrawListResponse;
 import com.nnbox.admin.api.ncash.service.NcashService;
 import com.nnbox.admin.common.constants.ErrorCode;
 import com.nnbox.admin.common.exception.BasicException;
+import com.nnbox.admin.data.model.User;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -64,6 +65,12 @@ public class NcashController {
 	@ApiOperation(value = "Connect9 본사 잔액", notes = "Connect9 본사 잔액을 불러온다.")
 	public int getConnect9Ncash() throws Exception {
 		return ncashService.getConnect9Ncash();
+	}
+	
+	@RequestMapping(value = "/connect9", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "Connect9 본사 정보", notes = "Connect9 본사 정보를 불러온다.")
+	public User getConnect9() throws Exception {
+		return ncashService.getConnect9();
 	}
 	
 }

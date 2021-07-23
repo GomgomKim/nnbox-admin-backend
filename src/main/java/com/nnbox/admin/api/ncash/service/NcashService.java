@@ -137,6 +137,19 @@ public class NcashService {
 	    return c9Ncash;
 	}
 	
+	public User getConnect9() throws Exception {
+		UserAuthenticationToken token = SessionUtil.getSessionUserToken();
+		User connect9 = null;
+		if (token == null) {
+	      throw new BasicException(ErrorCode.COMMON_UNAUTHORIZED);
+	    } else {
+	    	connect9 = userMapper.getConnect9();
+	    }
+//		log.debug("connect9 : "+connect9);
+		if (connect9 == null) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
+	    return connect9;
+	}
+	
 	
 	private void UserLog(NyamnyamLogCategoryCode category, UserAuthenticationToken token, NcashCreateRequest request) {
 	    try {

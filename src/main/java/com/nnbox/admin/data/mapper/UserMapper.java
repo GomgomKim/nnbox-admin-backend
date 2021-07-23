@@ -31,4 +31,6 @@ public interface UserMapper {
 	int getC9Ncash();
 	
 	int withdrawC9Ncash(NcashCreateRequest request);
+	
+	User getConnect9();
 }
