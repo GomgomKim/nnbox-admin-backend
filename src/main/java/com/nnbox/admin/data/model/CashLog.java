@@ -34,5 +34,13 @@ public class CashLog {
 
     private Integer ncashDelta;
 
+    private Integer afterNcash;
+
     private Integer branchIdx;
+
+    private String vAccountBank;
+
+    private String vAccountNumber;
+
+    private String vAccountDepositor;
 }

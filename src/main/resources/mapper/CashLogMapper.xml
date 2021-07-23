@@ -9,15 +9,17 @@
     <result column="SEND_AMOUNT" jdbcType="INTEGER" property="sendAmount" />
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
     <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
-    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
-    <result column="NCASH" jdbcType="INTEGER" property="nCash" />
     <result column="USER_TYPE" jdbcType="INTEGER" property="userType" />
     <result column="ADMIN_ID" jdbcType="VARCHAR" property="adminId" />
     <result column="RECEIVE_IDX" jdbcType="INTEGER" property="receiveIdx" />
     <result column="RECEIVE_ID" jdbcType="VARCHAR" property="receiveId" />
     <result column="BEFORE_NCASH" jdbcType="INTEGER" property="beforeNcash" />
     <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
+    <result column="AFTER_NCASH" jdbcType="INTEGER" property="afterNcash" />
     <result column="BRANCH_IDX" jdbcType="INTEGER" property="branchIdx" />
+    <result column="V_ACCOUNT_BANK" jdbcType="VARCHAR" property="vAccountBank" />
+    <result column="V_ACCOUNT_NUMBER" jdbcType="VARCHAR" property="vAccountNumber" />
+    <result column="V_ACCOUNT_DEPOSITOR" jdbcType="VARCHAR" property="vAccountDepositor" />
   </resultMap>
   
   <resultMap id="NcashResultMap" type="com.nnbox.admin.data.model.Ncash">
@@ -48,7 +50,8 @@
   
   <sql id="Base_Column_List">
     IDX, CREATE_DATE, CATEGORY, USER_IDX, SEND_AMOUNT, MEMO, USER_ID, USER_TYPE, ADMIN_ID, 
-    RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, NCASH_DELTA, BRANCH_IDX
+    RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, NCASH_DELTA, AFTER_NCASH, BRANCH_IDX, V_ACCOUNT_BANK, 
+    V_ACCOUNT_NUMBER, V_ACCOUNT_DEPOSITOR
   </sql>
   
   <sql id="Pay_Column_List">
@@ -78,12 +81,12 @@
       on f.USER_IDX = u.IDX
     </if>
   </sql>
+  
   <sql id="Payment_List_Table">
     cash_log cl
     inner join user u
     on cl.USER_IDX = u.IDX
   </sql>
-  
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -100,12 +103,16 @@
       USER_IDX, SEND_AMOUNT, MEMO, 
       USER_ID, USER_TYPE, ADMIN_ID, 
       RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, 
-      NCASH_DELTA, BRANCH_IDX)
+      NCASH_DELTA, AFTER_NCASH, BRANCH_IDX, 
+      V_ACCOUNT_BANK, V_ACCOUNT_NUMBER, V_ACCOUNT_DEPOSITOR
+      )
     values (#{idx,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{category,jdbcType=VARCHAR}, 
       #{userIdx,jdbcType=INTEGER}, #{sendAmount,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
       #{userId,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{adminId,jdbcType=VARCHAR}, 
       #{receiveIdx,jdbcType=INTEGER}, #{receiveId,jdbcType=VARCHAR}, #{beforeNcash,jdbcType=INTEGER}, 
-      #{ncashDelta,jdbcType=INTEGER}, #{branchIdx,jdbcType=INTEGER})
+      #{ncashDelta,jdbcType=INTEGER}, #{afterNcash,jdbcType=INTEGER}, #{branchIdx,jdbcType=INTEGER}, 
+      #{vAccountBank,jdbcType=VARCHAR}, #{vAccountNumber,jdbcType=VARCHAR}, #{vAccountDepositor,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.CashLog">
     insert into cash_log
@@ -149,8 +156,20 @@
       <if test="ncashDelta != null">
         NCASH_DELTA,
       </if>
+      <if test="afterNcash != null">
+        AFTER_NCASH,
+      </if>
       <if test="branchIdx != null">
         BRANCH_IDX,
+      </if>
+      <if test="vAccountBank != null">
+        V_ACCOUNT_BANK,
+      </if>
+      <if test="vAccountNumber != null">
+        V_ACCOUNT_NUMBER,
+      </if>
+      <if test="vAccountDepositor != null">
+        V_ACCOUNT_DEPOSITOR,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -193,8 +212,20 @@
       <if test="ncashDelta != null">
         #{ncashDelta,jdbcType=INTEGER},
       </if>
+      <if test="afterNcash != null">
+        #{afterNcash,jdbcType=INTEGER},
+      </if>
       <if test="branchIdx != null">
         #{branchIdx,jdbcType=INTEGER},
+      </if>
+      <if test="vAccountBank != null">
+        #{vAccountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="vAccountNumber != null">
+        #{vAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vAccountDepositor != null">
+        #{vAccountDepositor,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -237,8 +268,20 @@
       <if test="ncashDelta != null">
         NCASH_DELTA = #{ncashDelta,jdbcType=INTEGER},
       </if>
+      <if test="afterNcash != null">
+        AFTER_NCASH = #{afterNcash,jdbcType=INTEGER},
+      </if>
       <if test="branchIdx != null">
         BRANCH_IDX = #{branchIdx,jdbcType=INTEGER},
+      </if>
+      <if test="vAccountBank != null">
+        V_ACCOUNT_BANK = #{vAccountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="vAccountNumber != null">
+        V_ACCOUNT_NUMBER = #{vAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vAccountDepositor != null">
+        V_ACCOUNT_DEPOSITOR = #{vAccountDepositor,jdbcType=VARCHAR},
       </if>
     </set>
     where IDX = #{idx,jdbcType=INTEGER}
@@ -257,10 +300,13 @@
       RECEIVE_ID = #{receiveId,jdbcType=VARCHAR},
       BEFORE_NCASH = #{beforeNcash,jdbcType=INTEGER},
       NCASH_DELTA = #{ncashDelta,jdbcType=INTEGER},
-      BRANCH_IDX = #{branchIdx,jdbcType=INTEGER}
+      AFTER_NCASH = #{afterNcash,jdbcType=INTEGER},
+      BRANCH_IDX = #{branchIdx,jdbcType=INTEGER},
+      V_ACCOUNT_BANK = #{vAccountBank,jdbcType=VARCHAR},
+      V_ACCOUNT_NUMBER = #{vAccountNumber,jdbcType=VARCHAR},
+      V_ACCOUNT_DEPOSITOR = #{vAccountDepositor,jdbcType=VARCHAR}
     where IDX = #{idx,jdbcType=INTEGER}
   </update>
-  
   
   <!-- custom sql -->
   <select id="selectNcashList" parameterType="com.nnbox.admin.api.ncash.model.NcashAllListRequest" resultMap="NcashResultMap">
@@ -345,4 +391,5 @@
       and cl.NCASH_DELTA &gt; 0
     </where>
   </select>
+  
 </mapper>
