@@ -96,4 +96,8 @@ public class Order {
     // 라이더 주민번호
     @ApiModelProperty(value = "주민번호", dataType = "String", example = "", required = false, hidden = false)
     private String registrationNumber;
+    
+    // 대표자 이름
+    @ApiModelProperty(value = "대표자 이름", dataType = "String", example = "", required = false, hidden = false)
+    private String ownerName;
 }

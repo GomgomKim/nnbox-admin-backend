@@ -32,6 +32,7 @@
     <result column="ADDR1" jdbcType="VARCHAR" property="addr1" />
     <result column="ADDR2" jdbcType="VARCHAR" property="addr2" />
     <result column="ADDR3" jdbcType="VARCHAR" property="addr3" />
+    <result column="OWNER_NAME" jdbcType="VARCHAR" property="ownerName" />
     
     <!-- user -->
     <result column="EMAIL" jdbcType="VARCHAR" property="email" />
@@ -55,7 +56,7 @@
     a.DELIVERY_PRICE_FEE, a.COMPLETE_DATE
   </sql>
   <sql id="User_Base_Column_List">
-    f.FR_NAME, u.PHONE as FR_PHONE, f.BUSINESS_NUMBER, u.EMAIL, f.ADDR1, f.ADDR2, f.ADDR3
+    f.FR_NAME, u.PHONE as FR_PHONE, f.BUSINESS_NUMBER, u.EMAIL, f.ADDR1, f.ADDR2, f.ADDR3, f.OWNER_NAME
   </sql>
   <sql id="Rider_Base_Column_List">
     r.RIDER_NAME, u.PHONE as RIDER_PHONE, r.RIDER_LEVEL, r.RIDER_STATUS, r.RIDER_SETTING_GROUP_IDX as RIDER_GROUP, r.DELIVERY_PRICE_FEE_TYPE as FEE_TYPE
