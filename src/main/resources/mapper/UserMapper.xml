@@ -37,19 +37,21 @@
     , u.WITHDRAW_LIMIT, u.WITHDRAW_PASSWORD, u.WITHDRAW_ENABLED, u.BANK, u.BANK_ACCOUNT, u.DEPOSITOR
     , u.BRANCH_IDX, u.AGREE_SMS
   </sql>
-  <sql id="Rider_Column_List">
-    r.V_ACCOUNT_BANK, r.V_ACCOUNT_NUMBER, r.V_ACCOUNT_DEPOSITOR
+  <sql id="V_Column_List">
+    case u.USER_TYPE when 1 then r.V_ACCOUNT_BANK when 2 then f.V_ACCOUNT_BANK end as V_ACCOUNT_BANK
+    , case u.USER_TYPE when 1 then r.V_ACCOUNT_NUMBER when 2 then f.V_ACCOUNT_NUMBER end as V_ACCOUNT_NUMBER
+    , case u.USER_TYPE when 1 then r.V_ACCOUNT_DEPOSITOR when 2 then f.V_ACCOUNT_DEPOSITOR end as V_ACCOUNT_DEPOSITOR
   </sql>
   <sql id="User_Table_List">
-    user u
-    inner join rider r
-    on r.USER_IDX = u.IDX
+    user u left outer join rider r
+    on r.USER_IDX = u.IDX left outer join franchise f
+    on f.USER_IDX = u.IDX
   </sql>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />,
-    <include refid="Rider_Column_List" />
+    <include refid="V_Column_List" />
     from
     <include refid="User_Table_List" />
     where IDX = #{idx,jdbcType=INTEGER}
@@ -61,7 +63,7 @@
   <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />,
-    <include refid="Rider_Column_List" />
+    <include refid="V_Column_List" />
     from
     <include refid="User_Table_List" />
     where ID = #{id,jdbcType=VARCHAR}
@@ -69,7 +71,7 @@
   <select id="selectList" parameterType="com.nnbox.admin.api.sample.model.UserListRequest" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />,
-    <include refid="Rider_Column_List" />
+    <include refid="V_Column_List" />
     from
     <include refid="User_Table_List" />
 	<trim prefix="WHERE" prefixOverrides="AND |OR ">
@@ -96,7 +98,7 @@
   <select id="getConnect9" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />,
-    <include refid="Rider_Column_List" />
+    <include refid="V_Column_List" />
     from
     <include refid="User_Table_List" />
     where u.ID = 'connect9'
