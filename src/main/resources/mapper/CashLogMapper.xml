@@ -60,6 +60,8 @@
     <result column="V_ACCOUNT_DEPOSITOR" jdbcType="VARCHAR" property="depositor" />
     <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="REGISTRATION_NUMBER" jdbcType="VARCHAR" property="registraionNumber" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
   </resultMap>
   
@@ -69,7 +71,7 @@
     V_ACCOUNT_NUMBER, V_ACCOUNT_DEPOSITOR, KIND
   </sql>
   
-      <sql id="Pay_Column_List">
+  <sql id="Pay_Column_List">
     cl.IDX, cl.USER_IDX, cl.CREATE_DATE, cl.NCASH_DELTA, cl.MEMO
   </sql>
   
@@ -88,6 +90,7 @@
     , u.NCASH, u.USER_TYPE
     , case u.USER_TYPE when 1 then r.RIDER_NAME when 2 then f.FR_NAME end as USER_NAME
     , cl.KIND, cl.V_ACCOUNT_BANK, cl.V_ACCOUNT_NUMBER, cl.V_ACCOUNT_DEPOSITOR
+    , r.REGISTRATION_NUMBER, u.PHONE
   </sql>
   
   <sql id="Ncash_List_Table">
@@ -432,7 +435,7 @@
     inner join user u
     on u.IDX = cl.USER_IDX left outer join rider r
     on r.USER_IDX = u.IDX left outer join franchise f
-    on f.USER_IDX = u.IDX
+    on f.USER_IDX = u.IDX 
     <where>
       and cl.NCASH_DELTA != 0
       and cl.CATEGORY = 'BATCH_WORK_NCASH'

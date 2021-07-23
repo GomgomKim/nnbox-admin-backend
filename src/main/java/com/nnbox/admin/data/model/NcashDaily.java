@@ -53,4 +53,12 @@ public class NcashDaily {
 	  @ApiModelProperty(value = "생성 일자", dataType = "LocalDateTime")
 	  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	  private LocalDateTime createDate;
+	  
+	  // 주민번호
+	  @ApiModelProperty(value = "주민번호", dataType = "String", example = "주민번호")
+	  private String registraionNumber;
+	  
+	  // 연락처
+	  @ApiModelProperty(value = "연락처", dataType = "String", example = "연락처")
+	  private String phone;
 }
