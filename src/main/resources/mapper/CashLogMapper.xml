@@ -55,9 +55,9 @@
     <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
     <result column="KIND" jdbcType="VARCHAR" property="kind" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
-    <result column="BANK" jdbcType="VARCHAR" property="bank" />
-    <result column="BANK_ACCOUNT" jdbcType="VARCHAR" property="bankAccount" />
-    <result column="DEPOSITOR" jdbcType="VARCHAR" property="depositor" />
+    <result column="V_ACCOUNT_BANK" jdbcType="VARCHAR" property="bank" />
+    <result column="V_ACCOUNT_NUMBER" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="V_ACCOUNT_DEPOSITOR" jdbcType="VARCHAR" property="depositor" />
     <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
     <result column="MEMO" jdbcType="VARCHAR" property="memo" />
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
@@ -87,7 +87,7 @@
     cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA, cl.MEMO as CATEGORY_KR
     , u.NCASH, u.USER_TYPE
     , case u.USER_TYPE when 1 then r.RIDER_NAME when 2 then f.FR_NAME end as USER_NAME
-    , cl.KIND
+    , cl.KIND, cl.V_ACCOUNT_BANK, cl.V_ACCOUNT_NUMBER, cl.V_ACCOUNT_DEPOSITOR
   </sql>
   
   <sql id="Ncash_List_Table">
@@ -434,9 +434,9 @@
     on r.USER_IDX = u.IDX left outer join franchise f
     on f.USER_IDX = u.IDX
     <where>
-      <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
       and cl.NCASH_DELTA != 0
-      and cl.CATEGORY = ''
+      and cl.CATEGORY = 'BATCH_WORK_NCASH'
+      and cl.KIND = #{kind}
     </where>
     order by cl.IDX desc
     limit #{pageSize} offset #{limitStart}
@@ -448,9 +448,9 @@
     inner join user u
     on u.IDX = cl.USER_IDX
     <where>
-      <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
-      <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
       and cl.NCASH_DELTA != 0
+      and cl.CATEGORY = 'BATCH_WORK_NCASH'
+      and cl.KIND = #{kind}
     </where>
   </select>
 </mapper>
