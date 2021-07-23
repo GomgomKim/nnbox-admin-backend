@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
@@ -42,6 +43,15 @@ public class Order {
 
 	// 매장 전화번호
 	private String frPhone;
+	
+	// 매장 주소(기본, 신)
+	private String addr1;
+
+	// 메장 주소(상세)
+	private String addr2;
+
+	// 매장 주소(기본, 구)
+	private String addr3;
 
 	// assign order
 	// 주문 IDX
@@ -75,4 +85,15 @@ public class Order {
 	
 	// 수수료 방식
 	private Integer feeType;
+	
+    // 사업자 번호
+    @ApiModelProperty(value = "사업자 번호", dataType = "String", example = "111-22-33333", required = true, hidden = false)
+    private String businessNumber;
+    
+    // 이메일
+    private String email;
+    
+    // 라이더 주민번호
+    @ApiModelProperty(value = "주민번호", dataType = "String", example = "", required = false, hidden = false)
+    private String registrationNumber;
 }
