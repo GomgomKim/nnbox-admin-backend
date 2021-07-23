@@ -189,7 +189,7 @@ public class NcashService {
 	      User user2 = userMapper.selectByPrimaryKey(request.getReceiveUserIdx());
 	      CashLog cashLog = new CashLog();
 	      cashLog.setCategory(category);
-	      cashLog.setMemo(category.getCategory());
+	      cashLog.setMemo(category.getCategory() + " / "+ request.getNcashMemo());
 	      cashLog.setUserIdx(user2.getIdx());
 	      cashLog.setUserId(user2.getId());
 	      cashLog.setUserType(user2.getUserType());
