@@ -199,6 +199,10 @@ public class NcashService {
 	      Integer ncashDelta2 = request.getNcashAmount();
 	      cashLog.setBeforeNcash(user2.getNcash() - ncashDelta2);
 	      cashLog.setNcashDelta(ncashDelta2);
+	      cashLog.setAfterNcash(user2.getNcash());
+	      cashLog.setVAccountBank(user2.getVAccountBank());
+	      cashLog.setVAccountDepositor(user2.getVAccountDepositor());
+	      cashLog.setVAccountNumber(user2.getVAccountNumber());
 	      cashLog.setAdminId(token.getId());
 	      cashLog.setReceiveId(user2.getId());
 	      
