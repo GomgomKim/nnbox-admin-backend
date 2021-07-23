@@ -64,6 +64,11 @@ public class NcashService {
 	
 	public NcashCreateResponse createNcash(NcashCreateRequest request) throws Exception {
 		UserAuthenticationToken token = SessionUtil.getSessionUserToken();
+		if(request.getUserId() != null) {
+			User user = userMapper.selectById(request.getUserId());
+			Integer userIdx = user.getIdx();
+			request.setReceiveUserIdx(userIdx);
+		}
 		if (token == null) {
 	      throw new BasicException(ErrorCode.COMMON_UNAUTHORIZED);
 	    } else {
