@@ -62,6 +62,7 @@
   <sql id="Ncash_Column_List">
     cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA, cl.MEMO as CATEGORY_KR
     , u.NCASH, u.USER_TYPE
+    , case u.USER_TYPE when 1 then r.RIDER_NAME when 2 then f.FR_NAME end as USER_NAME
   </sql>
   
   <sql id="Ncash_List_Table">
@@ -267,7 +268,9 @@
     <include refid="Ncash_Column_List" />
     from cash_log cl
     inner join user u
-    on u.IDX = cl.USER_IDX
+    on u.IDX = cl.USER_IDX left outer join rider r
+    on r.USER_IDX = u.IDX left outer join franchise f
+    on f.USER_IDX = u.IDX
     <where>
       <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
       <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
