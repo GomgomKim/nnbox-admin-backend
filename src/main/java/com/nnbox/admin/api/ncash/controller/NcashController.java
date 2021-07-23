@@ -16,6 +16,8 @@ import com.nnbox.admin.api.ncash.model.NcashAllListRequest;
 import com.nnbox.admin.api.ncash.model.NcashAllListResponse;
 import com.nnbox.admin.api.ncash.model.NcashCreateRequest;
 import com.nnbox.admin.api.ncash.model.NcashCreateResponse;
+import com.nnbox.admin.api.ncash.model.NcashDailyListRequest;
+import com.nnbox.admin.api.ncash.model.NcashDailyListResponse;
 import com.nnbox.admin.api.ncash.model.NcashListRequest;
 import com.nnbox.admin.api.ncash.model.NcashListResponse;
 import com.nnbox.admin.api.ncash.model.WithdrawListRequest;
@@ -71,6 +73,12 @@ public class NcashController {
 	@ApiOperation(value = "Connect9 본사 정보", notes = "Connect9 본사 정보를 불러온다.")
 	public User getConnect9() throws Exception {
 		return ncashService.getConnect9();
+	}
+	
+	@RequestMapping(value = "/daily/list", method = RequestMethod.GET, produces = "application/json")
+	@ApiOperation(value = "일차감 내역", notes = "일차감 내역을 불러온다.")
+	public NcashDailyListResponse getNcashDailyList(@ModelAttribute NcashDailyListRequest listRequest, BindingResult bindingResult) throws Exception {
+		return ncashService.getNcashDailyList(listRequest);
 	}
 	
 }

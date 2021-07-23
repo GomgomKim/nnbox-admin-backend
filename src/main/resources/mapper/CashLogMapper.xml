@@ -20,9 +20,10 @@
     <result column="V_ACCOUNT_BANK" jdbcType="VARCHAR" property="vAccountBank" />
     <result column="V_ACCOUNT_NUMBER" jdbcType="VARCHAR" property="vAccountNumber" />
     <result column="V_ACCOUNT_DEPOSITOR" jdbcType="VARCHAR" property="vAccountDepositor" />
+    <result column="KIND" jdbcType="SMALLINT" property="kind" />
   </resultMap>
   
-  <resultMap id="NcashResultMap" type="com.nnbox.admin.data.model.Ncash">
+    <resultMap id="NcashResultMap" type="com.nnbox.admin.data.model.Ncash">
     <id column="IDX" jdbcType="INTEGER" property="idx" />
     <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
     <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
@@ -48,13 +49,27 @@
     <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
   </resultMap>
   
+  <resultMap id="NcashDailyResultMap" type="com.nnbox.admin.data.model.NcashDaily">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="KIND" jdbcType="VARCHAR" property="kind" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="BANK" jdbcType="VARCHAR" property="bank" />
+    <result column="BANK_ACCOUNT" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="DEPOSITOR" jdbcType="VARCHAR" property="depositor" />
+    <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
+    <result column="MEMO" jdbcType="VARCHAR" property="memo" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     IDX, CREATE_DATE, CATEGORY, USER_IDX, SEND_AMOUNT, MEMO, USER_ID, USER_TYPE, ADMIN_ID, 
     RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, NCASH_DELTA, AFTER_NCASH, BRANCH_IDX, V_ACCOUNT_BANK, 
-    V_ACCOUNT_NUMBER, V_ACCOUNT_DEPOSITOR
+    V_ACCOUNT_NUMBER, V_ACCOUNT_DEPOSITOR, KIND
   </sql>
   
-  <sql id="Pay_Column_List">
+      <sql id="Pay_Column_List">
     cl.IDX, cl.USER_IDX, cl.CREATE_DATE, cl.NCASH_DELTA, cl.MEMO
   </sql>
   
@@ -66,6 +81,13 @@
     cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA, cl.MEMO as CATEGORY_KR
     , u.NCASH, u.USER_TYPE
     , case u.USER_TYPE when 1 then r.RIDER_NAME when 2 then f.FR_NAME end as USER_NAME
+  </sql>
+  
+  <sql id="Ncash_Daily_Column_List">
+    cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA, cl.MEMO as CATEGORY_KR
+    , u.NCASH, u.USER_TYPE
+    , case u.USER_TYPE when 1 then r.RIDER_NAME when 2 then f.FR_NAME end as USER_NAME
+    , cl.KIND
   </sql>
   
   <sql id="Ncash_List_Table">
@@ -104,15 +126,15 @@
       USER_ID, USER_TYPE, ADMIN_ID, 
       RECEIVE_IDX, RECEIVE_ID, BEFORE_NCASH, 
       NCASH_DELTA, AFTER_NCASH, BRANCH_IDX, 
-      V_ACCOUNT_BANK, V_ACCOUNT_NUMBER, V_ACCOUNT_DEPOSITOR
-      )
+      V_ACCOUNT_BANK, V_ACCOUNT_NUMBER, V_ACCOUNT_DEPOSITOR, 
+      KIND)
     values (#{idx,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, #{category,jdbcType=VARCHAR}, 
       #{userIdx,jdbcType=INTEGER}, #{sendAmount,jdbcType=INTEGER}, #{memo,jdbcType=VARCHAR}, 
       #{userId,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{adminId,jdbcType=VARCHAR}, 
       #{receiveIdx,jdbcType=INTEGER}, #{receiveId,jdbcType=VARCHAR}, #{beforeNcash,jdbcType=INTEGER}, 
       #{ncashDelta,jdbcType=INTEGER}, #{afterNcash,jdbcType=INTEGER}, #{branchIdx,jdbcType=INTEGER}, 
-      #{vAccountBank,jdbcType=VARCHAR}, #{vAccountNumber,jdbcType=VARCHAR}, #{vAccountDepositor,jdbcType=VARCHAR}
-      )
+      #{vAccountBank,jdbcType=VARCHAR}, #{vAccountNumber,jdbcType=VARCHAR}, #{vAccountDepositor,jdbcType=VARCHAR}, 
+      #{kind,jdbcType=SMALLINT})
   </insert>
   <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.CashLog">
     insert into cash_log
@@ -171,6 +193,9 @@
       <if test="vAccountDepositor != null">
         V_ACCOUNT_DEPOSITOR,
       </if>
+      <if test="kind != null">
+        KIND,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="idx != null">
@@ -226,6 +251,9 @@
       </if>
       <if test="vAccountDepositor != null">
         #{vAccountDepositor,jdbcType=VARCHAR},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=SMALLINT},
       </if>
     </trim>
   </insert>
@@ -283,6 +311,9 @@
       <if test="vAccountDepositor != null">
         V_ACCOUNT_DEPOSITOR = #{vAccountDepositor,jdbcType=VARCHAR},
       </if>
+      <if test="kind != null">
+        KIND = #{kind,jdbcType=SMALLINT},
+      </if>
     </set>
     where IDX = #{idx,jdbcType=INTEGER}
   </update>
@@ -304,11 +335,12 @@
       BRANCH_IDX = #{branchIdx,jdbcType=INTEGER},
       V_ACCOUNT_BANK = #{vAccountBank,jdbcType=VARCHAR},
       V_ACCOUNT_NUMBER = #{vAccountNumber,jdbcType=VARCHAR},
-      V_ACCOUNT_DEPOSITOR = #{vAccountDepositor,jdbcType=VARCHAR}
+      V_ACCOUNT_DEPOSITOR = #{vAccountDepositor,jdbcType=VARCHAR},
+      KIND = #{kind,jdbcType=SMALLINT}
     where IDX = #{idx,jdbcType=INTEGER}
   </update>
   
-  <!-- custom sql -->
+      <!-- custom sql -->
   <select id="selectNcashList" parameterType="com.nnbox.admin.api.ncash.model.NcashAllListRequest" resultMap="NcashResultMap">
     select 
     <include refid="Ncash_Column_List" />
@@ -392,4 +424,33 @@
     </where>
   </select>
   
+  <!-- 일차감 -->
+  <select id="selectNcashDailyList" parameterType="com.nnbox.admin.api.ncash.model.NcashDailyListRequest" resultMap="NcashDailyResultMap">
+    select 
+    <include refid="Ncash_Daily_Column_List" />
+    from cash_log cl
+    inner join user u
+    on u.IDX = cl.USER_IDX left outer join rider r
+    on r.USER_IDX = u.IDX left outer join franchise f
+    on f.USER_IDX = u.IDX
+    <where>
+      <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
+      and cl.NCASH_DELTA != 0
+      and cl.CATEGORY = ''
+    </where>
+    order by cl.IDX desc
+    limit #{pageSize} offset #{limitStart}
+  </select>
+  
+  <select id="getNcashDailyListTotalCount" parameterType="com.nnbox.admin.api.ncash.model.NcashDailyListRequest" resultType="int">
+    select count(*)
+    from cash_log cl
+    inner join user u
+    on u.IDX = cl.USER_IDX
+    <where>
+      <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
+      <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
+      and cl.NCASH_DELTA != 0
+    </where>
+  </select>
 </mapper>

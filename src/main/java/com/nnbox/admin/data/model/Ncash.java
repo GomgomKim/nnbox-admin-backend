@@ -21,6 +21,10 @@ public class Ncash {
 	  @ApiModelProperty(value = "유저 이름", dataType = "String", example = "김냠냠")
 	  private String userName;
 	  
+	  // 구분
+	  @ApiModelProperty(value = "구분", dataType = "String", example = "리스료")
+	  private String kind;
+	  
 	  // 유형(1: 라이더, 2: 매장)
 	  @ApiModelProperty(value = "유형(1: 라이더, 2: 매장)", dataType = "Integer", example = "1")
 	  private Integer userType;

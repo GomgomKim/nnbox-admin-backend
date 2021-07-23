@@ -10,6 +10,8 @@ import com.nnbox.admin.api.ncash.model.NcashAllListRequest;
 import com.nnbox.admin.api.ncash.model.NcashAllListResponse;
 import com.nnbox.admin.api.ncash.model.NcashCreateRequest;
 import com.nnbox.admin.api.ncash.model.NcashCreateResponse;
+import com.nnbox.admin.api.ncash.model.NcashDailyListRequest;
+import com.nnbox.admin.api.ncash.model.NcashDailyListResponse;
 import com.nnbox.admin.api.ncash.model.NcashListRequest;
 import com.nnbox.admin.api.ncash.model.NcashListResponse;
 import com.nnbox.admin.api.ncash.model.WithdrawListRequest;
@@ -27,6 +29,7 @@ import com.nnbox.admin.data.mapper.WithdrawMapper;
 import com.nnbox.admin.data.model.CashLog;
 import com.nnbox.admin.data.model.Log;
 import com.nnbox.admin.data.model.Ncash;
+import com.nnbox.admin.data.model.NcashDaily;
 import com.nnbox.admin.data.model.User;
 import com.nnbox.admin.data.model.Withdraw;
 
@@ -153,6 +156,21 @@ public class NcashService {
 //		log.debug("connect9 : "+connect9);
 		if (connect9 == null) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
 	    return connect9;
+	}
+	
+	public NcashDailyListResponse getNcashDailyList(NcashDailyListRequest listRequest) throws Exception {
+		NcashDailyListResponse response = new NcashDailyListResponse();
+		
+	    response.setCurrentPage(listRequest.getPageNum());
+	    
+	    List<NcashDaily> ncashDailies = cashLogMapper.selectNcashDailyList(listRequest);
+	    Integer totalCount = cashLogMapper.getNcashDailyListTotalCount(listRequest);
+
+	    response.setNcashDailies(ncashDailies);
+	    response.setTotalCount(totalCount);
+	    response.setTotalPage(totalCount, 10);
+
+	    return response;
 	}
 	
 	

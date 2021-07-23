@@ -43,4 +43,6 @@ public class CashLog {
     private String vAccountNumber;
 
     private String vAccountDepositor;
+
+    private Integer kind;
 }
