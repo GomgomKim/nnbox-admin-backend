@@ -355,7 +355,6 @@
     <where>
       <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
       <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
-      and cl.NCASH_DELTA != 0
     </where>
     order by cl.IDX desc
     limit #{pageSize} offset #{limitStart}
@@ -369,7 +368,6 @@
     <where>
       <if test="category != null and !category.equals('')">and cl.CATEGORY like #{category}</if>
       <if test="userId != null and !userId.equals('')">and u.ID like CONCAT(#{userId}, '%')</if>
-      and cl.NCASH_DELTA != 0
     </where>
   </select>
   
@@ -410,7 +408,6 @@
     <where>
       u.USER_TYPE = #{userType}
       <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
-      and cl.NCASH_DELTA &gt; 0
     </where>
     order by cl.IDX desc
     limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
@@ -423,7 +420,6 @@
     <where>
       u.USER_TYPE = #{userType}
       <if test="userId != null">and u.ID like CONCAT(#{userId}, '%')</if>
-      and cl.NCASH_DELTA &gt; 0
     </where>
   </select>
   
@@ -437,7 +433,6 @@
     on r.USER_IDX = u.IDX left outer join franchise f
     on f.USER_IDX = u.IDX 
     <where>
-      and cl.NCASH_DELTA != 0
       and cl.CATEGORY = 'BATCH_WORK_NCASH'
       and cl.KIND = #{kind}
     </where>
@@ -451,7 +446,6 @@
     inner join user u
     on u.IDX = cl.USER_IDX
     <where>
-      and cl.NCASH_DELTA != 0
       and cl.CATEGORY = 'BATCH_WORK_NCASH'
       and cl.KIND = #{kind}
     </where>

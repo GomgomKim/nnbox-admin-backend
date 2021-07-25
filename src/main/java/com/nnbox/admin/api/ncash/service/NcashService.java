@@ -179,6 +179,7 @@ public class NcashService {
 	    try {
 	      // 받은 유저
 	      User user2 = userMapper.selectByPrimaryKey(request.getReceiveUserIdx());
+	      Integer receiveUserIdx = user2.getIdx();
 	      Log nyamnyamLog2 = new Log();
 	      nyamnyamLog2.setCategory(category);
 	      nyamnyamLog2.setMemo(category.getCategory());
@@ -193,6 +194,25 @@ public class NcashService {
 	      nyamnyamLog2.setBeforeNcash(user2.getNcash() - ncashDelta2);
 	      nyamnyamLog2.setAfterNcash(user2.getNcash());
 	      nyamnyamLog2.setNcashDelta(ncashDelta2);
+	      nyamnyamLog2.setAdminId(token.getId());
+	      nyamnyamLog2.setReceiveId(user2.getId());
+	      
+	      logMapper.insertSelective(nyamnyamLog2);
+
+	      user2 = userMapper.selectById("connect9");
+	      nyamnyamLog2 = new Log();
+	      nyamnyamLog2.setCategory(category);
+	      nyamnyamLog2.setMemo(category.getCategory());
+	      nyamnyamLog2.setUserIdx(user2.getIdx());
+	      nyamnyamLog2.setUserId(user2.getId());
+	      nyamnyamLog2.setUserType(user2.getUserType());
+	      nyamnyamLog2.setFrName(user2.getFrName());
+	      nyamnyamLog2.setBranchIdx(user2.getBranchIdx());
+	      nyamnyamLog2.setSendAmount(0-request.getNcashAmount());
+	      nyamnyamLog2.setReceiveIdx(receiveUserIdx);
+	      nyamnyamLog2.setBeforeNcash(user2.getNcash() + ncashDelta2);
+	      nyamnyamLog2.setAfterNcash(user2.getNcash());
+	      nyamnyamLog2.setNcashDelta(0-ncashDelta2);
 	      nyamnyamLog2.setAdminId(token.getId());
 	      nyamnyamLog2.setReceiveId(user2.getId());
 	      
@@ -236,10 +256,10 @@ public class NcashService {
 	      cashLog2.setUserId(connect9.getId());
 	      cashLog2.setUserType(connect9.getUserType());
 	      cashLog2.setBranchIdx(connect9.getBranchIdx());
-	      cashLog2.setSendAmount(request.getNcashAmount());
+	      cashLog2.setSendAmount(0-request.getNcashAmount());
 	      cashLog2.setReceiveIdx(request.getReceiveUserIdx());
 	      cashLog2.setBeforeNcash(connect9.getNcash() + ncashDelta2);
-	      cashLog2.setNcashDelta(ncashDelta2);
+	      cashLog2.setNcashDelta(0-ncashDelta2);
 	      cashLog2.setAfterNcash(connect9.getNcash());
 	      cashLog2.setVAccountBank(connect9.getVAccountBank());
 	      cashLog2.setVAccountDepositor(connect9.getVAccountDepositor());
