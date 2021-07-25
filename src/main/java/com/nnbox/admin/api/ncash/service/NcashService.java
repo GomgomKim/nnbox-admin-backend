@@ -226,6 +226,28 @@ public class NcashService {
 	      cashLog.setReceiveId(user2.getId());
 	      
 	      cashLogMapper.insertSelective(cashLog);
+	      
+	      // 본사
+	      User connect9 = userMapper.selectById("connect9");
+	      CashLog cashLog2 = new CashLog();
+	      cashLog2.setCategory(category);
+	      cashLog2.setMemo(category.getCategory()+ " / "+ request.getNcashMemo());
+	      cashLog2.setUserIdx(connect9.getIdx());
+	      cashLog2.setUserId(connect9.getId());
+	      cashLog2.setUserType(connect9.getUserType());
+	      cashLog2.setBranchIdx(connect9.getBranchIdx());
+	      cashLog2.setSendAmount(request.getNcashAmount());
+	      cashLog2.setReceiveIdx(request.getReceiveUserIdx());
+	      cashLog2.setBeforeNcash(connect9.getNcash() + ncashDelta2);
+	      cashLog2.setNcashDelta(ncashDelta2);
+	      cashLog2.setAfterNcash(connect9.getNcash());
+	      cashLog2.setVAccountBank(connect9.getVAccountBank());
+	      cashLog2.setVAccountDepositor(connect9.getVAccountDepositor());
+	      cashLog2.setVAccountNumber(connect9.getVAccountNumber());
+	      cashLog2.setAdminId(token.getId());
+	      cashLog2.setReceiveId(connect9.getId());
+	      
+	      cashLogMapper.insertSelective(cashLog2);
 	    } catch (Exception ex) {
 	      log.debug("nyamnyamLog error: {}", ex.getMessage());
 	    }
