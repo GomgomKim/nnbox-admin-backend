@@ -1,9 +1,5 @@
 package com.nnbox.admin.data.model;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -67,12 +63,12 @@ public class Order {
 	private Integer deliveryPriceFee;
 
 	// 픽업 일자
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime pickupDate;
+//	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private String pickupDate;
 
 	// 완료 일자
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime completeDate;
+//	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+	private String completeDate;
 
 	// 라이더 직급
 	private Integer riderLevel;
