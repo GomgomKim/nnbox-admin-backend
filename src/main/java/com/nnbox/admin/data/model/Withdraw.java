@@ -1,9 +1,5 @@
 package com.nnbox.admin.data.model;
 
-import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -46,7 +42,6 @@ public class Withdraw {
 	  private String memo;
 	  
 	  // 생성 일자
-	  @ApiModelProperty(value = "생성 일자", dataType = "LocalDateTime")
-	  @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-	  private LocalDateTime createDate;
+	  @ApiModelProperty(value = "생성 일자", dataType = "String")
+	  private String createDate;
 }
