@@ -25,7 +25,7 @@ public class SettlementController {
 	SettlementService settlementService;
 	
 	@RequestMapping(value = "/ncash/fee/list", method = RequestMethod.GET, produces = "application/json")
-	@ApiOperation(value = "예치금 지급내역", notes = "유저별 예치금 지급 이력을 불러온다.")
+	@ApiOperation(value = "입출금 수수료 내역", notes = "입출금 수수료 내역을 불러온다.")
 	public NcashFeeListResponse getNcashFeeList(@ModelAttribute NcashFeeListRequest listRequest, BindingResult bindingResult) throws Exception {
 		return settlementService.getNcashFeeList(listRequest);
 	}
