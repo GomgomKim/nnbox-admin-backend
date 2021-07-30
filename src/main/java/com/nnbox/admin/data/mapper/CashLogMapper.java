@@ -8,6 +8,7 @@ import com.nnbox.admin.api.ncash.model.NcashAllListRequest;
 import com.nnbox.admin.api.ncash.model.NcashDailyListRequest;
 import com.nnbox.admin.api.ncash.model.NcashListRequest;
 import com.nnbox.admin.api.ncash.model.WithdrawListRequest;
+import com.nnbox.admin.api.settlement.model.NcashFeeListRequest;
 import com.nnbox.admin.data.model.CashLog;
 import com.nnbox.admin.data.model.Ncash;
 import com.nnbox.admin.data.model.NcashDaily;
@@ -43,4 +44,8 @@ public interface CashLogMapper {
     List<NcashDaily> selectNcashDailyList(NcashDailyListRequest request);
     
     int getNcashDailyListTotalCount(NcashDailyListRequest request);
+    
+    List<Ncash> selectNcashFeeList(NcashFeeListRequest request);
+    
+    int getNcashFeeTotalCount(NcashFeeListRequest request);
 }

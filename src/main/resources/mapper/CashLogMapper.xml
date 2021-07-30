@@ -34,6 +34,7 @@
     <result column="CATEGORY_KR" jdbcType="VARCHAR" property="categoryKr" />
     <result column="NCASH_DELTA" jdbcType="INTEGER" property="ncashDelta" />
     <result column="ADMIN_ID" jdbcType="INTEGER" property="adminId"/>
+    <result column="KIND" jdbcType="SMALLINT" property="kind" />
   </resultMap>
   
   <resultMap id="PayResultMap" type="com.nnbox.admin.data.model.Withdraw">
@@ -83,6 +84,7 @@
     cl.IDX, cl.CREATE_DATE, cl.CATEGORY, u.ID as USER_ID, cl.ADMIN_ID, cl.NCASH_DELTA, cl.MEMO as CATEGORY_KR
     , u.NCASH, u.USER_TYPE
     , case u.USER_TYPE when 1 then r.RIDER_NAME when 2 then f.FR_NAME end as USER_NAME
+    , cl.KIND
   </sql>
   
   <sql id="Ncash_Daily_Column_List">
@@ -450,4 +452,35 @@
       and cl.KIND = #{kind}
     </where>
   </select>
+  
+  <!-- settlement -->
+  <select id="selectNcashFeeList" parameterType="com.nnbox.admin.api.settlement.model.NcashFeeListRequest" resultMap="NcashResultMap">
+    select 
+    <include refid="Ncash_Column_List" />
+    from cash_log cl 
+    inner join user u
+    on u.IDX = cl.USER_IDX left outer join rider r
+    on r.USER_IDX = u.IDX left outer join franchise f
+    on f.USER_IDX = u.IDX 
+    <where>
+      cl.CATEGORY in ('NCASH_CHARGE_PROC', 'WITHDRAW_REQ')
+      and u.ID ='connect9'
+    </where>
+    order by cl.IDX desc
+    limit #{pageSize} offset #{limitStart}
+  </select>
+  
+  <select id="getNcashFeeTotalCount" parameterType="com.nnbox.admin.api.settlement.model.NcashFeeListRequest" resultType="int">
+    select count(*)
+    from cash_log cl 
+    inner join user u
+    on u.IDX = cl.USER_IDX left outer join rider r
+    on r.USER_IDX = u.IDX left outer join franchise f
+    on f.USER_IDX = u.IDX 
+    <where>
+      cl.CATEGORY in ('NCASH_CHARGE_PROC', 'WITHDRAW_REQ')
+      and u.ID ='connect9'
+    </where>
+  </select>
+  
 </mapper>
