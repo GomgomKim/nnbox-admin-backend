@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 public class NcashDailyListRequest extends ListRequest {
       // 구분
-      @ApiModelProperty(value = "일차감 구분(1: 리스비, 2: 대출 상환, 3:산재 보험비)", dataType = "Integer", example = "1", required = true, hidden = false)
+      @ApiModelProperty(value = "일차감 구분(1: 리스비, 2: 대출 상환, 3:산재 보험비)", dataType = "Integer", example = "1", required = false, hidden = false)
       private Integer kind;
 }

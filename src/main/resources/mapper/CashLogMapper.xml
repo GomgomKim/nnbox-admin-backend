@@ -436,7 +436,7 @@
     on f.USER_IDX = u.IDX 
     <where>
       and cl.CATEGORY = 'BATCH_WORK_NCASH'
-      and cl.KIND = #{kind}
+      <if test="kind != null and !kind.equals('')">and cl.KIND = #{kind}</if>
     </where>
     order by cl.IDX desc
     limit #{pageSize} offset #{limitStart}
@@ -449,7 +449,7 @@
     on u.IDX = cl.USER_IDX
     <where>
       and cl.CATEGORY = 'BATCH_WORK_NCASH'
-      and cl.KIND = #{kind}
+      <if test="kind != null and !kind.equals('')">and cl.KIND = #{kind}</if>
     </where>
   </select>
   
