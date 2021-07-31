@@ -126,7 +126,7 @@ spring:
       maintainTimeStats: false
 server:
   ssl:
-    key-store: /home/nnbox/nnbox/key/rider.jks
+    key-store: /home/nnbox/nnbox/key/manage.jks
     key-store-password: siasiaqkrtm1!
     key-password: siasiaqkrtm1!
 cors:
