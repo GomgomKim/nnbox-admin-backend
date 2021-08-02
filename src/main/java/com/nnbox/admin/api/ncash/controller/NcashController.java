@@ -50,7 +50,7 @@ public class NcashController {
 		if (bindingResult.hasErrors()) throw new BasicException(ErrorCode.COMMON_BAD_REQUEST);
 		return ncashService.createNcash(request);
     }
-	
+	 
 	@RequestMapping(value = "/withdraw/list", method = RequestMethod.GET, produces = "application/json")
 	@ApiOperation(value = "예치금 출금내역", notes = "유저별 예치금 출금 이력을 불러온다.")
 	public WithdrawListResponse getWithdrawList(@ModelAttribute WithdrawListRequest listRequest, BindingResult bindingResult) throws Exception {
