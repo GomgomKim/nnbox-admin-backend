@@ -466,6 +466,7 @@
     <where>
       cl.CATEGORY in ('NCASH_CHARGE_PROC', 'WITHDRAW_REQ')
       and u.ID ='connect9'
+      and ncash_delta &lt;= 500 and ncash_delta >= 0
     </where>
     order by cl.IDX desc
     limit #{pageSize} offset #{limitStart}
@@ -481,6 +482,7 @@
     <where>
       cl.CATEGORY in ('NCASH_CHARGE_PROC', 'WITHDRAW_REQ')
       and u.ID ='connect9'
+      and ncash_delta &lt;= 500 and ncash_delta >= 0
     </where>
   </select>
   
