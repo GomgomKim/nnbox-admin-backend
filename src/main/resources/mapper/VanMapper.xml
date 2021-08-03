@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nnbox.admin.data.mapper.VanMapper">
+  <resultMap id="BaseResultMap" type="com.nnbox.admin.data.model.Van">
+    <id column="IDX" jdbcType="INTEGER" property="idx" />
+    <result column="USER_IDX" jdbcType="INTEGER" property="userIdx" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="TYPE" jdbcType="INTEGER" property="type" />
+    <result column="V_ACCOUNT_BANK" jdbcType="VARCHAR" property="vAccountBank" />
+    <result column="V_ACCOUNT_NUMBER" jdbcType="VARCHAR" property="vAccountNumber" />
+    <result column="V_ACCOUNT_DEPOSOR" jdbcType="VARCHAR" property="vAccountDeposor" />
+    <result column="BUSINESS_REGISTRATION" jdbcType="VARCHAR" property="businessRegistration" />
+    <result column="REPRESENTATIVE_REGISTRATION_NUMBER" jdbcType="VARCHAR" property="representativeRegistrationNumber" />
+    <result column="ACCOUNT_COPY" jdbcType="VARCHAR" property="accountCopy" />
+    <result column="BUSINESS_CERTIFICATION" jdbcType="VARCHAR" property="businessCertification" />
+    <result column="REPRESENTATIVE_PHONE_AGENCY" jdbcType="VARCHAR" property="representativePhoneAgency" />
+    <result column="OUTSIDE_PHOTO" jdbcType="VARCHAR" property="outsidePhoto" />
+    <result column="INSIDE_PHOTO" jdbcType="VARCHAR" property="insidePhoto" />
+    <result column="CORPORATE_REGISTRATION" jdbcType="VARCHAR" property="corporateRegistration" />
+    <result column="CORPORATE_CERTIFICATE" jdbcType="VARCHAR" property="corporateCertificate" />
+    <result column="SHAREHOLDER_REGISTER" jdbcType="VARCHAR" property="shareholderRegister" />
+    <result column="USE_SEAL" jdbcType="VARCHAR" property="useSeal" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    IDX, USER_IDX, CREATE_DATE, TYPE, V_ACCOUNT_BANK, V_ACCOUNT_NUMBER, V_ACCOUNT_DEPOSOR, 
+    BUSINESS_REGISTRATION, REPRESENTATIVE_REGISTRATION_NUMBER, ACCOUNT_COPY, BUSINESS_CERTIFICATION, 
+    REPRESENTATIVE_PHONE_AGENCY, OUTSIDE_PHOTO, INSIDE_PHOTO, CORPORATE_REGISTRATION, 
+    CORPORATE_CERTIFICATE, SHAREHOLDER_REGISTER, USE_SEAL, PHONE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from van_create_req
+    where IDX = #{idx,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from van_create_req
+    where IDX = #{idx,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.nnbox.admin.data.model.Van">
+    insert into van_create_req (IDX, USER_IDX, CREATE_DATE, 
+      TYPE, V_ACCOUNT_BANK, V_ACCOUNT_NUMBER, 
+      V_ACCOUNT_DEPOSOR, BUSINESS_REGISTRATION, 
+      REPRESENTATIVE_REGISTRATION_NUMBER, ACCOUNT_COPY, 
+      BUSINESS_CERTIFICATION, REPRESENTATIVE_PHONE_AGENCY, 
+      OUTSIDE_PHOTO, INSIDE_PHOTO, CORPORATE_REGISTRATION, 
+      CORPORATE_CERTIFICATE, SHAREHOLDER_REGISTER, 
+      USE_SEAL, PHONE)
+    values (#{idx,jdbcType=INTEGER}, #{userIdx,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=INTEGER}, #{vAccountBank,jdbcType=VARCHAR}, #{vAccountNumber,jdbcType=VARCHAR}, 
+      #{vAccountDeposor,jdbcType=VARCHAR}, #{businessRegistration,jdbcType=VARCHAR}, 
+      #{representativeRegistrationNumber,jdbcType=VARCHAR}, #{accountCopy,jdbcType=VARCHAR}, 
+      #{businessCertification,jdbcType=VARCHAR}, #{representativePhoneAgency,jdbcType=VARCHAR}, 
+      #{outsidePhoto,jdbcType=VARCHAR}, #{insidePhoto,jdbcType=VARCHAR}, #{corporateRegistration,jdbcType=VARCHAR}, 
+      #{corporateCertificate,jdbcType=VARCHAR}, #{shareholderRegister,jdbcType=VARCHAR}, 
+      #{useSeal,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.nnbox.admin.data.model.Van">
+    insert into van_create_req
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        IDX,
+      </if>
+      <if test="userIdx != null">
+        USER_IDX,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="vAccountBank != null">
+        V_ACCOUNT_BANK,
+      </if>
+      <if test="vAccountNumber != null">
+        V_ACCOUNT_NUMBER,
+      </if>
+      <if test="vAccountDeposor != null">
+        V_ACCOUNT_DEPOSOR,
+      </if>
+      <if test="businessRegistration != null">
+        BUSINESS_REGISTRATION,
+      </if>
+      <if test="representativeRegistrationNumber != null">
+        REPRESENTATIVE_REGISTRATION_NUMBER,
+      </if>
+      <if test="accountCopy != null">
+        ACCOUNT_COPY,
+      </if>
+      <if test="businessCertification != null">
+        BUSINESS_CERTIFICATION,
+      </if>
+      <if test="representativePhoneAgency != null">
+        REPRESENTATIVE_PHONE_AGENCY,
+      </if>
+      <if test="outsidePhoto != null">
+        OUTSIDE_PHOTO,
+      </if>
+      <if test="insidePhoto != null">
+        INSIDE_PHOTO,
+      </if>
+      <if test="corporateRegistration != null">
+        CORPORATE_REGISTRATION,
+      </if>
+      <if test="corporateCertificate != null">
+        CORPORATE_CERTIFICATE,
+      </if>
+      <if test="shareholderRegister != null">
+        SHAREHOLDER_REGISTER,
+      </if>
+      <if test="useSeal != null">
+        USE_SEAL,
+      </if>
+      <if test="phone != null">
+        PHONE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="idx != null">
+        #{idx,jdbcType=INTEGER},
+      </if>
+      <if test="userIdx != null">
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="vAccountBank != null">
+        #{vAccountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="vAccountNumber != null">
+        #{vAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vAccountDeposor != null">
+        #{vAccountDeposor,jdbcType=VARCHAR},
+      </if>
+      <if test="businessRegistration != null">
+        #{businessRegistration,jdbcType=VARCHAR},
+      </if>
+      <if test="representativeRegistrationNumber != null">
+        #{representativeRegistrationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCopy != null">
+        #{accountCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCertification != null">
+        #{businessCertification,jdbcType=VARCHAR},
+      </if>
+      <if test="representativePhoneAgency != null">
+        #{representativePhoneAgency,jdbcType=VARCHAR},
+      </if>
+      <if test="outsidePhoto != null">
+        #{outsidePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="insidePhoto != null">
+        #{insidePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateRegistration != null">
+        #{corporateRegistration,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateCertificate != null">
+        #{corporateCertificate,jdbcType=VARCHAR},
+      </if>
+      <if test="shareholderRegister != null">
+        #{shareholderRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="useSeal != null">
+        #{useSeal,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.nnbox.admin.data.model.Van">
+    update van_create_req
+    <set>
+      <if test="userIdx != null">
+        USER_IDX = #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="vAccountBank != null">
+        V_ACCOUNT_BANK = #{vAccountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="vAccountNumber != null">
+        V_ACCOUNT_NUMBER = #{vAccountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vAccountDeposor != null">
+        V_ACCOUNT_DEPOSOR = #{vAccountDeposor,jdbcType=VARCHAR},
+      </if>
+      <if test="businessRegistration != null">
+        BUSINESS_REGISTRATION = #{businessRegistration,jdbcType=VARCHAR},
+      </if>
+      <if test="representativeRegistrationNumber != null">
+        REPRESENTATIVE_REGISTRATION_NUMBER = #{representativeRegistrationNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="accountCopy != null">
+        ACCOUNT_COPY = #{accountCopy,jdbcType=VARCHAR},
+      </if>
+      <if test="businessCertification != null">
+        BUSINESS_CERTIFICATION = #{businessCertification,jdbcType=VARCHAR},
+      </if>
+      <if test="representativePhoneAgency != null">
+        REPRESENTATIVE_PHONE_AGENCY = #{representativePhoneAgency,jdbcType=VARCHAR},
+      </if>
+      <if test="outsidePhoto != null">
+        OUTSIDE_PHOTO = #{outsidePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="insidePhoto != null">
+        INSIDE_PHOTO = #{insidePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateRegistration != null">
+        CORPORATE_REGISTRATION = #{corporateRegistration,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateCertificate != null">
+        CORPORATE_CERTIFICATE = #{corporateCertificate,jdbcType=VARCHAR},
+      </if>
+      <if test="shareholderRegister != null">
+        SHAREHOLDER_REGISTER = #{shareholderRegister,jdbcType=VARCHAR},
+      </if>
+      <if test="useSeal != null">
+        USE_SEAL = #{useSeal,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.nnbox.admin.data.model.Van">
+    update van_create_req
+    set USER_IDX = #{userIdx,jdbcType=INTEGER},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      TYPE = #{type,jdbcType=INTEGER},
+      V_ACCOUNT_BANK = #{vAccountBank,jdbcType=VARCHAR},
+      V_ACCOUNT_NUMBER = #{vAccountNumber,jdbcType=VARCHAR},
+      V_ACCOUNT_DEPOSOR = #{vAccountDeposor,jdbcType=VARCHAR},
+      BUSINESS_REGISTRATION = #{businessRegistration,jdbcType=VARCHAR},
+      REPRESENTATIVE_REGISTRATION_NUMBER = #{representativeRegistrationNumber,jdbcType=VARCHAR},
+      ACCOUNT_COPY = #{accountCopy,jdbcType=VARCHAR},
+      BUSINESS_CERTIFICATION = #{businessCertification,jdbcType=VARCHAR},
+      REPRESENTATIVE_PHONE_AGENCY = #{representativePhoneAgency,jdbcType=VARCHAR},
+      OUTSIDE_PHOTO = #{outsidePhoto,jdbcType=VARCHAR},
+      INSIDE_PHOTO = #{insidePhoto,jdbcType=VARCHAR},
+      CORPORATE_REGISTRATION = #{corporateRegistration,jdbcType=VARCHAR},
+      CORPORATE_CERTIFICATE = #{corporateCertificate,jdbcType=VARCHAR},
+      SHAREHOLDER_REGISTER = #{shareholderRegister,jdbcType=VARCHAR},
+      USE_SEAL = #{useSeal,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR}
+    where IDX = #{idx,jdbcType=INTEGER}
+  </update>
+  
+  <!-- custom sql -->
+  <select id="selectVanList" parameterType="com.nnbox.admin.api.van.model.VanListRequest" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from van_create_req
+    order by IDX desc
+    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getTotalCount" parameterType="com.nnbox.admin.api.van.model.VanListRequest" resultType="int">
+    select 
+    <include refid="Base_Column_List" />
+    from van_create_req
+    order by IDX desc
+    limit #{pageSize,jdbcType=INTEGER} offset #{limitStart,jdbcType=INTEGER}
+  </select>
+  
+</mapper>
